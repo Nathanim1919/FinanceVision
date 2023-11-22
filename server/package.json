@@ -1,0 +1,26 @@
+{
+  "name": "personal-financial-assistance",
+  "version": "1.0.0",
+  "description": "This Mern stack project is expected to help peoples for tracking thier day to day relation with money",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nathanim1919/Personal-financial-Assistance.git"
+  },
+  "author": "Nathanim tadele",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nathanim1919/Personal-financial-Assistance/issues"
+  },
+  "homepage": "https://github.com/Nathanim1919/Personal-financial-Assistance#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  }
+}
