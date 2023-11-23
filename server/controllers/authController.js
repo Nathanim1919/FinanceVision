@@ -11,8 +11,6 @@ const register = async (req, res)=>{
             password
         } = req.body
 
-        
-
     }catch{
 
     }
