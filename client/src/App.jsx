@@ -12,8 +12,6 @@ import './app.css';
 function App() {
   return(
     <>
-    <Login/>
-    <Register/>
     <Header/>
     <Home/>
     <Blog/>

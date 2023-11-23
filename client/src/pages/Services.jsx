@@ -1,87 +1,75 @@
 import React from 'react';
 import styled from 'styled-components';
+import blogImage1 from '../../src/assets/blog/b1.jpg';
+import blogImage2 from '../../src/assets/blog/b2.jpg';
+import blogImage3 from '../../src/assets/blog/b3.jpg';
+import blogImage4 from '../../src/assets/blog/b4.jpg';
+import blogImage5 from '../../src/assets/blog/b5.jpg';
+import blogImage6 from '../../src/assets/blog/b6.jpg';
 
 const AboutContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 20px;
-  width: 70%;
-  margin: auto;
+    display: grid;
+    gap: 0rem;
+    place-items: center;
+    width: 80vw;
+    margin: auto;
 
-  div.about-section:nth-child(1),
-    div.about-section:nth-child(3),
-      div.about-section:nth-child(5){
-        flex-direction: row-reverse;
-      }
-
-  .about-section {
-    margin: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
-
-    img {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 10px;
+    >div:nth-child(1),
+    div:nth-child(3),
+    div:nth-child(5){
+      flex-direction: row-reverse;
     }
 
-    div {
+    >div{
       display: flex;
-      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
 
-      h2 {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
+      >*{
+        flex: 1;
       }
 
-      p {
-        font-size: 1rem;
-        color: #555;
+      img{
+        width: 100%;
+        height: 100%;
       }
     }
-  }
-`;
+  `;
 
 const aboutSections = [
   {
     id: 1,
-    image: 'https://example.com/image1.jpg',
+    image: blogImage1,
     title: 'Track Your Expenses',
     description: 'Easily monitor and categorize your expenses to gain insights into your spending habits.',
   },
   {
     id: 2,
-    image: 'https://example.com/image2.jpg',
+    image: blogImage2,
     title: 'Set and Achieve Goals',
     description: 'Define financial goals, track your progress, and celebrate your achievements along the way.',
   },
   {
     id: 3,
-    image: 'https://example.com/image3.jpg',
+    image: blogImage3,
     title: 'Budgeting Made Simple',
     description: 'Effortlessly create budgets, allocate funds, and stay on top of your financial targets.',
   },
   {
     id: 4,
-    image: 'https://example.com/image4.jpg',
+    image: blogImage4,
     title: 'Secure Your Future',
     description: 'Explore investment options, retirement planning, and strategies for long-term financial security.',
   },
   {
     id: 5,
-    image: 'https://example.com/image5.jpg',
+    image: blogImage5,
     title: 'Financial Education',
     description: 'Access a wealth of financial resources, tips, and articles to enhance your financial literacy.',
   },
   {
     id: 6,
-    image: 'https://example.com/image6.jpg',
+    image: blogImage6,
     title: 'User-Friendly Interface',
     description: 'Enjoy a sleek and intuitive user interface designed for a seamless financial management experience.',
   },
@@ -93,11 +81,13 @@ function Service() {
     <div className='header'> 
         <h1>Discover Our Features</h1>
         <p>Explore the key features that make our app stand out in helping you achieve financial success.</p>
-      </div>
+    </div>
     <AboutContainer>
       {aboutSections.map(section => (
         <div className='about-section' key={section.id}>
+          <div>
           <img src={section.image} alt={`About section - ${section.title}`} />
+          </div>
           <div>
             <h2>{section.title}</h2>
             <p>{section.description}</p>
