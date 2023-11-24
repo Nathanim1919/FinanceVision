@@ -7,6 +7,7 @@ import Login from "./pages/LOgin"
 import Register from "./pages/Register"
 import Service from "./pages/Services"
 import './app.css';
+import Faq from "./pages/Faq"
 
 
 function App() {
@@ -14,8 +15,9 @@ function App() {
     <>
     <Header/>
     <Home/>
-    <Blog/>
     <Service/>
+    <Blog/>
+    <Faq/>
     <About/>
     <Footer/>
     </>

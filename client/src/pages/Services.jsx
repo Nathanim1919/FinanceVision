@@ -12,7 +12,7 @@ const Container = styled.div`
     display:grid;
     place-items:center;
     width: 70vw;
-    margin:3rem auto;
+    margin:5rem auto;
 
 
     .header{

@@ -7,7 +7,7 @@ function Home() {
   return (
     <HomeContainer className = "home-container" >
       <div className="hero-section">
-        <h1>Empower Your Finances, Unleash Your Potential</h1>
+        <h1>Navigate Financial Success with the Power of AI at Your Fingertips</h1>
         <p>Transform the way you manage money. Our personal finance app is designed to help you take charge, plan for the future, and thrive financially.</p>
         <div className="cta-buttons">
           <Link to="/signup">

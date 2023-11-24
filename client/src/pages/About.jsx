@@ -8,14 +8,25 @@ const AboutContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   margin: 20px;
   width: 80vw;
-  margin: 2rem auto;
+  margin: 5rem auto;
   text-align: left;
-  gap: 1rem;
+  gap: 2rem;
   flex-wrap: wrap;
 
-  h1 {
+  h1>h1 {
     font-size: 2rem;
     margin-bottom: 10px;
+    color:#333;
+    padding: 0.4rem;
+    border-radius: 3px;
+
+    span{
+      color: #fff;
+      background-color: #333;
+      padding: 0.3rem 1rem;
+      position: relative;
+      transform: scale(.8);
+    }
   }
 
   p {
@@ -37,7 +48,7 @@ function About() {
     <AboutContainer>
       <img src={aboutImage} alt="About Us" />
       <div>
-        <h1>About Our Website</h1>
+        <h1><h1>About <span>Us</span></h1></h1>
         <p>Welcome to our financial assistance platform, where we empower individuals to take control of their finances and achieve their goals.
      At our website, we provide a user - friendly environment
      for managing expenses, setting financial goals, and gaining insights into your financial well - being.

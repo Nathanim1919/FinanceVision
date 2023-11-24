@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
-  background-color: #f8f9fa;
-  padding: 20px;
+  padding: 5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
 const FooterContent = styled.div`
@@ -37,7 +39,6 @@ function Footer() {
   return (
     <FooterContainer>
       <FooterContent>
-        <FooterText>&copy; 2023 Your Financial Assistance Platform. All rights reserved.</FooterText>
         <FooterLinks>
           <a href="/about">About Us</a>
           <a href="/services">Services</a>
@@ -49,6 +50,7 @@ function Footer() {
           <p>123 Main Street, Cityville, Country</p>
         </ContactInfo>
       </FooterContent>
+        <FooterText>&copy; 2023 Your Financial Assistance Platform. All rights reserved.</FooterText>
     </FooterContainer>
   );
 }
