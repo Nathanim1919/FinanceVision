@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styled from 'styled-components';
 import serviceImage1 from '../../src/assets/service/s1.jpg';
 import serviceImage2 from '../../src/assets/service/s2.jpg';
@@ -6,6 +6,8 @@ import serviceImage3 from '../../src/assets/service/s3.jpg';
 import serviceImage4 from '../../src/assets/service/s4.jpg';
 import serviceImage5 from '../../src/assets/service/s5.jpg';
 import serviceImage6 from '../../src/assets/service/s6.jpg';
+import Aos from 'aos';
+import 'aos/dist/aos.css'
 
 
 const Container = styled.div`
@@ -134,6 +136,11 @@ const aboutSections = [
 ];
 
 function Service() {
+  useEffect(() => {
+    Aos.init({
+      duration: 1000
+    })
+  }, []);
   return (
     <Container>
     <div className='header'> 
@@ -141,12 +148,12 @@ function Service() {
         <p>Explore the key features that make our app stand out in helping you achieve financial success.</p>
     </div>
     <AboutContainer>
-      {aboutSections.map(section => (
+      {aboutSections.map((section,index) => (
         <div className='about-section' key={section.id}>
-          <div>
+          <div data-aos="zoom-in">
           <img src={section.image} alt={`About section - ${section.title}`} />
           </div>
-          <div className="textContent">
+          <div className="textContent" data-aos={(index + 1)%2 === 0?"fade-left":"fade-right"}>
             <h2>{section.title}</h2>
             <p>{section.description}</p>
           </div>

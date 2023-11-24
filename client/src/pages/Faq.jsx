@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import styled from 'styled-components';
 import faqImage from '../../src/assets/faq.jpg'
 import {
@@ -8,6 +8,8 @@ import {
     IoIosArrowDown,
     IoIosArrowUp
 } from "react-icons/io";
+import Aos from 'aos';
+import 'aos/dist/aos.css'
 
 const FaqContainer = styled.div`
   width:80vw;
@@ -102,9 +104,15 @@ function Faq() {
        setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
    };
 
+     useEffect(() => {
+       Aos.init({
+         duration: 1000
+       })
+     }, []);
+
    return (
     <FaqContainer>
-      <div className='container'>
+      <div className='container' data-aos="fade-right">
             <h2>Frequently Asked Questions (FAQs)</h2>
             <FaqList>
                 {faqData.map((faq, index) => (
@@ -115,7 +123,7 @@ function Faq() {
                 ))}
             </FaqList>
       </div>
-        <div>
+        <div data-aos="fade-left">
             <img src={faqImage} alt=''/>
         </div>
     </FaqContainer>

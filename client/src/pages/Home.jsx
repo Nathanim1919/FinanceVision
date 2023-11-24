@@ -1,12 +1,21 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import heroImage from '../../src/assets/hero.jpg'
+import Aos from 'aos';
+import 'aos/dist/aos.css'
 
 function Home() {
+
+  useEffect(() => {
+    Aos.init({
+      duration: 1000
+    })
+  }, []);
+
   return (
     <HomeContainer className = "home-container" >
-      <div className="hero-section">
+      <div className="hero-section" data-aos="fade-right">
         <h1>Navigate Financial Success with the Power of AI at Your Fingertips</h1>
         <p>Transform the way you manage money. Our personal finance app is designed to help you take charge, plan for the future, and thrive financially.</p>
         <div className="cta-buttons">
@@ -15,7 +24,7 @@ function Home() {
           </Link>
         </div>
       </div>
-      <div>
+      <div data-aos="zoom-in">
         <img src={heroImage} alt=''/>
       </div>
     </HomeContainer>

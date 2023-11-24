@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styled from 'styled-components';
 import blogImage1 from '../../src/assets/blog/b1.jpg';
 import blogImage2 from '../../src/assets/blog/b2.jpg';
@@ -6,6 +6,8 @@ import blogImage3 from '../../src/assets/blog/b3.jpg';
 import blogImage4 from '../../src/assets/blog/b4.jpg';
 import blogImage5 from '../../src/assets/blog/b5.jpg';
 import blogImage6 from '../../src/assets/blog/b6.jpg';
+import Aos from 'aos';
+import 'aos/dist/aos.css'
 
 
 const Container = styled.div`
@@ -115,12 +117,17 @@ const blogPosts = [
 ];
 
 function Blog() {
+    useEffect(() => {
+      Aos.init({
+        duration: 1000
+      })
+    }, []);
   return (
     <Container>
     <h1>Our latest Blogs</h1>
     <BlogContainer className = 'blogContainer' >
       {blogPosts.map(post => (
-        <div className='blog' key={post.id}>
+        <div data-aos="zoom-in" className='blog' key={post.id}>
           <img src={post.image} alt={`Blog post - ${post.title}`} />
           <div className = 'textContent' >
             <div>

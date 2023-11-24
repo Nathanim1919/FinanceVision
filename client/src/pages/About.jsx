@@ -1,6 +1,8 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styled from 'styled-components';
-import aboutImage from '../../src/assets/about.jpg'
+import aboutImage from '../../src/assets/about.jpg';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 
 const AboutContainer = styled.div`
   text-align: center;
@@ -44,10 +46,15 @@ const AboutContainer = styled.div`
 `;
 
 function About() {
+    useEffect(() => {
+      Aos.init({
+        duration: 1000
+      })
+    }, []);
   return (
     <AboutContainer>
-      <img src={aboutImage} alt="About Us" />
-      <div>
+      <img data-aos="fade-right" src={aboutImage} alt="About Us" />
+      <div data-aos="fade-left">
         <h1><h1>About <span>Us</span></h1></h1>
         <p>Welcome to our financial assistance platform, where we empower individuals to take control of their finances and achieve their goals.
      At our website, we provide a user - friendly environment
