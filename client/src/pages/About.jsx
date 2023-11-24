@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import aboutImage from '../../src/assets/about.jpg'
 
 const AboutContainer = styled.div`
   text-align: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   margin: 20px;
+  width: 80vw;
+  margin: 2rem auto;
+  text-align: left;
+  gap: 1rem;
+  flex-wrap: wrap;
 
   h1 {
     font-size: 2rem;
@@ -27,16 +35,16 @@ const AboutContainer = styled.div`
 function About() {
   return (
     <AboutContainer>
-      <h1>About Our Website</h1>
-      <p>Welcome to our financial assistance platform, where we empower individuals to take control of their finances and achieve their goals.</p>
-      <img src="https://example.com/about-image.jpg" alt="About Us" />
-      <p>
-        At our website, we provide a user-friendly environment for managing expenses, setting financial goals, and gaining insights into your financial well-being.
-        Whether you are a seasoned investor or just starting with budgeting, our platform is designed to meet your diverse financial needs.
-      </p>
-      <p>
-        Explore our features, stay informed with financial trends through our blog, and embark on a journey towards financial success with our personalized tools and resources.
-      </p>
+      <img src={aboutImage} alt="About Us" />
+      <div>
+        <h1>About Our Website</h1>
+        <p>Welcome to our financial assistance platform, where we empower individuals to take control of their finances and achieve their goals.
+     At our website, we provide a user - friendly environment
+     for managing expenses, setting financial goals, and gaining insights into your financial well - being.
+     Whether you are a seasoned investor or just starting with budgeting, our platform is designed to meet your diverse financial needs.
+               Explore our features, stay informed with financial trends through our blog, and embark on a journey towards financial success with our personalized tools and resources.
+        </p>
+      </div>
     </AboutContainer>
   );
 }

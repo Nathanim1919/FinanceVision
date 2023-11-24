@@ -13,6 +13,22 @@ const Container = styled.div`
     place-items:center;
     width: 70vw;
     margin:3rem auto;
+
+
+    .header{
+      display: flex;
+      flex-direction: column;
+
+      >h1{
+        background-color: #333;
+        padding:.2rem 1rem;
+        color: #fff;
+      }
+
+      >*{
+        margin: 0;
+      }
+    }
 `
 
 const AboutContainer = styled.div`
@@ -30,6 +46,11 @@ const AboutContainer = styled.div`
       display: flex;
       justify-content: space-around;
       align-items: center;
+      flex-wrap: wrap;
+
+      @media screen and (max-width:800px){
+         display: grid;
+      }
       
       .textContent{
         position:relative;
