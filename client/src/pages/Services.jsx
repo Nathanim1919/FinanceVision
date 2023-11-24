@@ -41,6 +41,11 @@ const AboutContainer = styled.div`
     div:nth-child(5){
       flex-direction: row-reverse;
     }
+    > div:nth-child(1) .textContent::after,
+    div:nth-child(3) .textContent::after,
+    div:nth-child(5) .textContent::after{
+       transform:rotate(3deg);
+    }
 
     >div{
       display: flex;
@@ -71,7 +76,7 @@ const AboutContainer = styled.div`
           width:70%;
           height:40%;
           background-color:#333;
-          transform:rotate(3deg);
+          transform:rotate(-3deg);
           content:'';
           border-radius:10px;
         }
