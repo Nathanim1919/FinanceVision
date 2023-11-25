@@ -9,7 +9,7 @@ import {
 
 const HeaderContainer = styled.div`
   position: fixed;
-  top: 0;
+  top: -1rem;
   left: 0;
   right: 0;
   transform: translateY(${(props) => (props.scrollingUp ? '0' : '-100%')});
@@ -21,9 +21,9 @@ const HeaderContainer = styled.div`
   transition: transform 0.3s ease;
   z-index: 10;
 
-    .closeIcon {
-      display: none;
-    }
+  .closeIcon {
+    display: none;
+  }
 
   .logoIcon{
     display: none;
