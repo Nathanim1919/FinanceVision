@@ -9,7 +9,7 @@ function Home() {
 
   useEffect(() => {
     Aos.init({
-      duration: 1000
+      duration: 500
     })
   }, []);
 
@@ -40,7 +40,7 @@ const HomeContainer = styled.div`
   display: grid;
   grid-template-columns:repeat(auto-fit, minmax(350px, 1fr));
   place-items: center;
-  padding:1rem 3rem;
+  padding:3rem;
   margin: auto;
 
   button{
@@ -53,7 +53,6 @@ const HomeContainer = styled.div`
     border-radius: 10px;
   }
 
-
   >div{
     position: relative;
 
@@ -62,4 +61,15 @@ const HomeContainer = styled.div`
     }
   }
 
+
+  @media screen and (max-width:650px){
+    width: 90vw;
+    padding:3rem 1rem;
+    padding-bottom: 0;
+    margin: auto;
+      h1{
+        font-size: 1.2rem;
+        width: ;
+      }
+  }
 `

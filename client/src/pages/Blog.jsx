@@ -13,32 +13,40 @@ import 'aos/dist/aos.css'
 const Container = styled.div`
   display: grid;
   place-items: center;
+  position: relative;
   gap:2rem;
-
-
+  width: 80vw;
+  margin: auto;
+  
+  
   >button{
     padding: .6rem 1rem;
     border: none;
-    background-color: red;
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
-
+    
     &:hover{
       opacity: .7;
     }
   }
-`
+  `
 
 const BlogContainer = styled.div `
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  width: 80vw;
-  gap: 1rem;
-  margin: auto;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  position: relative;
+  widows: 100%;
+  gap: 2rem;
+
+
+  @media screen and (min-width:700px){
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
 
   .blog {
     border-radius: 8px;
+    width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     .textContent{
@@ -119,7 +127,7 @@ const blogPosts = [
 function Blog() {
     useEffect(() => {
       Aos.init({
-        duration: 1000
+        duration: 500
       })
     }, []);
   return (

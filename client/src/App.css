@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
 
+html{
+    overflow-x: hidden;
+}
 body{
     font-family: 'Poppins', sans-serif;
     padding: 0;
     margin: 0;
     display: grid;
-    place-items: center;
+    overflow-x: hidden;
 }

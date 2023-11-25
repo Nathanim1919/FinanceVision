@@ -6,6 +6,12 @@ const FooterContainer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+
+   @media screen and (max-width:700px){
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+   }
 `;
 
 const FooterContent = styled.div`

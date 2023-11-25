@@ -48,7 +48,7 @@ const AboutContainer = styled.div`
 function About() {
     useEffect(() => {
       Aos.init({
-        duration: 1000
+        duration: 500
       })
     }, []);
   return (

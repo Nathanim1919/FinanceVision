@@ -18,6 +18,13 @@ const FaqContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap:2rem;
 
+  @media screen and (max-width:650px){
+    h2 {
+      font-size: 1.5rem;
+    }
+    
+  }
+
   img{
     width:100%;
   }
@@ -41,6 +48,11 @@ const FaqList = styled.ul`
 const FaqItem = styled.li`
   margin-bottom: 20px;
   cursor: pointer;
+
+    @media screen and (max-width:700px){
+      font-size: 1rem;
+      font-weight: 300;
+    }
   
   &:hover{
     opacity: .8;
@@ -106,7 +118,7 @@ function Faq() {
 
      useEffect(() => {
        Aos.init({
-         duration: 1000
+         duration: 500
        })
      }, []);
 

@@ -13,8 +13,16 @@ import 'aos/dist/aos.css'
 const Container = styled.div`
     display:grid;
     place-items:center;
-    width: 70vw;
+    width: 60vw;
     margin:5rem auto;
+
+    @media screen and (max-width:750px) {
+      width: 80vw;
+
+      h1{
+        font-size: 1.5rem;
+      }
+    }
 
 
     .header{
@@ -22,9 +30,9 @@ const Container = styled.div`
       flex-direction: column;
 
       >h1{
-        background-color: #333;
+        font-weight: bolder;
         padding:.2rem 1rem;
-        color: #fff;
+        color: #333;
       }
 
       >*{
@@ -49,6 +57,44 @@ const AboutContainer = styled.div`
        transform:rotate(3deg);
     }
 
+    
+    .imageContainer::after{
+      position: absolute;
+      top:50%;
+      right:-60%;
+      height: 60%;
+      width:100%;
+      content: '';
+      background: #eee;
+      border-top-left-radius: 100px;
+      border-bottom-left-radius: 100px;
+
+       @media screen and (max-width:650px){
+          height: 48%;
+        }
+    }
+    > div:nth-child(2) .imageContainer::after,
+    div:nth-child(4) .imageContainer::after,
+    div:nth-child(6) .imageContainer::after{
+       left:-60%;
+        border-top-right-radius: 100px;
+      border-bottom-right-radius: 100px;
+        border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+
+    .imageContainer{
+      padding:3rem;
+      img{
+        border-radius: 20% 0%;
+        position: relative;
+        z-index: 5;
+        padding: 1rem;
+        filter:drop-shadow(0 9px 24px rgba(0,0,0,.1));
+      }
+    }
+
+
     >div{
       display: flex;
       justify-content: space-around;
@@ -57,6 +103,25 @@ const AboutContainer = styled.div`
 
       @media screen and (max-width:800px){
          display: grid;
+
+        div:nth-child(1) .textContent::after,
+        div:nth-child(3) .textContent::after,
+        div:nth-child(5) .textContent::after{
+          background-color: transparent;
+        }
+
+         div.textContent {
+              &::after{
+               background-color: transparent;
+               color: #333;
+            }
+         }
+         
+         
+         div.textContent h2{
+          font-size: 1.2rem;
+          color: #333;
+         }
       }
       
       .textContent{
@@ -138,7 +203,7 @@ const aboutSections = [
 function Service() {
   useEffect(() => {
     Aos.init({
-      duration: 1000
+      duration: 500
     })
   }, []);
   return (
@@ -150,8 +215,8 @@ function Service() {
     <AboutContainer>
       {aboutSections.map((section,index) => (
         <div className='about-section' key={section.id}>
-          <div data-aos="zoom-in">
-          <img src={section.image} alt={`About section - ${section.title}`} />
+          <div className='imageContainer' data-aos="zoom-in">
+             <img src={section.image} alt={`About section - ${section.title}`} />
           </div>
           <div className="textContent" data-aos={(index + 1)%2 === 0?"fade-left":"fade-right"}>
             <h2>{section.title}</h2>
