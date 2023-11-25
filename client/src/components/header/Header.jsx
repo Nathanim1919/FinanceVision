@@ -131,6 +131,11 @@ const HeaderContainer = styled.div`
         background-color: #0056b3;
       }
     }
+
+    button.memberBtn{
+      background-color: transparent;
+      color: #333;
+    }
   }
 `;
 
@@ -180,8 +185,8 @@ function Header() {
         </ul>
       </div>
         <div>
-          <button>Sign up</button>
-          <button>Log in</button>
+          <button className='memberBtn'>Login</button>
+          <button>Register</button>
         </div>
     </HeaderContainer>
   );
