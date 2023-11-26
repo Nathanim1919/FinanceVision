@@ -139,8 +139,8 @@ const AboutContainer = styled.div`
         &::after{
           position:absolute;
           top:2%;
-          left:0;
-          width:70%;
+          left:-1rem;
+          width:80%;
           height:40%;
           background-color:#333;
           transform:rotate(-3deg);
@@ -215,7 +215,8 @@ function Service() {
     <AboutContainer>
       {aboutSections.map((section,index) => (
         <div className='about-section' key={section.id}>
-          <div className='imageContainer' data-aos="zoom-in">
+          <div className = 'imageContainer'
+          data-aos = {(index + 1) % 2 === 0 ? "fade-right" : "fade-left"} >
              <img src={section.image} alt={`About section - ${section.title}`} />
           </div>
           <div className="textContent" data-aos={(index + 1)%2 === 0?"fade-left":"fade-right"}>

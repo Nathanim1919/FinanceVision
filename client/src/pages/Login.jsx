@@ -1,23 +1,67 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+  FcGoogle
+} from "react-icons/fc";
+import cverImage from '../assets/reg.jpg';
 
-const LoginContainer = styled.div`
-  max-width: 400px;
+const RegisterContainer = styled.div`
+  width: 90%;
   margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 2rem;
+
+
+  @media screen and (min-width: 768px) {
+        width: 60%;
+  }
+
+  >*{
+    width: 100%;
+  }
+
+  .buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
 `;
 
-const Title = styled.h2`
-  text-align: center;
+const Title = styled.div`
   margin-bottom: 20px;
+  background-position: center;
+  background-size: cover;
+  padding: 1rem 0;
+  color: #fff;
+  background-image: url(${cverImage});
+
+  h1{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const Form = styled.form`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   flex-direction: column;
+  gap: 1rem;
+
+  >div{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    >*{
+      flex: 1;
+    }
+  }
 
   label {
     margin-bottom: 8px;
@@ -35,43 +79,35 @@ const Form = styled.form`
     background-color: #007bff;
     color: #fff;
     border: none;
-    padding: 10px;
+    padding:.6rem 0;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
+    font-weight: 500;
+    font-family: inherit;
+
+  
 
     &:hover {
       background-color: #0056b3;
     }
   }
-`;
 
-const GoogleButton = styled.button`
-  background-color: #fff;
-  border: 1px solid #ccc;
-  color: #555;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-
-  img {
-    width: 20px;
-    margin-right: 10px;
-  }
-
-  &:hover {
-    background-color: #f8f9fa;
+  button.signupwgoogole{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid blue;
+    gap: 1rem;
+    background-color: transparent;
+    color:#333;
   }
 `;
 
-const NeedAnAccount = styled.p`
+
+
+const AlreadyHaveAccount = styled.p`
   text-align: center;
   margin-top: 20px;
 
@@ -89,27 +125,32 @@ const NeedAnAccount = styled.p`
 
 function Login() {
   return (
-    <LoginContainer>
-      <Title>Login to Your Account</Title>
+    <RegisterContainer>
+      <Title>
+        <h1>Sign in</h1>
+      </Title>
       <Form>
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" required />
+        <div>
+          <input  placeholder='Enter your Email' type="email" id="email" name="email" required />
+        </div>
 
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password" required />
+        <div>
+          <input required placeholder='Enter Your Password' type="password" id="password" name="password" />
+          </div>
 
-        <button type="submit">Log In</button>
+        <button className='signup' type="submit">Create account</button>
+      <button className='signupwgoogole'>
+       <FcGoogle/>
+        Sign In with Google
+      </button>
       </Form>
 
-      <GoogleButton>
-        <img src="https://example.com/google-icon.png" alt="Google Logo" />
-        Log In with Google
-      </GoogleButton>
-
-      <NeedAnAccount>
-        Need an account? <a href="/register">Sign up</a>
-      </NeedAnAccount>
-    </LoginContainer>
+  <div className='buttons'>
+      <AlreadyHaveAccount>
+       Don't you have an account? <a href="/login">Sign Up</a>
+      </AlreadyHaveAccount>
+  </div>
+    </RegisterContainer>
   );
 }
 

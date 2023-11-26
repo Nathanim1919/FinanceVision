@@ -6,10 +6,11 @@ import {
 import {
   IoMdClose
 } from "react-icons/io";
+import Member from '../../pages/Member';
 
 const HeaderContainer = styled.div`
   position: fixed;
-  top: -1rem;
+  top: 0rem;
   left: 0;
   right: 0;
   transform: translateY(${(props) => (props.scrollingUp ? '0' : '-100%')});
@@ -142,6 +143,10 @@ const HeaderContainer = styled.div`
 function Header() {
   const [scrollingUp, setScrollingUp] = useState(true);
   const [openMenu, setOpenmenu] = useState(false);
+  const [oepnForm, setOpenForm] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openregister, setOpenregister] = useState(false);
+
 
   useEffect(() => {
     let lastScrollTop = 0;
@@ -167,6 +172,12 @@ function Header() {
     scrollingUp = {
       scrollingUp
     } >
+      {
+        oepnForm && < Member openregister={openregister} setOpenForm = {
+          setOpenForm
+        }
+        />
+      }
       <div className='logo'>
         <div className='logoIcon' onClick={()=>setOpenmenu(true)}>
           <AiOutlineMenu/>
@@ -185,11 +196,10 @@ function Header() {
         </ul>
       </div>
         <div>
-          <button className='memberBtn'>Login</button>
-          <button>Register</button>
+          <button onClick={()=>{setOpenForm(true); setOpenLogin(true); setOpenregister(false)}} className='memberBtn'>Login</button>
+          <button onClick={()=>{setOpenForm(true); setOpenLogin(false); setOpenregister(true)}}>Register</button>
         </div>
     </HeaderContainer>
   );
 }
-
 export default Header;
