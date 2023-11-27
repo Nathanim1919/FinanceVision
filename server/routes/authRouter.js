@@ -1,15 +1,16 @@
-const {validationResult} = require('express-validator');
+// E:\Projects\portfolio projects\Personal-financial-Assistance\server\routes\authRouter.js
 const express = require('express');
 const router = express.Router();
+// const {
+//     RegisterValidator,
+//     loginValidator
+// } = require('../utils/validator');
 const {
-    RegisterValidator,
-    loginValidator
-} = require('../utils/validator')
+    register,
+    login
+} = require('../controllers/authController');
 
+router.post('/register', register); // Check this line
+router.post('/login', login);
 
-router.post('/register',RegisterValidator, (req, res)=>{
-
-});
-router.post('/login',loginValidator, (req, res)=>{
-
-});
+module.exports = router;
