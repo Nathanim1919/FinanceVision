@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Login from './Login';
-import Register from './Register';
+import Login from '../features/userAuth/Login';
+import Register from '../features/userAuth/Register';
 import styled from 'styled-components';
 import {
   IoMdClose
@@ -8,15 +8,16 @@ import {
 
 function Member({
   setOpenForm,
-  openregister
+  openregister,
+  setOpenregister
 }) {
   return (
     <Container >
       <div className='closeForm' onClick={()=>setOpenForm(false)}>
         < IoMdClose/>
       </div>
-       { openregister?<Register/>
-                        :<Login/>  
+       { openregister?<Register setOpenregister={setOpenregister}/>
+                        :<Login setOpenregister={setOpenregister}/>  
         }
     </Container>
   )

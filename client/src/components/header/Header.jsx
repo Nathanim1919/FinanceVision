@@ -173,7 +173,7 @@ function Header() {
       scrollingUp
     } >
       {
-        oepnForm && < Member openregister={openregister} setOpenForm = {
+        oepnForm && < Member setOpenregister={setOpenregister} openregister={openregister} setOpenForm = {
           setOpenForm
         }
         />

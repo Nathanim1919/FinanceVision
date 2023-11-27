@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   FcGoogle
 } from "react-icons/fc";
-import cverImage from '../assets/reg.jpg';
+import cverImage from '../../assets/reg.jpg';
 
 const RegisterContainer = styled.div`
   width: 90%;
@@ -123,39 +123,35 @@ const AlreadyHaveAccount = styled.p`
   }
 `;
 
-function Register() {
+function Login({setOpenregister}) {
   return (
     <RegisterContainer>
       <Title>
-        <h1>Create an Account</h1>
+        <h1>Sign in</h1>
       </Title>
       <Form>
         <div>
-          <input required placeholder='Enter Your fullname' type="text" id="name" name="name"  />
-
           <input  placeholder='Enter your Email' type="email" id="email" name="email" required />
         </div>
 
         <div>
           <input required placeholder='Enter Your Password' type="password" id="password" name="password" />
-
-          <input required placeholder='Confirm Your Password' type="password" id="confirmPassword" name="confirmPassword" />
           </div>
 
-        <button className='signup' type="submit">Create account</button>
+        <button className='signup' type="submit">Sign In</button>
       <button className='signupwgoogole'>
        <FcGoogle/>
-        Sign Up with Google
+        Sign In with Google
       </button>
       </Form>
 
   <div className='buttons'>
       <AlreadyHaveAccount>
-        Already have an account? <a href="/login">Log in</a>
+       Don't you have an account? <a onClick={()=>setOpenregister(true)}>Sign Up</a>
       </AlreadyHaveAccount>
   </div>
     </RegisterContainer>
   );
 }
 
-export default Register;
+export default Login;
