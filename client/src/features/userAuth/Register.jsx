@@ -5,7 +5,7 @@ import {
 } from "react-icons/fc";
 import cverImage from '../../assets/reg.jpg';
 import { useSelector, useDispatch } from 'react-redux';
-import { register } from './userAuthSlice';
+import { registerAsync } from './userAuthSlice';
 import axios from 'axios';
 
 
@@ -16,6 +16,7 @@ function Register({setOpenregister}) {
     fullname:'',
     email:'',
     password:'',
+     confirmPassword: '',
   });
 
 
@@ -29,8 +30,19 @@ function Register({setOpenregister}) {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    alert(e)
-    dispatch(register(formData));
+
+    // Validate password and confirmPassword
+    // if (formData.password !== formData.confirmPassword){
+    //   alert('Password do not match')
+    //   return;
+    // }
+
+    // dispatch the registerAsync action
+    dispatch(registerAsync({
+      name:formData.fullname,
+      email:formData.email,
+      password:formData.password,
+    }));
   }
 
 
