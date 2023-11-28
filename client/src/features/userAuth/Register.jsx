@@ -7,6 +7,10 @@ import cverImage from '../../assets/reg.jpg';
 import { useSelector, useDispatch } from 'react-redux';
 import { registerAsync } from './userAuthSlice';
 import axios from 'axios';
+import {
+  IoMdClose
+} from "react-icons/io";
+import { Link } from 'react-router-dom';
 
 
 function Register({setOpenregister}) {
@@ -39,10 +43,17 @@ function Register({setOpenregister}) {
 
     // dispatch the registerAsync action
     dispatch(registerAsync({
-      name:formData.fullname,
+      fullname:formData.fullname,
       email:formData.email,
       password:formData.password,
     }));
+
+    setFormData({
+      fullname:'',
+      email:'',
+      password:'',
+      confirmPassword:''
+    })
   }
 
 
@@ -51,6 +62,9 @@ function Register({setOpenregister}) {
     <RegisterContainer>
       <Title>
         <h1>Create an Account</h1>
+          <Link to={'/'}>
+            < IoMdClose/>
+        </Link>
       </Title>
       <Form onSubmit={handleRegister}>
         <div>
@@ -62,7 +76,7 @@ function Register({setOpenregister}) {
         <div>
           <input value={formData.password} onChange={handleInputChange} required placeholder='Enter Your Password' type="password" id="password" name="password" />
 
-          <input required placeholder='Confirm Your Password' type="password" id="confirmPassword" name="confirmPassword" />
+          <input value={formData.confirmPassword} onChange={handleInputChange} required placeholder='Confirm Your Password' type="password" id="confirmPassword" name="confirmPassword" />
           </div>
 
         <button className='signup' type="submit">Create account</button>
@@ -74,7 +88,7 @@ function Register({setOpenregister}) {
 
   <div className='buttons'>
       <AlreadyHaveAccount>
-        Already have an account? <a onClick={()=>setOpenregister(false)}>Log in</a>
+        Already have an account? <Link to={'/login'}>Log in</Link>
       </AlreadyHaveAccount>
   </div>
     </RegisterContainer>
@@ -87,6 +101,10 @@ export default Register;
 
 // styled component
 const RegisterContainer = styled.div `
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 90%;
   margin: auto;
   display: flex;
@@ -119,12 +137,26 @@ const Title = styled.div `
   padding: 1rem 0;
   color: #fff;
   background-image: url(${cverImage});
+  position: relative;
+
+    a {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      color: #fff;
+      font-size: 1.5rem;
+    }
 
   h1{
     position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 0 1rem;
+
+     @media screen and (max-width:768px){
+       font-size: 1.5rem;
+    }
   }
 `;
 
@@ -139,6 +171,11 @@ const Form = styled.form `
     align-items: center;
     gap: 2rem;
     flex-wrap: wrap;
+
+
+    @media screen and (max-width:768px){
+       gap:0rem;
+    }
     >*{
       flex: 1;
     }
@@ -197,6 +234,7 @@ const AlreadyHaveAccount = styled.p `
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
+    cursor: pointer;
 
     &:hover {
       color: #0056b3;

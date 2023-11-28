@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     // Authentication-related fields
-    username: {
+    fullname: {
         type: String,
-        unique: true,
         required: true
     },
     email: {
@@ -18,17 +17,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-
-    // Personal information
-    firstName: {
-        type: String
-    },
-    lastName: {
-        type: String
-    },
-    dateOfBirth: {
-        type: Date
-    },
+    
+    // dateOfBirth: {
+    //     type: Date
+    // },
 
     // Contact information
     phoneNumber: {
@@ -54,12 +46,8 @@ const userSchema = new Schema({
     // Additional preferences
     currency: {
         type: String,
-        default: 'USD'
+        default: 'Birr'
     }, // User's preferred currency
-    theme: {
-        type: String,
-        default: 'light'
-    }, // User interface theme preference
 
     // Timestamps
     createdAt: {
@@ -72,5 +60,4 @@ const userSchema = new Schema({
 });
 
 const User = mongoose.model('User', userSchema);
-
 module.exports = User;

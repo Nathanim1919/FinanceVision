@@ -19,7 +19,7 @@ function Home() {
         <h1>Navigate Financial Success with the Power of AI at Your Fingertips</h1>
         <p>Transform the way you manage money. Our personal finance app is designed to help you take charge, plan for the future, and thrive financially.</p>
         <div className="cta-buttons">
-          <Link to="/signup">
+          <Link to="/register">
             <button className="get-started">Get Started for Free</button>
           </Link>
         </div>
@@ -64,12 +64,11 @@ const HomeContainer = styled.div`
 
   @media screen and (max-width:650px){
     width: 90vw;
-    padding:3rem 1rem;
+    padding:6rem 1rem;
     padding-bottom: 0;
     margin: auto;
       h1{
         font-size: 1.2rem;
-        width: ;
       }
   }
 `

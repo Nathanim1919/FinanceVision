@@ -4,8 +4,19 @@ import {
   FcGoogle
 } from "react-icons/fc";
 import cverImage from '../../assets/reg.jpg';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { loginAsync } from './userAuthSlice';
+import { Link } from 'react-router-dom';
+import {
+  IoMdClose
+} from "react-icons/io";
 
 const RegisterContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 90%;
   margin: auto;
   display: flex;
@@ -38,12 +49,26 @@ const Title = styled.div`
   padding: 1rem 0;
   color: #fff;
   background-image: url(${cverImage});
+  position: relative;
+
+  a{
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    color: #fff;
+     font-size: 1.5rem;
+  }
 
   h1{
     position: relative;
+    padding:0 1rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+      @media screen and (max-width:768px){
+       font-size: 1.5rem;
+    }
   }
 `;
 
@@ -116,6 +141,7 @@ const AlreadyHaveAccount = styled.p`
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
+    cursor: pointer;
 
     &:hover {
       color: #0056b3;
@@ -124,18 +150,45 @@ const AlreadyHaveAccount = styled.p`
 `;
 
 function Login({setOpenregister}) {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    email:'',
+    password:''
+  });
+
+  const handleInputChange = (e)=>{
+    setFormData({
+      ...formData,
+      [e.target.name]:e.target.value
+    })
+  }
+
+  const handleLogin = (e) =>{
+    e.preventDefault();
+
+    // dispatch loginAsync action
+    dispatch(loginAsync({
+      email:formData.email,
+      password:formData.password
+    }));
+  }
+
+
   return (
-    <RegisterContainer>
+    <RegisterContainer >
       <Title>
         <h1>Sign in</h1>
+        <Link to={'/'}>
+            < IoMdClose/>
+        </Link>
       </Title>
-      <Form>
+      <Form onSubmit={handleLogin}>
         <div>
-          <input  placeholder='Enter your Email' type="email" id="email" name="email" required />
+          <input value={formData.email} onChange={handleInputChange}  placeholder='Enter your Email' type="email" id="email" name="email" required />
         </div>
 
         <div>
-          <input required placeholder='Enter Your Password' type="password" id="password" name="password" />
+          <input value={formData.password} onChange={handleInputChange} required placeholder='Enter Your Password' type="password" id="password" name="password" />
           </div>
 
         <button className='signup' type="submit">Sign In</button>
@@ -147,7 +200,7 @@ function Login({setOpenregister}) {
 
   <div className='buttons'>
       <AlreadyHaveAccount>
-       Don't you have an account? <a onClick={()=>setOpenregister(true)}>Sign Up</a>
+       Don't you have an account? <Link to={'/register'}>Sign Up</Link>
       </AlreadyHaveAccount>
   </div>
     </RegisterContainer>

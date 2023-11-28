@@ -72,20 +72,24 @@ passport.deserializeUser(async (id, done) => {
 const register = async (req, res) => {
     try {
         // validate incoming request data using express-validator
-        const errors = validationResult(req);
-        if (errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array()
-            });
-        }
+        // const errors = validationResult(req);
+        // if (errors.isEmpty()) {
+        //     return res.status(400).json({
+        //         errors: errors.array()
+        //     });
+        // }
 
 
         // Destructure user input
         const {
-            name,
+            fullname,
             email,
             password
         } = req.body;
+
+        console.log(fullname);
+        console.log(email);
+        console.log(password);
 
 
         // check if the user already exists
@@ -102,7 +106,7 @@ const register = async (req, res) => {
 
         // create a new user instance
         user = new UserModel({
-            name,
+            fullname,
             email,
             password
         })
@@ -151,7 +155,7 @@ const login = (req, res, next)=>{
             },
         };
 
-        const token  = jwt.sign(payload, process.env.JWT+ServiceWorkerContainer, {expiresIn:'1h'})
+        const token  = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn:'1h'})
 
 
         res.json({token});

@@ -10,9 +10,22 @@ export const registerAsync = createAsyncThunk('userAuth/register', async (userDa
     rejectWithValue
 }) => {
     try {
-        const response = await axios.post('/api/register', userData);
+        const {
+            fullname,
+            email,
+            password
+        } = userData; // Destructure the userData object
+        const response = await axios.post('http://localhost:5000/auth/register', {
+            fullname,
+            email,
+            password
+        });
+
+        console.log(response);
+
+        console.log(response)
         if (response.status === 201) {
-            return userData;
+            return response.data.user;
         } else {
             return rejectWithValue('Registration failed.');
         }
@@ -26,7 +39,7 @@ export const loginAsync = createAsyncThunk('userAuth/login', async (userData, {
     rejectWithValue
 }) => {
     try {
-        const response = await axios.post('/api/login', userData);
+        const response = await axios.post('http://localhost:5000/auth/login', userData);
         if (response.status === 200) {
             return response.data.user;
         } else {

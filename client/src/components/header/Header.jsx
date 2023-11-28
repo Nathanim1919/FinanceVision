@@ -6,7 +6,7 @@ import {
 import {
   IoMdClose
 } from "react-icons/io";
-import Member from '../../pages/Member';
+import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -21,6 +21,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   transition: transform 0.3s ease;
   z-index: 10;
+  padding:0 2rem;
 
   .closeIcon {
     display: none;
@@ -28,6 +29,28 @@ const HeaderContainer = styled.div`
 
   .logoIcon{
     display: none;
+  }
+
+  .buttons{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+
+    >a:nth-child(1){
+      background-color: transparent;
+      color: #333;
+    }
+
+    >*{
+      background-color: blue;
+      padding:.2rem 1rem;
+      flex: 1;
+      text-decoration: none;
+      font-family: inherit;
+      color:#fff;
+      font-weight: 600;
+    }
   }
 
   @media screen and (max-width:700px){
@@ -172,12 +195,6 @@ function Header() {
     scrollingUp = {
       scrollingUp
     } >
-      {
-        oepnForm && < Member setOpenregister={setOpenregister} openregister={openregister} setOpenForm = {
-          setOpenForm
-        }
-        />
-      }
       <div className='logo'>
         <div className='logoIcon' onClick={()=>setOpenmenu(true)}>
           <AiOutlineMenu/>
@@ -195,9 +212,9 @@ function Header() {
           <li>Contact us</li>
         </ul>
       </div>
-        <div>
-          <button onClick={()=>{setOpenForm(true); setOpenLogin(true); setOpenregister(false)}} className='memberBtn'>Login</button>
-          <button onClick={()=>{setOpenForm(true); setOpenLogin(false); setOpenregister(true)}}>Register</button>
+        <div className='buttons'>
+          <Link to={'/login'} onClick={()=>{setOpenForm(true); setOpenLogin(true); setOpenregister(false)}} className='memberBtn'>Login</Link>
+          <Link to={'/register'} onClick={()=>{setOpenForm(true); setOpenLogin(false); setOpenregister(true)}}>Register</Link>
         </div>
     </HeaderContainer>
   );
