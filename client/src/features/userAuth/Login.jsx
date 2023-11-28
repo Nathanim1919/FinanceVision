@@ -7,7 +7,8 @@ import cverImage from '../../assets/reg.jpg';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { loginAsync } from './userAuthSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useHistory from 'react-router-dom'
+
 import {
   IoMdClose
 } from "react-icons/io";
@@ -149,8 +150,9 @@ const AlreadyHaveAccount = styled.p`
   }
 `;
 
-function Login({setOpenregister}) {
+function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email:'',
     password:''
@@ -171,8 +173,8 @@ function Login({setOpenregister}) {
       email:formData.email,
       password:formData.password
     }));
+   navigate('/profile');
   }
-
 
   return (
     <RegisterContainer >

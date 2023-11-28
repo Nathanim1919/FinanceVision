@@ -3,6 +3,7 @@ import {
     createAsyncThunk
 } from '@reduxjs/toolkit'
 import axios from 'axios'
+import api from '../../utils/api';
 
 
 // Async Thunks
@@ -15,15 +16,11 @@ export const registerAsync = createAsyncThunk('userAuth/register', async (userDa
             email,
             password
         } = userData; // Destructure the userData object
-        const response = await axios.post('http://localhost:5000/auth/register', {
+        const response = await api.post('http://localhost:5000/auth/register', {
             fullname,
             email,
             password
         });
-
-        console.log(response);
-
-        console.log(response)
         if (response.status === 201) {
             return response.data.user;
         } else {
@@ -39,8 +36,15 @@ export const loginAsync = createAsyncThunk('userAuth/login', async (userData, {
     rejectWithValue
 }) => {
     try {
-        const response = await axios.post('http://localhost:5000/auth/login', userData);
+         const {
+             email,
+             password
+         } = userData;
+        const response = await api.post('http://localhost:5000/auth/login', {email, password});
+        
         if (response.status === 200) {
+            // Save the token in localStorage
+            localStorage.setItem('token', response.data.token);
             return response.data.user;
         } else {
             return rejectWithValue('Login failed')
@@ -81,6 +85,7 @@ const userAuthSlice = createSlice({
                 state.loading = false;
                 state.isAuthenticated = true;
                 state.user = action.payload;
+                console.log(state.user)
             })
 
             .addCase(registerAsync.rejected, (state, action) => {
@@ -106,8 +111,5 @@ const userAuthSlice = createSlice({
 });
 
 
-
-
 export const { logout } = userAuthSlice.actions;
-
 export default userAuthSlice.reducer;

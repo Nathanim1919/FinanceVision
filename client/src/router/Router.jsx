@@ -2,6 +2,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import App from '../App'
 import Login from '../features/userAuth/Login';
 import Register from '../features/userAuth/Register';
+import UserProfile from '../features/userAuth/userProfile';
 
 
 
@@ -18,6 +19,10 @@ const Router = () =>{
         {
             path:'/register',
             element:<Register/>
+        },
+        {
+            path:'/profile',
+            element:<UserProfile/>
         }
     ]);
 

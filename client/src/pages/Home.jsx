@@ -61,7 +61,6 @@ const HomeContainer = styled.div`
     }
   }
 
-
   @media screen and (max-width:650px){
     width: 90vw;
     padding:6rem 1rem;
