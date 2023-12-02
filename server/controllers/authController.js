@@ -22,14 +22,12 @@ passport.use(
                     email
                 });
 
-
                 // if the user does not exist, return an error
                 if (!user) {
                     return done(null, false, {
                         message: 'Invalid credentials'
                     });
                 }
-
 
                 // chaeck i the provided password matches the hashed passowrd in the database
                 const isMatch = await bcrypt.compare(password, user.password);
@@ -68,18 +66,9 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
-// Registartion route
+// Registration route
 const register = async (req, res) => {
     try {
-        // validate incoming request data using express-validator
-        // const errors = validationResult(req);
-        // if (errors.isEmpty()) {
-        //     return res.status(400).json({
-        //         errors: errors.array()
-        //     });
-        // }
-
-
         // Destructure user input
         const {
             fullname,
@@ -87,41 +76,35 @@ const register = async (req, res) => {
             password
         } = req.body;
 
-        console.log(fullname);
-        console.log(email);
-        console.log(password);
-
-
-        // check if the user already exists
+        // Check if the user already exists
         let user = await UserModel.findOne({
             email
         });
+
         if (user) {
             return res.status(400).json({
                 errors: [{
                     message: 'User already exists'
                 }]
-            })
+            });
         }
 
-        // create a new user instance
+        // Create a new user instance
         user = new UserModel({
             fullname,
             email,
             password
-        })
+        });
 
-        
-        // Hash the passwprd before saving it to the database
+        // Hash the password before saving it to the database
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
-
 
         // Save the user to the database
         await user.save();
 
-        res.status(200).json({
-            message:'User registered successfully'
+        res.status(201).json({
+            message: 'User registered successfully'
         });
 
     } catch (error) {
@@ -131,18 +114,19 @@ const register = async (req, res) => {
 };
 
 
-
 // Login route using passport.authonticate middleware
-const login = (req, res, next)=>{
-    passport.authenticate('local',{session:false}, (err, user, info)=>{
-        if(err){
+const login = (req, res, next) => {
+    passport.authenticate('local', {
+        session: false
+    }, (err, user, info) => {
+        if (err) {
             return next(err);
         }
 
-        if (!user){
+        if (!user) {
             return res.status(401).json({
-                errors:[{
-                    message:info.message
+                errors: [{
+                    message: info.message
                 }]
             });
         }
@@ -150,16 +134,48 @@ const login = (req, res, next)=>{
 
         // if authentication is successful, create a JSON Web Token (JWT)
         const payload = {
-            user:{
-                id:user._id
+            user: {
+                id: user._id
             },
         };
 
-    
-        const token  = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn:'1h'})
 
-        res.json({token, user});
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: '1h'
+        })
+
+        res.json({
+            token,
+            user
+        });
     })(req, res, next);
 }
 
-module.exports = {register, login};
+
+
+const getUser = async (req, res) =>{
+    try{
+        const {userId} = req.body;
+        const user = await UserModel.findById(userId);
+
+        if (user){
+            res.status(200).json({
+                user:user
+            })
+        }
+
+        res.status(404).json({
+            message:'user not found'
+        })
+    }catch(error){
+        res.status(500).json({
+            message:error
+        })
+    }
+}
+
+module.exports = {
+    register,
+    login,
+    getUser
+};

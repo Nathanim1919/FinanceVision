@@ -1,15 +1,15 @@
+// const {
+//     connectToDatabase,
+//     isConnected
+// } = require('./config/connectDb');
 // index.js (your server code)
 const mongoose = require('mongoose');
 const express = require('express');
 const dotenv = require('dotenv');
 
-const {
-        connectToDatabase,
-        isConnected
-    } = require('./config/connectDb');
 const authRouter = require('./routes/authRouter');
 const cors = require('cors');
-    
+
 const app = express();
 dotenv.config();
 
@@ -24,6 +24,26 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+mongoose.connect('mongodb://127.0.0.1:27017/Assistanse', {})
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(error => console.log(error));
+
+
+app.use('/auth', authRouter);
+// Start the server function
+app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT}`));
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Initialize the app and connect to the database
@@ -45,9 +65,6 @@ app.use(cors(corsOptions));
 //         console.error('Error connecting to MongoDB:', error.message);
 //     });
 
-mongoose.connect('mongodb://127.0.0.1:27017/Assistanse', {})
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(error => console.log(error));
 
 
 // Global error handling middleware
@@ -60,23 +77,18 @@ mongoose.connect('mongodb://127.0.0.1:27017/Assistanse', {})
 
 // Graceful shutdown on SIGTERM signal
 // process.on('SIGTERM', () => {
-    //     console.info('Received SIGTERM signal. Closing server gracefully.');
-    //     // Add cleanup logic if needed
-    //     process.exit(0);
+//     console.info('Received SIGTERM signal. Closing server gracefully.');
+//     // Add cleanup logic if needed
+//     process.exit(0);
 // });
 
 
 // API routes
-app.use('/auth', authRouter);
 
 
 // Unhandled Promise Rejections
 // process.on('unhandledRejection', (reason, promise) => {
-    //     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-    //     // Handle the error gracefully or log it
-    //     process.exit(1); // Exit the process or handle as appropriate
-    // });
-
-    
-// Start the server function
-app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT}`));
+//     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+//     // Handle the error gracefully or log it
+//     process.exit(1); // Exit the process or handle as appropriate
+// });

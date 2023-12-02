@@ -8,11 +8,12 @@ const {authenticateToken} = require('../utils/authonticateToken');
 // } = require('../utils/validator');
 const {
     register,
-    login
+    login,
+    getUser
 } = require('../controllers/authController');
 
 router.post('/register', register); // Check this line
 router.post('/login', login);
-router.get('/profile', authenticateToken, )
+router.get('/profile', getUser)
 
 module.exports = router;

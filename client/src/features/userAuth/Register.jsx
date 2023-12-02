@@ -11,16 +11,20 @@ import {
   IoMdClose
 } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
 
 
-function Register({setOpenregister}) {
 
-  const dispatch = useDispatch();
+function Register() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullname:'',
     email:'',
     password:'',
-     confirmPassword: '',
+    confirmPassword: '',
   });
 
 
@@ -32,28 +36,28 @@ function Register({setOpenregister}) {
   }
 
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Validate password and confirmPassword
-    // if (formData.password !== formData.confirmPassword){
-    //   alert('Password do not match')
-    //   return;
-    // }
+    try {
+      // dispatch the registerAsync action
+      const result = await dispatch(registerAsync(formData));
+      console.log(result)
+      if (registerAsync.fulfilled.match(result)){
+          navigate('/login')
+      }
+  
+      setFormData({
+        fullname:'',
+        email:'',
+        password:'',
+        confirmPassword:''
+      })
+      
+    } catch (error) {
+      console.log('registration failed', error);
+    }
 
-    // dispatch the registerAsync action
-    dispatch(registerAsync({
-      fullname:formData.fullname,
-      email:formData.email,
-      password:formData.password,
-    }));
-
-    setFormData({
-      fullname:'',
-      email:'',
-      password:'',
-      confirmPassword:''
-    })
   }
 
 

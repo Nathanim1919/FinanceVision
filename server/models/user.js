@@ -18,9 +18,9 @@ const userSchema = new Schema({
         required: true
     },
     
-    // dateOfBirth: {
-    //     type: Date
-    // },
+    dateOfBirth: {
+        type: Date
+    },
 
     // Contact information
     phoneNumber: {
