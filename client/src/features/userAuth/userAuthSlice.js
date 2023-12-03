@@ -2,46 +2,34 @@ import {
     createSlice,
     createAsyncThunk
 } from '@reduxjs/toolkit';
-import axios from 'axios';
 import api from '../../utils/api';
 
-
-// Action to initialize user authentication based on the token
-export const initializeAuth = () => async (dispatch) => {
+export const checkAuth = () => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
 
         if (token) {
-            const userId = token.user.id; 
-            // If a token exists, fetch user data or perform any necessary initialization
-            const response = await api.get(`http://localhost:5000/auth/user`, {
-                userId
+            // Send the token to the server for validation
+            const response = await api.post('http://localhost:5000/auth/verify', {
+                token
             });
 
-            console.log(response)
-
             if (response.status === 200) {
-                // Assuming your user data is available in response.data.user
                 const user = response.data.user;
 
-                // Set the authentication state
                 dispatch({
                     type: 'userAuth/setAuthenticatedUser',
                     payload: {
                         user
                     },
                 });
-            } else {
-                // Handle error if needed
-                console.error('Error fetching user data:', response.data.error);
             }
         }
     } catch (error) {
-        console.error('Error during authentication initialization:', error);
+        console.error('Error checking authentication:', error);
         // Handle error if needed
     }
 };
-
 
 // Async Thunks
 export const registerAsync = createAsyncThunk('userAuth/register', async (userData, {

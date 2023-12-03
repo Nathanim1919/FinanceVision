@@ -86,7 +86,6 @@ const AboutContainer = styled.div`
     .imageContainer{
       padding:3rem;
       img{
-        border-radius: 20% 0%;
         position: relative;
         z-index: 5;
         padding: 1rem;
@@ -116,7 +115,6 @@ const AboutContainer = styled.div`
                color: #333;
             }
          }
-         
          
          div.textContent h2{
           font-size: 1.2rem;
@@ -215,8 +213,7 @@ function Service() {
     <AboutContainer>
       {aboutSections.map((section,index) => (
         <div className='about-section' key={section.id}>
-          <div className = 'imageContainer'
-          data-aos = {(index + 1) % 2 === 0 ? "fade-right" : "fade-left"} >
+          <div className = 'imageContainer' data-aos = {(index + 1) % 2 === 0 ? "fade-right" : "fade-left"} >
              <img src={section.image} alt={`About section - ${section.title}`} />
           </div>
           <div className="textContent" data-aos={(index + 1)%2 === 0?"fade-left":"fade-right"}>

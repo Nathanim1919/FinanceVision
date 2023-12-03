@@ -87,14 +87,6 @@ const handleLogin = async (e) => {
 export default Login;
 
 
-
-
-
-
-
-
-
-
   const RegisterContainer = styled.div`
     position: absolute;
     top: 50%;
