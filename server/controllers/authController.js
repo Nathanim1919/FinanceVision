@@ -139,40 +139,52 @@ const login = (req, res, next) => {
             },
         };
 
-
+        const expiresIn = 3600
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: '1h'
+            expiresIn: expiresIn
         })
+
+         const expirationDate = new Date();
+         expirationDate.setSeconds(expirationDate.getSeconds() + expiresIn);
+
+
 
         res.json({
             token,
-            user
+            user,
+            expiresAt: expirationDate.toISOString() // Include the expiration date in the response
         });
     })(req, res, next);
 }
 
 
-
-const getUser = async (req, res) =>{
-    try{
-        const {userId} = req.body;
+const getUser = async (req, res) => {
+    try {
+        const {
+            userId
+        } = req.params;
+        console.log(userId)
         const user = await UserModel.findById(userId);
-
-        if (user){
-            res.status(200).json({
-                user:user
-            })
+        console.log(user)
+        if (user) {
+            return res.status(200).json({
+                user: user
+            });
         }
 
-        res.status(404).json({
-            message:'user not found'
-        })
-    }catch(error){
-        res.status(500).json({
-            message:error
-        })
+        // Move the 404 response outside of the if block
+        return res.status(404).json({
+            message: 'User not found'
+        });
+    } catch (error) {
+        // Handle other errors, log them, and send a 500 response
+        console.error('Error fetching user:', error);
+        return res.status(500).json({
+            message: 'Internal server error'
+        });
     }
-}
+};
+
 
 module.exports = {
     register,

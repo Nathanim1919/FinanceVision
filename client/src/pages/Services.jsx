@@ -7,156 +7,32 @@ import serviceImage4 from '../../src/assets/service/s4.jpg';
 import serviceImage5 from '../../src/assets/service/s5.jpg';
 import serviceImage6 from '../../src/assets/service/s6.jpg';
 import Aos from 'aos';
-import 'aos/dist/aos.css'
+import 'aos/dist/aos.css';
 
 
 const Container = styled.div`
-    display:grid;
-    place-items:center;
-    width: 60vw;
-    margin:5rem auto;
-
-    @media screen and (max-width:750px) {
-      width: 80vw;
-
-      h1{
-        font-size: 1.5rem;
-      }
-    }
-
-
-    .header{
-      display: flex;
-      flex-direction: column;
-
-      >h1{
-        font-weight: bolder;
-        padding:.2rem 1rem;
-        color: #333;
-      }
-
-      >*{
-        margin: 0;
-      }
-    }
-`
+    width: 70%;
+    margin: 3rem auto;
+  `;
 
 const AboutContainer = styled.div`
+  display: grid;
+  gap: 2rem;
+
+  >div{
     display: grid;
-    gap: 0rem;
-    place-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap:2rem;
 
-    >div:nth-child(1),
-    div:nth-child(3),
-    div:nth-child(5){
-      flex-direction: row-reverse;
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-    > div:nth-child(1) .textContent::after,
-    div:nth-child(3) .textContent::after,
-    div:nth-child(5) .textContent::after{
-       transform:rotate(3deg);
-    }
-
-    
-    .imageContainer::after{
-      position: absolute;
-      top:50%;
-      right:-60%;
-      height: 60%;
-      width:100%;
-      content: '';
-      background: #eee;
-      border-top-left-radius: 100px;
-      border-bottom-left-radius: 100px;
-
-       @media screen and (max-width:650px){
-          height: 48%;
-        }
-    }
-    > div:nth-child(2) .imageContainer::after,
-    div:nth-child(4) .imageContainer::after,
-    div:nth-child(6) .imageContainer::after{
-       left:-60%;
-        border-top-right-radius: 100px;
-      border-bottom-right-radius: 100px;
-        border-top-left-radius: 0px;
-      border-bottom-left-radius: 0px;
-    }
-
-    .imageContainer{
-      padding:3rem;
-      img{
-        position: relative;
-        z-index: 5;
-        padding: 1rem;
-        filter:drop-shadow(0 9px 24px rgba(0,0,0,.1));
-      }
-    }
-
-
-    >div{
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      flex-wrap: wrap;
-
-      @media screen and (max-width:800px){
-         display: grid;
-
-        div:nth-child(1) .textContent::after,
-        div:nth-child(3) .textContent::after,
-        div:nth-child(5) .textContent::after{
-          background-color: transparent;
-        }
-
-         div.textContent {
-              &::after{
-               background-color: transparent;
-               color: #333;
-            }
-         }
-         
-         div.textContent h2{
-          font-size: 1.2rem;
-          color: #333;
-         }
-      }
-      
-      .textContent{
-        position:relative;
-
-        >*{
-          position:relative;
-          z-index:2;
-        }
-
-        h2{
-          color:#fff;
-        }
-
-        &::after{
-          position:absolute;
-          top:2%;
-          left:-1rem;
-          width:80%;
-          height:40%;
-          background-color:#333;
-          transform:rotate(-3deg);
-          content:'';
-          border-radius:10px;
-        }
-      }
-
-      >*{
-        flex: 1;
-      }
-
-      img{
-        width: 100%;
-        height: 100%;
-      }
-    }
-  `;
+  }
+  
+`
 
 const aboutSections = [
   {
@@ -165,29 +41,30 @@ const aboutSections = [
     title: 'Track Your Expenses',
     description: 'Easily monitor and categorize your expenses to gain insights into your spending habits.',
   },
-  {
-    id: 2,
-    image:serviceImage2,
-    title: 'Set and Achieve Goals',
-    description: 'Define financial goals, track your progress, and celebrate your achievements along the way.',
-  },
+    {
+      id: 2,
+      image: serviceImage2,
+      title: 'Financial Education',
+      description: 'Access a wealth of financial resources, tips, and articles to enhance your financial literacy.',
+    },
+
   {
     id: 3,
-    image:serviceImage3,
+    image:serviceImage4,
     title: 'Budgeting Made Simple',
     description: 'Effortlessly create budgets, allocate funds, and stay on top of your financial targets.',
   },
   {
     id: 4,
-    image:serviceImage4,
+    image:serviceImage3,
     title: 'Secure Your Future',
     description: 'Explore investment options, retirement planning, and strategies for long-term financial security.',
   },
   {
     id: 5,
-    image:serviceImage5,
-    title: 'Financial Education',
-    description: 'Access a wealth of financial resources, tips, and articles to enhance your financial literacy.',
+    image: serviceImage5,
+    title: 'Set and Achieve Goals',
+    description: 'Define financial goals, track your progress, and celebrate your achievements along the way.',
   },
 {
   id: 6,

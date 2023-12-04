@@ -1,22 +1,46 @@
+// controllers/authController.js
 const jwt = require('jsonwebtoken');
+const {getUserById} = require('../services/userService.js')
 
-module.exports.authenticateToken = (req, res, next) => {
-    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
 
-    if (!token) {
-        return res.status(401).json({
-            message: 'Unauthorized'
-        });
-    }
+const verifyToken = async (req, res) => {
+    try {
+        // Extract the token from the request body or headers
+        const token = req.body.token || req.headers.authorization?.split(' ')[1];
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) {
-            return res.status(403).json({
-                message: 'Token is not valid'
+        if (!token) {
+            return res.status(401).json({
+                error: 'Unauthorized: No token provided'
             });
         }
 
-        req.user = user;
-        next();
-    });
+        // Verify the token
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Assuming the decodedToken contains user information or user ID
+        const userId = decodedToken.user.id;
+
+        // Fetch user details from the database
+        const user = await getUserById(userId);
+        
+        if (!user) {
+            return res.status(401).json({
+                error: 'Unauthorized: Invalid user'
+            });
+        }
+
+        // Token is valid, send user details back to the client
+        res.status(200).json({
+            user
+        });
+    } catch (error) {
+        console.error('Error during token verification:', error);
+        return res.status(401).json({
+            error: 'Unauthorized: Invalid token'
+        });
+    }
+};
+
+module.exports = {
+    verifyToken,
 };

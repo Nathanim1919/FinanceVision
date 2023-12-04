@@ -4,7 +4,7 @@ import {
   FcGoogle
 } from "react-icons/fc";
 import cverImage from '../../assets/reg.jpg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { loginAsync } from './userAuthSlice';
 import { Link, useNavigate } from 'react-router-dom'; 
@@ -17,6 +17,8 @@ import {
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.userAuth.isAuthenticated);
+  
 
   const [formData, setFormData] = useState({
     email:'',
@@ -39,6 +41,7 @@ const handleLogin = async (e) => {
     if (loginAsync.fulfilled.match(result)) {
       // The login was successful, navigate to the profile page
       navigate('/profile');
+      console.log(isAuthenticated)
     } else {
       // The login failed, handle the error (if needed)
       console.log('Login failed:', result.error);

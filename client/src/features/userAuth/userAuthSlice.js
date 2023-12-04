@@ -6,30 +6,26 @@ import api from '../../utils/api';
 
 export const checkAuth = () => async (dispatch) => {
     try {
-        const token = localStorage.getItem('token');
-
-        if (token) {
-            // Send the token to the server for validation
-            const response = await api.post('http://localhost:5000/auth/verify', {
-                token
+        
+        // Send the token to the server for validation
+        const response = await api.post('http://localhost:5000/auth/verify');
+       
+        if (response.status === 200) {
+            const user = response.data.user;
+            
+            dispatch({
+                type: 'userAuth/setAuthenticatedUser',
+                payload: {
+                    user,
+                },
             });
-
-            if (response.status === 200) {
-                const user = response.data.user;
-
-                dispatch({
-                    type: 'userAuth/setAuthenticatedUser',
-                    payload: {
-                        user
-                    },
-                });
-            }
         }
     } catch (error) {
         console.error('Error checking authentication:', error);
         // Handle error if needed
     }
 };
+
 
 // Async Thunks
 export const registerAsync = createAsyncThunk('userAuth/register', async (userData, {
@@ -64,13 +60,6 @@ export const loginAsync = createAsyncThunk('userAuth/login', async (userData, {
     rejectWithValue
 }) => {
     try {
-        // if (token) {
-        //     // If a token is provided, return the user directly
-        //     return {
-        //         user: null
-        //     };
-        // }
-
          const {
              email,
              password
@@ -78,9 +67,12 @@ export const loginAsync = createAsyncThunk('userAuth/login', async (userData, {
         const response = await api.post('http://localhost:5000/auth/login', {email, password});
         
         if (response.status === 200) {
+
             // Save the token in localStorage
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('tokenExpiration', response.data.expiresAt);
             return response.data.user;
+
         } else {
             return rejectWithValue({
                 errorMessage: 'Login failed.'

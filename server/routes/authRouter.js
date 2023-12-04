@@ -1,7 +1,7 @@
 // E:\Projects\portfolio projects\Personal-financial-Assistance\server\routes\authRouter.js
 const express = require('express');
 const router = express.Router();
-const {authenticateToken} = require('../utils/authonticateToken');
+const {verifyToken} = require('../utils/authonticateToken');
 // const {
 //     RegisterValidator,
 //     loginValidator
@@ -13,7 +13,8 @@ const {
 } = require('../controllers/authController');
 
 router.post('/register', register); // Check this line
+router.post('/verify', verifyToken)
 router.post('/login', login);
-router.get('/profile', getUser)
+router.get('/user/:id', getUser)
 
 module.exports = router;
