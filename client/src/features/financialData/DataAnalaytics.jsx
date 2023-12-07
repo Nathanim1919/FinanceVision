@@ -5,7 +5,9 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 
-const DataAnalytics = ({ selectedYear }) => {
+const DataAnalytics = () => {
+    const years = [2020, 2021, 2022, 2023];
+    const [selectedYear, setSelectedYear] = useState(years[0]);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -85,21 +87,25 @@ const DataAnalytics = ({ selectedYear }) => {
     maintainAspectRatio: true,
   };
 
+
+
+   const handleYearChange = (e) => {
+     setSelectedYear(e.target.value);
+   };
+
   return (
     <AnalyticsContainer key={JSON.stringify(chartData)}>
-       <div className='header'>
-            <h2>Data Analytics for {selectedYear}</h2>
-            <div className='year'>
-                {selectedYear}
-                <div>
-                    <li>2020</li>
-                    <li>2021</li>
-                    <li>2022</li>
-                    <li>2023</li>
-                </div>
-            </div>
-        </div>  
-      <Line data={chartData} options={chartOptions} />
+        <div className='year'>
+            <h3>Data Analaytics</h3>
+            <select value={selectedYear} onChange={handleYearChange}>
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+        </div> 
+        <Line data={chartData} options={chartOptions} />
     </AnalyticsContainer>
   );
 };
@@ -114,6 +120,12 @@ const AnalyticsContainer = styled.div`
     border-radius: 10px;
     
 
+    .year{
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
     .header{
         display: flex;
         justify-content: center;
@@ -124,27 +136,5 @@ const AnalyticsContainer = styled.div`
             font-size: 1.2rem;
         }
 
-        .year{
-            position: relative;
-
-            >div{
-                position: absolute;
-                list-style-type: none;
-                top: 0;
-                left: 0;
-                background-color: #fff;
-                border: 1px solid #333;
-                
-                li{
-                    width:100%;
-                    cursor: pointer;
-                    padding: 0.3rem;
-
-                    &:hover{
-                        color: #eee;
-                    }
-                }
-            }
-        }
     }
 `

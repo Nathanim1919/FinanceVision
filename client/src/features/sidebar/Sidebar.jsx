@@ -25,7 +25,7 @@ import {
     IoMdClose
 } from "react-icons/io";
 
-function Sidebar({setOpenSidebar,openSidebar}) {
+function Sidebar() {
   return (
     <SidebarContainer  openSidebar ={openSidebar}>
        <div
@@ -36,7 +36,7 @@ function Sidebar({setOpenSidebar,openSidebar}) {
              <IoMdClose />
         </div>
 
-        <div>
+        <div className='sidebarLinks'>
             <div>
                 <MdDashboard/>
                 <span>Dashboard</span>
@@ -67,8 +67,8 @@ function Sidebar({setOpenSidebar,openSidebar}) {
                 <span>Report</span>
             </div>
             <div>
-                    <IoMdNotifications/>
-                    <span>Notification</span>
+                <IoMdNotifications/>
+                <span>Notification</span>
             </div>
         </div>
     </SidebarContainer>
@@ -93,12 +93,10 @@ const SidebarContainer = styled.div`
     transition: transform 0.3s ease-in-out;
 
 
-
-    
     >div{
         display: grid;
         justify-content: center;
-        gap: 1.5rem;
+        gap: 1rem;
         
         
         >*{
@@ -131,5 +129,76 @@ const SidebarContainer = styled.div`
         top: 2rem;
         right: 2rem;
         z-index: 5;
+    }
+
+    @media screen and (min-width:700px){
+        position: fixed;
+        height: 10%;
+        width: 100%;
+        background-color: #fff;
+        top: 0%;
+        left: 0%;
+        display: flex;
+        justify-content: center;
+        padding: 1rem 0;
+        align-items: center;
+        transform: translateY(0);
+        transition: transform 0.3s ease-in-out;
+        margin: .1rem auto;
+        border-bottom: 2px solid #eee;
+
+        div.closeIcon{
+            display: none;
+        }
+
+        .sidebarLinks{
+            width: 70vw;
+            display: flex;
+            align-items: center;
+
+            >*{
+                font-size: .7rem;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                 
+                &::after{
+                    content: '';
+                    width: 100%;
+                    height: 2px;
+                    background-color: #333;
+                    position: absolute;
+                    bottom: -.7rem;
+                    left: 0;
+                }
+
+                >*{
+                    margin: 0;
+                }
+
+                &:hover{
+                    background-color: transparent;
+                }
+
+                >*:nth-child(1){
+                    width: 20px;
+                    height: 20px;
+                    padding: 0.5rem;
+                    border-radius: 50%;
+                    display: grid;
+                    place-items: center;
+                    position: relative;
+                    top: -.3rem;
+                }
+
+                /* span{
+                    position: absolute;
+                    bottom: 0%;
+                    left: 0;
+                    transition: all .3s ease-in-out;
+                } */
+            }
+        }
     }
 `
