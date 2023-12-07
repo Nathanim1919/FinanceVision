@@ -82,7 +82,7 @@ export default Sidebar;
 const SidebarContainer = styled.div`
     position: absolute;
     height: 100vh;
-    width: 40vw;
+    width: 50%;
     z-index: 2;
     background-color: #fff;
     top: 0;

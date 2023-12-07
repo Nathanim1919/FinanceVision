@@ -6,6 +6,8 @@ const FooterContainer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  width:70vw;
+  margin:auto;
 
    @media screen and (max-width:700px){
     flex-direction: column;

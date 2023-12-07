@@ -9,7 +9,9 @@ import Loading from '../../components/loader/Loding';
 import Transaction from '../financialData/Transaction';
 import Incomes from '../financialData/Incomes';
 import Expenses from '../financialData/Expenses';
+import FinancialNotifications from '../financialData/Notification';
 import Sidebar from '../../components/sidebar/Sidebar';
+import DataAnalaytics from '../financialData/DataAnalaytics';
 
 
 const UserProfile = () => {
@@ -40,9 +42,14 @@ const UserProfile = () => {
             </div>
           </div>
           <Sidebar setOpenSidebar={setOpenSidebar} openSidebar={openSidebar}/>
-          <Transaction/>
-          <Incomes/>
-          <Expenses/>
+          <div className='financeData'>
+            <Transaction/>
+            <FinancialNotifications/>
+            <DataAnalaytics selectedYear={2023}/>
+            {/* <Incomes/>
+            <Expenses/> */}
+
+          </div>
         </ProfileContainer>
       );
   }
@@ -52,12 +59,18 @@ export default UserProfile;
 
 
 const ProfileContainer = styled.div`
+      margin: 4rem auto;
+      .financeData{
+         display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      }
      .profileSection{
-        background-color: #fff;
+        background-color:rgb(60,179,113);
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding:0 1rem;
+        color:#fff;
 
         >div{
           display: flex;
@@ -78,6 +91,13 @@ const ProfileContainer = styled.div`
           .menuIcon{
             font-size: 2rem;
           }
+        }
+     }
+
+     @media screen and (min-width:700px){
+        .financeData{
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
         }
      }
 `;
