@@ -4,14 +4,14 @@ import { FaShoppingCart, FaUtensils, FaSubway, FaGasPump } from 'react-icons/fa'
 import {
   FaArrowRightLong
 } from "react-icons/fa6";
+import { NavLink } from 'react-router-dom';
 
 const TransactionContainer = styled.div`
-padding:1rem;
-background-color:#fff;
-margin:1rem;
-box-shadow:0 6px 27px rgba(0,0,0,.05);
-border-radius: 10px;
-  /* Add styling for the transaction container */
+background-color: #fff;
+        margin: 1rem;
+        padding:1rem;
+        box-shadow:0 6px 27px rgba(0,0,0,.05);
+        border-radius: 10px;
 
   .headerSection{
     display:flex;
@@ -52,8 +52,7 @@ const TransactionItem = styled.div`
 `;
 
 const TransactionIcon = styled.div`
-  font-size: 24px;
-  margin-right: 10px;
+
 `;
 
 function Transaction() {
@@ -68,18 +67,18 @@ function Transaction() {
     <TransactionContainer>
       <div className="headerSection">
         <h3>Recent Transactions</h3>
-        <div className = "nextIcon" >
+        <NavLink to={'/profile/transactions'} className = "nextIcon" >
           <FaArrowRightLong/>
-        </div>
+        </NavLink>
       </div>
       <TransactionList>
         {transactions.map(transaction => (
           <TransactionItem key={transaction.id}>
-            <TransactionIcon>{transaction.icon}</TransactionIcon>
             <div className="info">
+            <TransactionIcon>{transaction.icon}</TransactionIcon>
               <div>{(transaction.description).slice(0, 10)}</div>
-              <div>{transaction.amount >= 0 ? `+${transaction.amount}` : transaction.amount}</div>
             </div>
+              <div>{transaction.amount >= 0 ? `+${transaction.amount}` : transaction.amount}</div>
           </TransactionItem>
         ))}
       </TransactionList>

@@ -13,25 +13,17 @@ import FinancialNotifications from '../financialData/Notification';
 import Sidebar from '../sidebar/Sidebar';
 import DataAnalaytics from '../financialData/DataAnalaytics';
 import ProfileSection from '../../components/profileSection';
+import Goals from '../financialData/Goals';
+import DataAnalytics from '../financialData/DataAnalaytics';
+import DashBoard from '../financialData/DashBoard';
+import { Outlet } from 'react-router-dom';
 
 
 const UserProfile = () => {
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.userAuth.user);
-  const [openSidebar, setOpenSidebar] = useState(false);
-
-
-
-  // get values
-   const isDashboardOpen = useSelector((state) => state.sidebar.openSections.dashboard);
-   const isIncomeOpen = useSelector((state) => state.sidebar.openSections.income);
-   const isExpenseOpen = useSelector((state) => state.sidebar.openSections.expense);
-   const isTransactionOpen = useSelector((state) => state.sidebar.openSections.transaction);
-   const isGoalOpen = useSelector((state) => state.sidebar.openSections.goal);
-   const isReportOpen = useSelector((state) => state.sidebar.openSections.report);
-  
-
+   const [openSidebar, setOpenSidebar] = useState(false);
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -41,51 +33,34 @@ const UserProfile = () => {
   if (!user) return <Loading/>
   else{    
       return (
-        <ProfileContainer>
+        
+        <Conatiner>
           <Header2 user={user} setOpenSidebar={setOpenSidebar}/>
           <Sidebar setOpenSidebar={setOpenSidebar} openSidebar={openSidebar}/>
-
-          <ProfileSection user={user}/>
-            <div setDashboard={setDashboard} setIncome={setIncome} setExpense={setExpense} setTransaction={setTransaction} setGoal={setGoal} setReport={setReport} className='infoPage'>
-                <div className='financeData'>
-                  <Transaction user={user}/>
-                  <FinancialNotifications user={user}/>
-                  <DataAnalaytics user={user}/>
-                  {/* <Incomes/>
-                  <Expenses/> */}
-                </div>
-            </div>
-          </ProfileContainer>
+           <ProfileSection user={user}/>
+          <Outlet/>
+        </Conatiner>
       );
   }
 }
 export default UserProfile;
 
 
-const ProfileContainer = styled.div`
-      background-color: #fff;
-      display: grid;
-      gap: 1rem;
-      margin: 4rem auto;
+const Conatiner = styled.div`
+    width: 95vw;
+    background-color: #fff;
+    margin: auto;
 
-      .financeData{
-          padding: 0rem;
-          display: grid;
-          grid-template-columns: 1fr;
-          background-color: #eee;
-        
 
-          /* >div:nth-child(3){
-            grid-column: span 2;
-          } */
-      }
-     .profileSection{
+      .profileSection{
         background-color:#fff;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-top: 2rem;
         color:#333;
+        padding: 0 2rem;
+        margin-top: 10%;
+  
 
         >div{
           display: flex;
@@ -108,27 +83,12 @@ const ProfileContainer = styled.div`
         }
      }
 
-     @media screen and (min-width:700px){
-      width:98%;
 
-      .profileSection{
-        width: 70%;
-        margin: auto;
-      }
 
-      .infoPage{
-        display: grid;
-        grid-template-columns: 1fr;
-      }
-        .financeData{
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            width: 70%;
-          margin: auto;
-
-          >div:nth-child(3){
-            grid-column: span 2;
-          }
-        }
-     }
-`;
+    @media screen and (min-width:768px){
+        width: 80vw;
+        /* > *{
+          width: 80%;
+        } */
+    }
+`

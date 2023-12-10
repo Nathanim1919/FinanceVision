@@ -4,6 +4,7 @@ import { IoMdAlert } from 'react-icons/io';
 import {
     FaArrowRightLong
 } from "react-icons/fa6";
+import { NavLink } from 'react-router-dom';
 
 const NotificationsContainer = styled.div`
         background-color: #fff;
@@ -63,9 +64,12 @@ function FinancialNotifications() {
     <NotificationsContainer>
       <div className = 'headerSection' >
         <h3>Financial Notifications</h3>
-         <div className="nextIcon">
+         <NavLink to = {
+           '/profile/notifications'
+         }
+         className = "nextIcon" >
           <FaArrowRightLong/>
-        </div>
+        </NavLink>
       </div>
       <NotificationsList>
         {financialAlerts.map(alert => (

@@ -24,10 +24,14 @@ import {
 import {
     IoMdClose
 } from "react-icons/io";
+import { NavLink } from 'react-router-dom';
 
-function Sidebar() {
+function Sidebar({
+    setOpenSidebar,
+    openSidebar
+}) {
   return (
-    <SidebarContainer  openSidebar ={openSidebar}>
+    <SidebarContainer openSidebar ={openSidebar}>
        <div
             className='closeIcon'
             onClick={() => setOpenSidebar(false)}
@@ -36,53 +40,55 @@ function Sidebar() {
              <IoMdClose />
         </div>
 
-        <div className='sidebarLinks'>
-            <div>
-                <MdDashboard/>
-                <span>Dashboard</span>
-            </div>
+<div className='sidebarLinks'>
+        <NavLink onClick={()=>setOpenSidebar(false)} to = '/profile/dashboard'
+        className = {
+            nav => (nav.isActive ? "active" : "not-active")
+        } >
+          <MdDashboard />
+          <span>Dashboard</span>
+        </NavLink>
 
-            <div>
-               <FaPlusSquare/>    
-               <span>Income</span>
-            </div>
+        <NavLink onClick={()=>setOpenSidebar(false)} to='/profile/incomes' className={nav => (nav.isActive ? "active" : "not-active")}>
+          <FaPlusSquare />
+          <span>Income</span>
+        </NavLink>
 
-            <div>
-                <FaSquareMinus/>
-                <span>Expense</span>
-            </div>
+        <NavLink onClick={()=>setOpenSidebar(false)} to='/profile/expenses' className={nav => (nav.isActive ? "active" : "not-active")}>
+          <FaSquareMinus />
+          <span>Expense</span>
+        </NavLink>
 
-            <div>    
-              <GrTransaction/>    
-              <span>Transaction</span>
-            </div>
+        <NavLink onClick={()=>setOpenSidebar(false)} to='/profile/transactions' className={nav => (nav.isActive ? "active" : "not-active")}>
+          <GrTransaction />
+          <span>Transaction</span>
+        </NavLink>
 
-            <div>  
-              <GoGoal/>     
-              <span>Goal</span>
-            </div>
+        <NavLink onClick={()=>setOpenSidebar(false)} to='/profile/goals' className={nav => (nav.isActive ? "active" : "not-active")}>
+          <GoGoal />
+          <span>Goal</span>
+        </NavLink>
 
-            <div>
-                <GoGraph/>
-                <span>Report</span>
-            </div>
-            <div>
-                <IoMdNotifications/>
-                <span>Notification</span>
-            </div>
-        </div>
+        <NavLink onClick={()=>setOpenSidebar(false)} to='/profile/analaytics' className={nav => (nav.isActive ? "active" : "not-active")}>
+          <GoGraph />
+          <span>Report</span>
+        </NavLink>
+
+        <NavLink onClick={()=>setOpenSidebar(false)} to='/profile/notifications' className={nav => (nav.isActive ? "active" : "not-active")}>
+          <IoMdNotifications />
+          <span>Notification</span>
+        </NavLink>
+      </div>
     </SidebarContainer>
   )
 }
 export default Sidebar;
 
 
-
-
 const SidebarContainer = styled.div`
-    position: absolute;
+    position: fixed;
     height: 100vh;
-    width: 50%;
+    width: 160px;
     z-index: 2;
     background-color: #fff;
     top: 0;
@@ -91,21 +97,34 @@ const SidebarContainer = styled.div`
     align-items: center;
     transform: ${props => props.openSidebar ? 'translateX(-0%)' : 'translateX(-100%)'};
     transition: transform 0.3s ease-in-out;
+    padding: 0 1rem;
+
+    .sidebarLinks {
+        a.not-active {
+            background-color: transparent;
+        }
+
+        >a.active {
+            background-color: #eee;
+        }
+    }
 
 
     >div{
         display: grid;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 1rem;
         
         
         >*{
-            font-size: 1.2rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: .5rem;
             padding:.5rem 1rem;
             cursor: pointer;
+            color: #333;
+            text-decoration: none;
             border-radius: 10px;
 
             &:hover{
@@ -147,57 +166,56 @@ const SidebarContainer = styled.div`
         margin: .1rem auto;
         border-bottom: 2px solid #eee;
 
+        >div{
+             justify-content: center;
+        }
+
         div.closeIcon{
             display: none;
         }
 
         .sidebarLinks{
-            width: 70vw;
+            width: 60vw;
             display: flex;
             align-items: center;
+            justify-content: center;
 
-            >*{
-                font-size: .7rem;
+           
+          
+
+            >a{
+                font-size: 1rem;
                 position: relative;
                 display: flex;
+                justify-content: center;
                 flex-direction: column;
                 align-items: center;
+                flex: 1;
+                transition: transform .4s ease-in-out;
                  
-                &::after{
-                    content: '';
-                    width: 100%;
-                    height: 2px;
-                    background-color: #333;
-                    position: absolute;
-                    bottom: -.7rem;
-                    left: 0;
-                }
-
                 >*{
-                    margin: 0;
+                    margin: 0rem;
+                    
                 }
 
+                
+                
                 &:hover{
-                    background-color: transparent;
+                    transform: scale(.94);
                 }
-
-                >*:nth-child(1){
-                    width: 20px;
-                    height: 20px;
-                    padding: 0.5rem;
-                    border-radius: 50%;
-                    display: grid;
-                    place-items: center;
-                    position: relative;
-                    top: -.3rem;
-                }
-
-                /* span{
-                    position: absolute;
-                    bottom: 0%;
-                    left: 0;
-                    transition: all .3s ease-in-out;
-                } */
+            }
+             a::after{
+                 content: '';
+                 width: 0%;
+                 height: 2px;
+                 background-color: #333;
+                 position: absolute;
+                 bottom: -.7rem;
+                 left: 0;
+                  transition: width .4s ease-in-out;
+             }
+            a.active::after{
+                width: 100%;
             }
         }
     }

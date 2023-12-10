@@ -139,20 +139,12 @@ const login = (req, res, next) => {
             },
         };
 
-        const expiresIn = 3600
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: expiresIn
-        })
-
-         const expirationDate = new Date();
-         expirationDate.setSeconds(expirationDate.getSeconds() + expiresIn);
-
+        const token = jwt.sign(payload, process.env.JWT_SECRET)
 
 
         res.json({
             token,
             user,
-            expiresAt: expirationDate.toISOString() // Include the expiration date in the response
         });
     })(req, res, next);
 }
