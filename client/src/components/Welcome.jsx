@@ -1,14 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {
     useSelector
 } from 'react-redux';
+import AskAi from './ai/AskAi';
 
 const WelcomeContainer = styled.div`
+  display: grid;
+  place-items: center;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   margin-top: 20px;
+
+  .buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 50%;
+
+    >*{
+      flex: 1;
+      padding: 0.6rem 1rem;
+      background-color: blue;
+      border: none;
+      font-weight: bolder;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
 `;
 
 const WelcomeMessage = () => {
@@ -18,24 +40,16 @@ const WelcomeMessage = () => {
       <h2>{user.fullname}, Welcome to Your Financial Assistant App!</h2>
       <p>
         This intelligent financial assistant is here to make managing your finances a breeze. Take advantage of our
-        cutting-edge features, including:
-      </p>
-      <ul>
-        <li>Effortlessly track your expenses, incomes, and transactions.</li>
-        <li>Set and achieve financial goals with personalized insights.</li>
-        <li>Gain deep insights into your financial habits through advanced analytics.</li>
-        <li>Utilize AI-powered advice for smart financial decision-making.</li>
-        <li>Ask questions and receive personalized recommendations from our AI assistant.</li>
-      </ul>
-      <p>
-        Our AI assistant is here to help you on your financial journey. Whether you need advice, want to explore
-        personalized insights, or have questions about your finances, simply ask the assistant for assistance.
+        cutting - edge features, Our AI assistant is here to help you on your financial journey.Whether you need advice, want to explore
+        personalized insights, or have questions about your finances, simply ask the assistant
+        for assistance.
         It's like having a financial expert right at your fingertips!
       </p>
-      <p>
-        Get started by exploring the menu and setting up your financial information. If you have any questions,
-        feel free to reach out to our support team.
-      </p>
+      <div className='buttons'>
+        <button>Ask AI</button>
+        <button>Set up Financial information</button>
+      </div>
+      <AskAi user={user}/>
     </WelcomeContainer>
   );
 };
