@@ -11,28 +11,27 @@ import 'aos/dist/aos.css';
 
 
 const Container = styled.div`
-    width: 70%;
+    width: 80%;
     margin: 3rem auto;
   `;
 
 const AboutContainer = styled.div`
   display: grid;
+  grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
   gap: 2rem;
 
-  >div{
+  > div {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap:2rem;
+    gap: 2rem;
 
-
-    img{
+    img {
       width: 100%;
-      height: 100%;
+      max-height:300px;
       object-fit: cover;
     }
   }
-  
-`
+`;
+
 
 const aboutSections = [
   {

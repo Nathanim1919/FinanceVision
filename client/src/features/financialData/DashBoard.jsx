@@ -17,7 +17,7 @@ function DashBoard() {
                   <FinancialNotifications user={user}/>
                   <Transaction user={user}/>
                   <DataAnalytics user={user}/>
-                </div>
+                </div>     
             </div>
           </ProfileContainer>
   )
