@@ -4,14 +4,23 @@ import {
     useSelector
 } from 'react-redux';
 import AskAi from './ai/AskAi';
+import imgBg from '../assets/service/s1.jpg';
 
 const WelcomeContainer = styled.div`
   display: grid;
+  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
   place-items: center;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   margin-top: 20px;
+  gap:2rem;
+
+  img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
 
   .buttons{
     display: flex;
@@ -19,7 +28,7 @@ const WelcomeContainer = styled.div`
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
-    width: 50%;
+    width: 100%;
 
     >*{
       flex: 1;
@@ -35,9 +44,15 @@ const WelcomeContainer = styled.div`
 
 const WelcomeMessage = () => {
      const user = useSelector(state => state.userAuth.user);
+     const [openAI, setOpenAi] = useState(false);
   return (
     <WelcomeContainer>
-      <h2>{user.fullname}, Welcome to Your Financial Assistant App!</h2>
+
+    <div>
+        <img src={imgBg} alt="image"/>
+    </div>  
+    <div>
+      <h2>{(user.fullname).toUpperCase()}, Welcome to Your Financial Assistant App!</h2>
       <p>
         This intelligent financial assistant is here to make managing your finances a breeze. Take advantage of our
         cutting - edge features, Our AI assistant is here to help you on your financial journey.Whether you need advice, want to explore
@@ -46,10 +61,11 @@ const WelcomeMessage = () => {
         It's like having a financial expert right at your fingertips!
       </p>
       <div className='buttons'>
-        <button>Ask AI</button>
+        <button onClick={()=> setOpenAi(true)}>Ask AI</button>
         <button>Set up Financial information</button>
       </div>
-      <AskAi user={user}/>
+      {openAI && <AskAi user={user} setOpenAi={setOpenAi}/>}
+    </div>
     </WelcomeContainer>
   );
 };

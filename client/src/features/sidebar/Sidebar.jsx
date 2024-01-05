@@ -25,11 +25,27 @@ import {
     IoMdClose
 } from "react-icons/io";
 import { NavLink } from 'react-router-dom';
+import { TbBrandBinance } from "react-icons/tb";
+import { IoIosLogOut } from "react-icons/io";
 
 function Sidebar({
     setOpenSidebar,
     openSidebar
 }) {
+
+
+    const logout = () => {
+        const tokenKey = "token"; // replace with your actual token key
+        const token = localStorage.getItem(tokenKey);
+      
+        if (token) {
+          localStorage.removeItem(tokenKey);
+          console.log("Token removed successfully");
+        } else {
+          console.log("No token found in localStorage");
+        }
+      };
+      
   return (
     <SidebarContainer openSidebar ={openSidebar}>
        <div
@@ -40,6 +56,9 @@ function Sidebar({
              <IoMdClose />
         </div>
 
+        <NavLink to={'/profile'} className="logo">
+            <TbBrandBinance/>
+        </NavLink >
 <div className='sidebarLinks'>
         <NavLink onClick={()=>setOpenSidebar(false)} to = '/profile/dashboard'
         className = {
@@ -78,6 +97,10 @@ function Sidebar({
           <IoMdNotifications />
           <span>Notification</span>
         </NavLink>
+        <NavLink onClick={()=>logout()} to='/' className={nav => (nav.isActive ? "active" : "not-active")}>
+          <IoIosLogOut />
+          <span>Log out</span>
+        </NavLink>
       </div>
     </SidebarContainer>
   )
@@ -99,7 +122,17 @@ const SidebarContainer = styled.div`
     transition: transform 0.3s ease-in-out;
     padding: 0 1rem;
 
+    .logo{
+        position:absolute;
+        left:1rem;
+        transform:scale(2);
+        cursor:pointer;
+    }
     .sidebarLinks {
+        position:relative;
+       
+
+
         a.not-active {
             background-color: transparent;
         }
@@ -150,7 +183,7 @@ const SidebarContainer = styled.div`
         z-index: 5;
     }
 
-    @media screen and (min-width:700px){
+    @media screen and (min-width:900px){
         position: fixed;
         height: 10%;
         width: 100%;
@@ -175,10 +208,15 @@ const SidebarContainer = styled.div`
         }
 
         .sidebarLinks{
-            width: 60vw;
+            width: 100vw;
             display: flex;
             align-items: center;
             justify-content: center;
+
+
+            @media screen and (min-width:1200px){
+                width: 80vw;
+            }
 
            
           

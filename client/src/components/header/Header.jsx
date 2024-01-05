@@ -8,6 +8,7 @@ import {
 } from "react-icons/io";
 import { Link } from 'react-router-dom';
 
+
 const HeaderContainer = styled.div`
   position: fixed;
   top: 0rem;

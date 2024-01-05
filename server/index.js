@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const dotenv = require('dotenv');
 const {connectToDatabase, isConnected} = require("./config/connectDb");
@@ -60,13 +59,3 @@ process.on('SIGTERM', () => {
     // Add cleanup logic if needed
     process.exit(0);
 });
-
-    
-    
-    
-    
-    // mongoose.connect('mongodb://127.0.0.1:27017/Assistanse', {})
-    //     .then(() => console.log('Connected to MongoDB'))
-    //     .catch(error => console.log(error));
-
-
