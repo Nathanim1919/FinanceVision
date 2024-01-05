@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FaBriefcase, FaMoneyBillAlt, FaGift, FaHandHoldingUsd } from 'react-icons/fa';
+import { FaBriefcase,FaPlus, FaMoneyBillAlt, FaGift, FaHandHoldingUsd } from 'react-icons/fa';
+import IncomeForm from './forms/IncomeForm';
+
 
 const IncomesContainer = styled.div`
   background-color: #fff;
   padding: 1rem;
   margin: 1rem;
   border-radius: 10px;
-  /* Add styling for the incomes container */
+  
+
+  .header{
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+
+
+    >*:nth-child(2){
+      width: 20px;
+      padding: .5rem;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #eee;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+  }
 `;
 
 const IncomesList = styled.div`
@@ -54,11 +74,17 @@ function Incomes() {
     { id: 4, icon: <FaHandHoldingUsd />, source: 'Investments', amount: 200.00 },
   ];
 
+
+  const [addIncome, setAddIncome] = useState(false);
+
   return (
     <IncomesContainer>
-      <div>
-        <h3>Income Sources</h3>
+      <div className="header">
+          <h3>Income Sources</h3>
+          <FaPlus onClick={()=>setAddIncome(true)}/>
+          {addIncome && <IncomeForm setAddIncome={setAddIncome}/>}
       </div>
+
       <IncomesList>
         {incomes.map(income => (
           <IncomeItem key={income.id}>
