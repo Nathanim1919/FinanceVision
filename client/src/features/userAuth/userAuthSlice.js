@@ -8,7 +8,7 @@ export const checkAuth = () => async (dispatch) => {
     try {
         
         // Send the token to the server for validation
-        const response = await api.post('http://localhost:5000/auth/verify');
+        const response = await api.post('http://localhost:5000/api/auth/verify');
        
         if (response.status === 200) {
             const user = response.data.user;
@@ -37,7 +37,7 @@ export const registerAsync = createAsyncThunk('userAuth/register', async (userDa
             email,
             password
         } = userData; // Destructure the userData object
-        const response = await api.post('http://localhost:5000/auth/register', {
+        const response = await api.post('http://localhost:5000/api/auth/register', {
             fullname,
             email,
             password
@@ -64,7 +64,7 @@ export const loginAsync = createAsyncThunk('userAuth/login', async (userData, {
              email,
              password
          } = userData;
-        const response = await api.post('http://localhost:5000/auth/login', {email, password});
+        const response = await api.post('http://localhost:5000/api/auth/login', {email, password});
         
         if (response.status === 200) {
 

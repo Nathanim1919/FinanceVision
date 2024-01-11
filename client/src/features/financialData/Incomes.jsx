@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaBriefcase,FaPlus, FaMoneyBillAlt, FaGift, FaHandHoldingUsd } from 'react-icons/fa';
 import IncomeForm from './forms/IncomeForm';
+import { useSelector } from "react-redux";
 
 
 const IncomesContainer = styled.div`
@@ -67,15 +68,17 @@ const IncomeIcon = styled.div`
 `;
 
 function Incomes() {
-  const incomes = [
-    { id: 1, icon: <FaBriefcase />, source: 'Salary', amount: 3000.00 },
-    { id: 2, icon: <FaMoneyBillAlt />, source: 'Freelance Work', amount: 500.00 },
-    { id: 3, icon: <FaGift />, source: 'Gift', amount: 100.00 },
-    { id: 4, icon: <FaHandHoldingUsd />, source: 'Investments', amount: 200.00 },
-  ];
+  // const incomes = [
+  //   { id: 1, icon: <FaBriefcase />, source: 'Salary', amount: 3000.00 },
+  //   { id: 2, icon: <FaMoneyBillAlt />, source: 'Freelance Work', amount: 500.00 },
+  //   { id: 3, icon: <FaGift />, source: 'Gift', amount: 100.00 },
+  //   { id: 4, icon: <FaHandHoldingUsd />, source: 'Investments', amount: 200.00 },
+  // ];
 
 
   const [addIncome, setAddIncome] = useState(false);
+  //   get active user
+const user = useSelector(state => state.userAuth.user);
 
   return (
     <IncomesContainer>
@@ -86,7 +89,7 @@ function Incomes() {
       </div>
 
       <IncomesList>
-        {incomes.map(income => (
+        {user && user.incomes.map(income => (
           <IncomeItem key={income.id}>
             <IncomeIcon>{income.icon}</IncomeIcon>
             <div className='info'>

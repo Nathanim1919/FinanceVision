@@ -1,12 +1,60 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {
     IoMdClose
 } from "react-icons/io";
 import { FcMindMap } from "react-icons/fc";
 import { FaRegUser } from "react-icons/fa";
+import axios from 'axios';
+
+
 
 function AskAi({user, setOpenAi}) {
+  const [message, setMessage] = useState('');  
+  const [haveConversation, setHaveConversation] = useState(false);
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    try {
+        // Save user message
+        const userMessage = await axios.post('http://localhost:5000/api/messages/sendMessage', { text: message, userId: user._id });
+        console.log(userMessage)
+
+        // Trigger AI response
+        const aiResponse = await axios.post(process.env.OPENAI_API, { text: message });
+
+        // Save AI response as a message
+        const aiMessage = await axios.post('http://localhost:5000/api/messages/sendMessage', {
+            text: aiResponse.data.aiText,  // Adjust based on your AI response structure
+            sender: 'ai',
+        });
+
+        console.log(aiMessage)
+
+        // Clear the message input
+        setMessage('');
+        setHaveConversation(!haveConversation);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+  
+const getMessages =async () => {
+    try {
+        const messages = await axios.get('http://localhost:5000/api/messages/getMessage', {userId: user._id })
+        console.log("hey", messages);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+  useEffect(()=>{
+    getMessages();
+  },[haveConversation])
+
+
   return (
     <Container >
         <div className='header'>
@@ -37,53 +85,11 @@ function AskAi({user, setOpenAi}) {
                 </div>
                 <p>3 seconds ago</p>
            </div>
-           <div className="userMessage">
-                <div>
-                    <FaRegUser/>
-                    <div className="message-content">
-                        <p>Hi there! I need some help with my finances.</p>
-                    </div>
-                </div>
-                <p>5 seconds ago</p>
-           </div>
-
-           <div className="aiMessage">
-                <div>
-                    <div className="message-content">
-                     <p>Hello! I'm here to assist you with your finances. What specific information or assistance are you looking for?</p>
-                    </div>
-                    <FcMindMap style={{
-                        fontSize:"3rem",
-                    }}/>
-                </div>
-                <p>3 seconds ago</p>
-           </div>
-           <div className="userMessage">
-                <div>
-                    <FaRegUser/>
-                    <div className="message-content">
-                        <p>Hi there! I need some help with my finances.</p>
-                    </div>
-                </div>
-                <p>5 seconds ago</p>
-           </div>
-
-           <div className="aiMessage">
-                <div>
-                    <div className="message-content">
-                     <p>Hello! I'm here to assist you with your finances. What specific information or assistance are you looking for?</p>
-                    </div>
-                    <FcMindMap style={{
-                        fontSize:"3rem",
-                    }}/>
-                </div>
-                <p>3 seconds ago</p>
-           </div>
         </div>
 
         <div className='footer'>
-            <form>
-                <input type='text' placeholder='ask me..' required/>
+            <form onSubmit={sendMessage}>
+                <input value={message} onChange={(e)=> setMessage(e.target.value)} type='text' placeholder='ask me..' required/>
                 <input type='submit' value={'send'}/>
             </form>
         </div>

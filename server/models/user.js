@@ -31,11 +31,13 @@ const userSchema = new Schema({
     },
 
     // Financial information
-    income: {
-        type: Number,
-        default: 0
-    }, // Total income
-    savings: {
+    incomes: [
+        {
+          type:Schema.Types.ObjectId,
+          ref: 'Income',
+        },
+      ],
+    saving:{                                                                                    
         type: Number,
         default: 0
     }, // Total savings

@@ -20,7 +20,7 @@ passport.use(
                 // find the user by email in the database
                 const user = await UserModel.findOne({
                     email
-                });
+                }).populate('incomes');
 
                 // if the user does not exist, return an error
                 if (!user) {
@@ -152,9 +152,7 @@ const login = (req, res, next) => {
 
 const getUser = async (req, res) => {
     try {
-        const {
-            userId
-        } = req.params;
+        const { userId } = req.params;
         console.log(userId)
         const user = await UserModel.findById(userId);
         console.log(user)
@@ -176,6 +174,7 @@ const getUser = async (req, res) => {
         });
     }
 };
+
 
 
 module.exports = {
