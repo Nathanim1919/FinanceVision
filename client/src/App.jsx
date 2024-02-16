@@ -1,35 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext'; // Assuming custom Auth context
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// Import components from respective folders
+import {Home} from './pages/Home.jsx'
+import {Login} from './pages/Login';
+import {Register} from './pages/Register';
+import {Goals} from './pages/Goals/Goals.jsx';
+import {GoalDetails} from './pages/Goals/GoalDetails.jsx';
+import {Settings} from './pages/Settings.jsx';
+import {TransactionDetails} from "./pages/Transactions/TransactionDetails.jsx";
+import {Transactions} from "./pages/Transactions/Transactions.jsx";
+import {Dashboard} from "./pages/Dashboard.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  // const navigate = useNavigate()
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            {/* User-facing routes (public) */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Protected routes (authenticated) */}
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/transactions" element={<Transactions />} />
+              <Route path="/transactions/:transactionId" element={<TransactionDetails />} />
+              <Route path="/goals" element={<Goals />} />
+              <Route path="/goals/:goalId" element={<GoalDetails />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
+
+            {/* Error handling (optional) */}
+            <Route path="*" element={<NoMatch />} /> // Handle not-found scenarios
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+  );
 }
 
-export default App
+export default App;
+
+
+
+
+import {useAuth } from './context/AuthContext';
+
+function ProtectedRoutes({ children }) {
+  const { isLoggedIn, navigateToLogin } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login', { replace: true })
+    }
+  }, [isLoggedIn]);
+
+  return <>{children}</>; // Render child components
+}
+
+// NoMatch component (optional)
+import { Link } from 'react-router-dom';
+
+
+function NoMatch() {
+  return (
+      <div>
+        <h2>Page not found!</h2>
+        <Link to="/">Go back home</Link>
+      </div>
+  );
+}
