@@ -70,7 +70,7 @@ export const Register = () => {
             </div>
             <Input type='submit' value='Register'/>
             <Input type='submit' value='Singup with Google'/>
-            <p className='navigate'>Already have an account? <a href="/register">Sign up</a></p>
+            <p className='navigate'>Already have an account? <a href="/Login">Login</a></p>
             <div className="validation">
                 <div className='requirement'>
                     <p>Password Must contain at least</p>
