@@ -4,6 +4,7 @@ import {styled} from 'styled-components'
 import { FaCheckCircle } from "react-icons/fa";
 import { IoIosCloseCircle } from "react-icons/io";
 import {passswordValidation, emailValidation, usernameValidation} from '../utils/Validation' 
+import { Link } from 'react-router-dom'
 
 export const Register = () => {
   const [userData, setUserData] = useState({
@@ -58,7 +59,7 @@ export const Register = () => {
 
   return (
     <Container className="conatiner">
-        <form action="">
+        <form>
             <h2>Register For Free</h2>
             <div className='inputContainers'>
               <Input name="email" type='email' placeholder='Enter your email' value={userData.email} onChange={onChange} error={email.error}/>
@@ -70,25 +71,25 @@ export const Register = () => {
             </div>
             <Input type='submit' value='Register'/>
             <Input type='submit' value='Singup with Google'/>
-            <p className='navigate'>Already have an account? <a href="/Login">Login</a></p>
+            <p className='navigate'>Already have an account? <Link to="/Login">Login</Link></p>
             <div className="validation">
                 <div className='requirement'>
-                    <p>Password Must contain at least</p>
+                    <p>Password Must contain</p>
                     <ul>
                         <li className={passwordData.hasLength?"passed":""}>
-                          {passwordData.hasLength?<FaCheckCircle/>:<IoIosCloseCircle/>}8 characters Long
+                          {passwordData.hasLength?<FaCheckCircle/>:<IoIosCloseCircle/>}at least 8 characters
                         </li>
                         <li className={passwordData.hasDigit?"passed":""}>
-                          {passwordData.hasDigit?<FaCheckCircle/>:<IoIosCloseCircle/>}Atleast 1 digit
+                          {passwordData.hasDigit?<FaCheckCircle/>:<IoIosCloseCircle/>}at least 1 Digit
                         </li>
                         <li className={passwordData.hasLowerCase?"passed":''}>
-                          {passwordData.hasLowerCase?<FaCheckCircle/>:<IoIosCloseCircle/>}Atleast 1 lowercase character
+                          {passwordData.hasLowerCase?<FaCheckCircle/>:<IoIosCloseCircle/>}at least 1 Lowercase character
                         </li>
                         <li className={passwordData.hasUpperCase?"passed":""}>
-                          {passwordData.hasUpperCase?<FaCheckCircle/>:<IoIosCloseCircle/>}Atleast 1 uppercase character
+                          {passwordData.hasUpperCase?<FaCheckCircle/>:<IoIosCloseCircle/>}at least 1 Uppercase character
                           </li>
                         <li className={passwordData.hasSpecialCharacter?"passed":""}>
-                          {passwordData.hasSpecialCharacter?<FaCheckCircle/>:<IoIosCloseCircle/>}Atleast 1 special character
+                          {passwordData.hasSpecialCharacter?<FaCheckCircle/>:<IoIosCloseCircle/>}at least 1 Special character
                         </li>
                     </ul>
                 </div>
@@ -173,7 +174,9 @@ const Container = styled.div`
 
     >*{
       margin: 0;
+      width: 100%;
     }
+
 
     .navigate{
       font-size: .8rem;
@@ -196,7 +199,6 @@ const Container = styled.div`
       gap: .5rem;
       margin-bottom: .6rem;
       flex-wrap: wrap;
-
       
     @media screen and (max-width: 600px){
        flex-direction: column;
@@ -206,12 +208,10 @@ const Container = styled.div`
         width: 100%;
        }
     }
-
       >*{
         flex: 1;
       }
     }
-
     >h2{
       align-self: center;
     }

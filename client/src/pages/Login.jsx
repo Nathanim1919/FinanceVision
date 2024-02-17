@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Input from '../components/Input'
 import {styled} from 'styled-components'
+import { Link } from 'react-router-dom'
 
 
 export const Login = () => {
@@ -10,7 +11,6 @@ export const Login = () => {
     password:'',
     confirmPassword:''
   })
-
 
 
   function onChange(e){
@@ -23,9 +23,10 @@ export const Login = () => {
             <h2>Login here</h2>
             <Input name="email" type='email' placeholder='Enter your email' value={userData.email} onChange={onChange}/>
             <Input name="password" type='password' placeholder='Enter your password' value={userData.password} onChange={onChange}/>
+            <p className='navigate'>Don't you have an account? <Link to="/register">Signup</Link></p>
             <Input type='submit' value='Login'/>
             <Input type='submit' value='Login with Google'/>
-            <p className='navigate'>Don't you have an account? <a href="/register">Signup</a></p>
+            <Link className='navigate'>Forgot your password?</Link>
         </form>
     </Container>
   )

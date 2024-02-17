@@ -57,14 +57,14 @@ const Container = styled.div`
 
    input[type="submit"]{
     background-color: #3294f0;
-    border: none;
-    padding: .5rem;
+    width: 100%;
+    border: 1px solid #3294f0;
     color: #fff;
     cursor: pointer;
 
 
     &:hover{
-      background-color: #13497c;
+      background-color: #8cbce8;
     }
    }
 `
