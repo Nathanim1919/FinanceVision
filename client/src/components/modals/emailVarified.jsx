@@ -22,7 +22,6 @@ export const EmailVerified = () => {
         navigate('/login');
       }
     };
-
     verify();
   }, [unHashedToken, navigate]);
 

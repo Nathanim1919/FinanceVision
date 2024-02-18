@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import Input from '../components/Input'
 import {styled} from 'styled-components'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 
 export const Login = () => {
   const [userData, setUserData] = useState({
     email:'',
-    username:'',
     password:'',
-    confirmPassword:''
   })
 
 
@@ -17,9 +16,20 @@ export const Login = () => {
     setUserData({...userData, [e.target.name]: e.target.value})
   }
 
+
+  const authenticateUser = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/auth/login',{userData});
+      console.log(response.data.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <Container className="conatiner">
-        <form action="">
+        <form onSubmit={authenticateUser}>
             <h2>Login here</h2>
             <Input name="email" type='email' placeholder='Enter your email' value={userData.email} onChange={onChange}/>
             <Input name="password" type='password' placeholder='Enter your password' value={userData.password} onChange={onChange}/>

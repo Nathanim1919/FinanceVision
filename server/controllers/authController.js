@@ -59,7 +59,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     text: `Please verify your email by clicking on the link below: ${verificationURL}`,
   });
 
-  console.log("first - 11111111111111111111111111  ", hashedToken)  
+  console.log("first - 11111111111111111111111111  ", hashedToken);
 
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken -emailVerificationToken -emailVerificationTokenExpiry"
@@ -99,7 +99,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
     .update(unHashedToken)
     .digest("hex");
 
-  console.log("first - 22222222222222222222222222  ", hashedToken)  
+  console.log("first - 22222222222222222222222222  ", hashedToken);
 
   // While registering the user, same time when we are sending the verification mail
   // we have saved a hashed value of the original email verification token in the db
@@ -132,6 +132,81 @@ export const verifyEmail = asyncHandler(async (req, res) => {
         200,
         { isEmailVerified: true },
         "Email verified successfully"
+      )
+    );
+});
+
+const generateAccessAndRefreshTokens = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+
+    // attach refresh token to the user document to avoid refreshing the accesstoken with multiple refresh tokens
+    user.refreshToken = refreshToken;
+
+    await user.save({ validateBeforeSave: false });
+    return { accessToken, refreshToken };
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong while generating the access token",
+    });
+  }
+};
+
+export const loginUser = asyncHandler(async (req, res) => {
+  const { userData } = req.body;
+
+  const { email, password } = userData;
+
+  console.log("email is: ", email);
+  console.log("password is: ", password);
+
+  if (!userData.email) {
+    res.status(400).json({
+      message: "Username or Email is required",
+    });
+  }
+
+  const user = await User.findOne({
+    $or: [{ email }, { username: email }],
+  });
+
+  if (!user) {
+    res.status(404).json({
+      message: "User does not exist",
+    });
+  }
+  const isPasswordValid = await user.comparePassword(password);
+
+  if (!isPasswordValid) {
+    res.status(401).json({
+      message: "Invalid user credentials",
+    });
+    return;
+  }
+
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id
+  );
+
+  // get the user document ignoring the password and refreshToken field
+  const looggedInUser = await User.findById(user._id)
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken)
+    .cookie("refreshToken", refreshToken)
+    .json(
+      new ApiResponse(
+        200,
+        {
+          user: looggedInUser,
+          accessToken,
+          refreshToken,
+        },
+        "User logged in successfully"
       )
     );
 });
