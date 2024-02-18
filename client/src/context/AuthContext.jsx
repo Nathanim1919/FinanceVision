@@ -11,6 +11,8 @@ export const AuthContext = createContext({
 
 });
 
+
+// Create a provider for components to consume and subscribe to changes
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
@@ -65,6 +67,7 @@ export const AuthProvider = ({ children }) => {
 AuthProvider.propTypes = {
     children: PropTypes.node.isRequired,
 };
+
 export const useAuth = () => {
     return React.useContext(AuthContext);
 };

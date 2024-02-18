@@ -211,7 +211,7 @@ userSchema.methods.generateTemporaryToken = function () {
     - The unhashed token will be sent to the user's email
   */
 
-  const hashedToken = crypto
+    let hashedToken = crypto
     .createHash("sha256")
     .update(unHashedToken)
     .digest("hex");

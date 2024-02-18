@@ -1,3 +1,4 @@
+// Desc: Register component for user registration.
 import React, { useState } from 'react'
 import Input from '../components/Input'
 import {styled} from 'styled-components'
@@ -5,15 +6,28 @@ import { FaCheckCircle } from "react-icons/fa";
 import { IoIosCloseCircle } from "react-icons/io";
 import {passswordValidation, emailValidation, usernameValidation} from '../utils/Validation' 
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { Success } from '../components/modals/success'
+import { Loader } from '../components/Loader';
 
+/**
+ * Register component for user registration.
+ * @component
+ * @returns {JSX.Element} Register component JSX
+ */
 export const Register = () => {
+  // state to handle user data
   const [userData, setUserData] = useState({
     email:'',
     username:'',
     password:'',
     confirmPassword:''
   })
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
+  // state to handle password validation
   const [passwordData, setPasswordData] = useState({
     hasLength: false,
     hasLowerCase: false,
@@ -22,15 +36,17 @@ export const Register = () => {
     hasDigit: false
   })
 
+  // state to handle username validation
   const [username, setUserName] = useState({
     error: null
   })
 
-
+// state to handle email validation
   const [email, setEmail] = useState({
     error:null
   })
   
+  // function to handle input change
   function onChange(e){
     setUserData({...userData, [e.target.name]: e.target.value})
     if (e.target.name === 'username'){
@@ -57,9 +73,44 @@ export const Register = () => {
     }
   }
 
+
+  // function to register user
+  function registerUser(e){
+    e.preventDefault();
+    
+    // check if the password and confirm password are the same
+    // if(userData.password !== userData.confirmPassword){
+      //   return alert('Password does not match');
+      // }
+      
+      try{
+      setIsLoading(true);
+      // send a post request to the server to register the user
+      axios.post('http://localhost:3000/api/v1/auth/register', userData)
+      .then(res => {
+        console.log("//////////////////", res.data);
+        setError('')
+        setIsRegistered(true);
+      })
+      .catch(err => {
+        if (err.response.status >= 400 && err.response.status < 500){
+          setError(err.response.data.message)
+        } else {
+          setError("Internal server error, Please try again!");
+        }
+      })
+      setIsLoading(false);
+    }catch(err){
+      console.log(err);
+      setError(err);
+    }
+ }
+
   return (
     <Container className="conatiner">
-        <form>
+      {isLoading && <Loader/>}
+        <form onSubmit={registerUser}>
+         {error && <p className='errorMessage'><IoIosCloseCircle/>{error}</p>}
             <h2>Register For Free</h2>
             <div className='inputContainers'>
               <Input name="email" type='email' placeholder='Enter your email' value={userData.email} onChange={onChange} error={email.error}/>
@@ -67,7 +118,7 @@ export const Register = () => {
             </div>
             <div className='inputContainers'>
               <Input name="password" type='password' placeholder='Enter your password' value={userData.password} onChange={onChange} error={null}/>
-              <Input name="confirmpassword" type='password' placeholder='confirm password' value={userData.confirmPassword} onChange={onChange} error = {null}/>
+              <Input name="confirmPassword" type='password' placeholder='confirm password' value={userData.confirmPassword} onChange={onChange} error = {null}/>
             </div>
             <Input type='submit' value='Register'/>
             <Input type='submit' value='Singup with Google'/>
@@ -95,6 +146,7 @@ export const Register = () => {
                 </div>
             </div>
         </form>
+        {isRegistered && <Success setIsRegistered={setIsRegistered}/>}
     </Container>
   )
 }
@@ -175,6 +227,17 @@ const Container = styled.div`
     >*{
       margin: 0;
       width: 100%;
+    }
+
+    .errorMessage{
+      background-color: #f1cccc;
+      padding: 0.3rem;
+      color: #780909;
+      font-size: .8rem;
+      transition: all .3s ease-in-out;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
     }
 
 

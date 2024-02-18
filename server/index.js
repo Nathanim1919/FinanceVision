@@ -16,7 +16,7 @@ const startServer = async () => {
     // Create Express Server
     const app = new Express();
     app.use(Express.json());
-    app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+    app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
     const port = process.env.PORT || 3000;
 
     // Routes

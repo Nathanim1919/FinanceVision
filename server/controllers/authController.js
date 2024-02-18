@@ -22,8 +22,9 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   // If the user exists, throw an error
   if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
+    res.status(400).json({
+      message: "The Email or Username is already registered!",
+    });
   }
 
   // Create a new user
@@ -45,14 +46,11 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   // Save the user to the database
   user.emailVerificationToken = hashedToken;
-  console.log(user.emailVerificationToken, "  /////////////////////////////////////////////////1111111111111111111122222222222222222222222");
   user.emailVerificationTokenExpires = tokenExpiry;
   await user.save({ validateBeforeSave: false });
 
   // Send the unhashed token to the user's email
-  const verificationURL = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/auth/verify-email/${unHashedToken}`;
+  const verificationURL = `http://localhost:5173/verify-email/${unHashedToken}`;
 
   // Send the email
   await sendEmail({
@@ -60,6 +58,8 @@ export const registerUser = asyncHandler(async (req, res) => {
     subject: "Email Verification",
     text: `Please verify your email by clicking on the link below: ${verificationURL}`,
   });
+
+  console.log("first - 11111111111111111111111111  ", hashedToken)  
 
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken -emailVerificationToken -emailVerificationTokenExpiry"
@@ -86,7 +86,6 @@ export const registerUser = asyncHandler(async (req, res) => {
 export const verifyEmail = asyncHandler(async (req, res) => {
   // Destructure the verification token from the request params
   const { unHashedToken } = req.params;
-  console.log(unHashedToken, "  /////////////hdgfts////////////////////////////////////1111111111111111111122222222222222222222222");
 
   // Check if the verification token is missing
   if (!unHashedToken) {
@@ -95,11 +94,12 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   }
 
   // Hash the verification token
-
   let hashedToken = crypto
     .createHash("sha256")
     .update(unHashedToken)
     .digest("hex");
+
+  console.log("first - 22222222222222222222222222  ", hashedToken)  
 
   // While registering the user, same time when we are sending the verification mail
   // we have saved a hashed value of the original email verification token in the db
@@ -107,7 +107,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   // If we find the user another check is if token expiry of that token is greater than current time if not that means it is expired
   const user = await User.findOne({
     emailVerificationToken: hashedToken,
-    emailVerificationTokenExpiry: { $gt: Date.now() },
+    // emailVerificationTokenExpires: { $gt: Date.now() },
   });
 
   // If the user is not found, throw an error
