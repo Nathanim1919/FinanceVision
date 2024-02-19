@@ -9,7 +9,17 @@ const Header = styled.div`
     justify-content: space-between;
     align-items: center;
 
+    @media screen and (max-width: 768px){
+        justify-content: space-around;
+        }
+
     .logo{
+
+        @media screen and (max-width: 768px){
+            position: relative;
+            z-index: 3;
+        }
+        
         h1{
             font-size: 1.6rem;
             span{
@@ -24,6 +34,11 @@ const Container = styled.div`
     width: 80vw;
     margin:0 auto;
 
+
+    @media screen and (max-width: 768px){
+        width: 100vw;
+    }
+
     &::after{
         content: '';
         position: absolute;
@@ -34,6 +49,13 @@ const Container = styled.div`
         height: 13vh;
         border-bottom-left-radius:170px;
         border-bottom-right-radius:170px;
+
+        @media screen and (max-width: 768px){
+            width: 100vw;
+            height: 12vh;
+            border-bottom-left-radius:0px;
+            border-bottom-right-radius:0px;
+        }
     }
 
 
@@ -42,18 +64,30 @@ const Container = styled.div`
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
         align-items: center;
+        position: relative;
+
+        @media screen and (max-width: 768px){
+            grid-template-columns: 1fr;
+            padding: 2rem;
+        }
 
         .icon{
             color: gold;
             font-size: 6rem;
             right: 40%;
             position: absolute;
+
+            @media screen and (max-width: 768px){
+                right: -8%;
+                top: 18%;
+    
+            }
         }
         .icon2{
             color: gold;
             font-size: 16rem;
-            left: 33%;
-            bottom: -10%;
+            left: 20%;
+            bottom: -18%;
             opacity: .2;
             position: absolute;
             transform: rotate(34deg);
@@ -101,8 +135,9 @@ const Button = styled.div`
     a{
         color: #ffffff;
         text-decoration: none;
-        padding: .5rem 1rem;
+        padding: .2rem 1rem;
         border-radius: 5px;
+        
     }
 
     a:hover{
@@ -110,7 +145,7 @@ const Button = styled.div`
     }
 
     a:nth-child(2){
-            border-radius: 5px;
+            border-radius: 15px;
             background-color: #ffffff;
             color: #2b2a2a;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -119,8 +154,9 @@ const Button = styled.div`
     }
 
     a:nth-child(2):hover{
+        border: 1px solid rgb(255, 255, 255);
         background-color: transparent;
-        color: #333;
+        color: #fcfcfc;
     }
     
 `
