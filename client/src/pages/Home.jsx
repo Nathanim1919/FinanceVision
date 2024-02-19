@@ -3,6 +3,9 @@ import styled from "styled-components";
 import HeroImage from "../../public/images/hero.jpg";
 import { FaBitcoin } from "react-icons/fa";
 import { FaMoneyCheckAlt } from "react-icons/fa";
+import Services from "../sections/Services";
+import { FAQs } from "./FAQs";
+import BlogPost from "../layouts/BlogPost";
 
 const Header = styled.div`
     display: flex;
@@ -46,7 +49,7 @@ const Container = styled.div`
         right: 0%;
         width: 40vw;
         background-color: #498fdf;
-        height: 13vh;
+        height: 11vh;
         border-bottom-left-radius:170px;
         border-bottom-right-radius:170px;
 
@@ -160,6 +163,8 @@ const Button = styled.div`
     }
     
 `
+
+
 export const Home = () => {
     return (
        <Container>
@@ -190,6 +195,10 @@ export const Home = () => {
                     <img src={HeroImage} alt="hero"/>
                 </div>    
             </div>
+
+            <Services/>
+            <BlogPost/>
+            <FAQs/>
        </Container>
     )
 };
