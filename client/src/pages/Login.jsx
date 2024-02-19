@@ -16,14 +16,20 @@ export const Login = () => {
     setUserData({...userData, [e.target.name]: e.target.value})
   }
 
-
   const authenticateUser = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/api/v1/auth/login',{userData});
-      console.log(response.data.data)
+      const { accessToken } = response.data.data;
+      console.log(accessToken);
+
+      if (accessToken) {
+        document.cookie = `accessToken=${accessToken}`;
+      } else {
+        console.error('No token found');
+      }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 

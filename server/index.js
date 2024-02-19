@@ -2,6 +2,7 @@ import Express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import userRouter  from "./routes/authRoute.js";
 dotenv.config();
 
@@ -15,6 +16,7 @@ const startServer = async () => {
 
     // Create Express Server
     const app = new Express();
+    app.use(cookieParser());
     app.use(Express.json());
     app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
     const port = process.env.PORT || 3000;
