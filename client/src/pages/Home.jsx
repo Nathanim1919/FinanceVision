@@ -15,7 +15,7 @@ const Header = styled.div`
     align-items: center;
 
     @media screen and (max-width: 768px){
-        justify-content: space-around;
+          justify-content: space-around;
         }
 
     .logo{
@@ -39,12 +39,13 @@ const Container = styled.div`
     width: 80vw;
     margin:0 auto;
 
+   
 
     @media screen and (max-width: 768px){
         width: 100vw;
     }
 
-    &::after{
+    /* &::after{
         content: '';
         position: absolute;
         top: 0%;
@@ -61,7 +62,7 @@ const Container = styled.div`
             border-bottom-left-radius:0px;
             border-bottom-right-radius:0px;
         }
-    }
+    } */
 
 
     .hero{
@@ -130,6 +131,41 @@ const Container = styled.div`
     }
 `
 
+const Navbar = styled.nav`
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #007bff;
+        align-self: end;
+        padding: 0 2rem;
+        border-radius: 4rem;
+        position: fixed;
+        z-index: 10;
+        right: 4%;
+
+        ul{
+            position: relative;
+            z-index: 5;
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: capitalize;
+            margin-right: 2rem;
+
+            li{
+                cursor: pointer;
+
+                &:hover{
+                    color: #dbdaa5;
+                }
+            }
+        
+        }
+`
+
 const Button = styled.div`
     display: flex;
     justify-content: center;
@@ -175,10 +211,19 @@ export const Home = () => {
                     <h1>F<span>Vision</span></h1>
                 </div>
 
+            <Navbar>
+                <ul>
+                    <li>Home</li>
+                    <li>Service</li>
+                    <li>Blog</li>
+                    <li>About</li>
+                    <li>Contact</li>
+                </ul>
                 <Button className="btns">
                     <Link to="/login">Login</Link>
                     <Link to="/register">Register</Link>
                 </Button>
+            </Navbar>
             </Header>
 
             <div className="hero">

@@ -164,7 +164,6 @@ const Container = styled.div`
             align-self: center;
             position: relative;
         }
-    }
 `
 
 export default function Services() {

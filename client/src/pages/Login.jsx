@@ -3,7 +3,7 @@ import Input from '../components/Input'
 import {styled} from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import { IoArrowBack } from "react-icons/io5";
 
 export const Login = () => {
   const [userData, setUserData] = useState({
@@ -35,6 +35,9 @@ export const Login = () => {
 
   return (
     <Container className="conatiner">
+      <Link to={'/'} className='backIcon'>
+        <IoArrowBack/>
+      </Link>
         <form onSubmit={authenticateUser}>
             <h2>Login here</h2>
             <Input name="email" type='email' placeholder='Enter your email' value={userData.email} onChange={onChange}/>
@@ -56,6 +59,22 @@ const Container = styled.div`
   height: 100%;
   display: grid;
   place-items: center;
+
+  .backIcon{
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.4rem;
+    background-color: #0356b63f;
+    z-index: 5;
+    cursor: pointer;
+  }
 
 
   &::after{

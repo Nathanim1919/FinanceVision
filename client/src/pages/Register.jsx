@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Success } from '../components/modals/success'
 import { Loader } from '../components/Loader';
+import { IoArrowBack } from "react-icons/io5";
+
 
 /**
  * Register component for user registration.
@@ -108,6 +110,9 @@ export const Register = () => {
 
   return (
     <Container className="conatiner">
+      <Link to={'/'} className='backIcon'>
+        <IoArrowBack/>
+      </Link>
       {isLoading && <Loader/>}
         <form onSubmit={registerUser}>
          {error && <p className='errorMessage'><IoIosCloseCircle/>{error}</p>}
@@ -160,6 +165,22 @@ const Container = styled.div`
   height: 100%;
   display: grid;
   place-items: center;
+
+  .backIcon{
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.4rem;
+    background-color: #0356b63f;
+    z-index: 5;
+    cursor: pointer;
+  }
 
   .validation{
 
