@@ -28,7 +28,7 @@ const Container = styled.div`
     transition: all .3s ease-in-out;
 
     &:hover{
-        transform: scale(1.12);
+        transform: scale(1.05);
     }
 
     h2{

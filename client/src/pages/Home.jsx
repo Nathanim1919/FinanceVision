@@ -6,6 +6,7 @@ import { FaMoneyCheckAlt } from "react-icons/fa";
 import Services from "../sections/Services";
 import { FAQs } from "./FAQs";
 import BlogPost from "../layouts/BlogPost";
+import FooterLayout from "../layouts/FooterLayout";
 
 const Header = styled.div`
     display: flex;
@@ -199,6 +200,7 @@ export const Home = () => {
             <Services/>
             <BlogPost/>
             <FAQs/>
+            <FooterLayout/>
        </Container>
     )
 };
