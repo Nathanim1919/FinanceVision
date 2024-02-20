@@ -84,7 +84,6 @@ const Container = styled.div`
 
         @media screen and (max-width:768px){
             grid-template-columns: 1fr;
-
         }
 
         .BackDropimage{
@@ -93,43 +92,36 @@ const Container = styled.div`
             top: -105%;
             right: -50%;
 
+            
+        @media screen and (max-width:768px){
+            top: -40%;
+            right: -50%;
+        }
+
             img{
                 width: 100%;
                 object-fit: cover;
                 height: auto;
             }
         }
-
-        &::after{
-            content: '';
-            background-color: #fff;
-            width: 50%;
-            height: 20%;
-            position: absolute;
-            bottom: 0;
-            right: 5%;
-            border-top-right-radius: 40px;
-            border-top-left-radius: 40px;
-
-            
-        @media screen and (max-width:768px){
-            display: none;
-
-        }
         }
 
         .calltoaction{
+            background: linear-gradient(to right, #ff0877, #3d84ff);
             display: flex;
             flex-direction: column;
             gap: 1rem;
             position: relative;
-            bottom: -10%;
+            bottom: -30%;
             z-index: 3;
-            padding: 2rem 0;
+            padding: 2rem; 
+            box-shadow: 0 20px 54px rgba(0,0,0,.3);
+            color: #fff;
 
             @media screen and (max-width:768px){
                 padding:1rem;
-                bottom: 0;
+                bottom: 10%;
+                margin: 3rem;
             }
 
 
@@ -149,8 +141,8 @@ const Container = styled.div`
             left: -1rem;
 
             @media screen and (max-width:768px){
-                top: 0;
-                left: 0;
+                top: -10%;
+                left: -1rem;
             }
             
             
@@ -171,12 +163,6 @@ const Container = styled.div`
             text-decoration: none;
             align-self: center;
             position: relative;
-            bottom: -3rem;
-
-            
-        @media screen and (max-width:768px){
-            bottom:0;
-        }
         }
     }
 `

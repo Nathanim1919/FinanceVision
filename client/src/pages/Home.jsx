@@ -7,6 +7,7 @@ import Services from "../sections/Services";
 import { FAQs } from "./FAQs";
 import BlogPost from "../layouts/BlogPost";
 import FooterLayout from "../layouts/FooterLayout";
+import AboutUs from "../layouts/About";
 
 const Header = styled.div`
     display: flex;
@@ -199,6 +200,7 @@ export const Home = () => {
 
             <Services/>
             <BlogPost/>
+            <AboutUs/>
             <FAQs/>
             <FooterLayout/>
        </Container>

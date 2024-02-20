@@ -10,12 +10,17 @@ import { FaHandPointRight } from "react-icons/fa";
 const Container = styled.div`
     display: grid;
     place-items: center;
+    padding: 2rem;
 `
 
 const SubContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr .6fr;
     place-items: center;
+
+    @media screen and (max-width:768px){
+        grid-template-columns: 1fr;
+    }
 
     h2{
         font-size: 1.2rem;

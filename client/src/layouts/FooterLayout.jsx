@@ -9,7 +9,10 @@ import { FaLinkedin } from "react-icons/fa";
 
 
 const Container = styled.div`
-    /* background-color: #1f1c1c; */
+
+@media screen and (max-width:768px){
+        padding: 2rem;
+    }
 `
 
 const SubContainer = styled.div`
@@ -20,6 +23,10 @@ const SubContainer = styled.div`
     color: white;
     background-color: blue;
     border-radius: 10px;
+
+    @media screen and (max-width:768px){
+        flex-direction: column;
+    }
 
     .links{
         display: grid;
@@ -65,6 +72,11 @@ const Upper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media screen and (max-width:768px){
+        flex-direction: column;
+     
+    }
 
 
     img{

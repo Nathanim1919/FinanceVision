@@ -14,6 +14,10 @@ const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
+
+    @media screen and (max-width:768px){
+        padding: 2rem;
+    }
 `
 
 export default function BlogPost() {
