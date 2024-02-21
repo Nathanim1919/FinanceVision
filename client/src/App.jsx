@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext'; // Assuming custom Auth context
+// import { AuthProvider } from './context/AuthContext'; // Assuming custom Auth context
 import { ProtectedRoutes } from './layouts/ProtectedRoutes.jsx';
 
 // Import components from respective folders
@@ -19,16 +19,17 @@ import PageNotFound  from './pages/PageNotFound.jsx';
 function App() {
   // const navigate = useNavigate()
   return (
-      <AuthProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home/>} />
-            {/* User-facing routes (public) */}
+          
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path='/verify-email/:unHashedToken' element={<EmailVerified/>}/>
-
-            {/* Protected routes (authenticated) */}
+            {/* for just checking */}
+            {/* <Route element={<Layout />}>
+              <Route path="/transactions" element={<Transactions />} />
+            </Route> */}
             <Route element={<ProtectedRoutes />}>
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
@@ -37,14 +38,11 @@ function App() {
                 <Route path="/goals" element={<Goals />} />
                 <Route path="/goals/:goalId" element={<GoalDetails />} />
                 <Route path="/settings" element={<Settings />} />
+                </Route>
             </Route>
-            </Route>
-
-            {/* Error handling (optional) */}
-            <Route path="*" element={<PageNotFound />} /> // Handle not-found scenarios
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
-      </AuthProvider>
   );
 }
 export default App;

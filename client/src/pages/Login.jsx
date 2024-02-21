@@ -4,12 +4,16 @@ import {styled} from 'styled-components'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { IoArrowBack } from "react-icons/io5";
+import { Loader } from '../components/Loader'
+import { useNavigate } from 'react-router-dom'
 
 export const Login = () => {
   const [userData, setUserData] = useState({
     email:'',
     password:'',
   })
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
 
   function onChange(e){
@@ -17,24 +21,29 @@ export const Login = () => {
   }
 
   const authenticateUser = async (e) => {
+    setIsLoading(true)
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/api/v1/auth/login',{userData});
       const { accessToken } = response.data.data;
-      console.log(accessToken);
+      console.log(response);
 
-      if (accessToken) {
+      if (accessToken && response.statusText === 'OK' && response.data.data !== null) {
         document.cookie = `accessToken=${accessToken}`;
+        navigate('/dashboard', { replace: true });
+
       } else {
         console.error('No token found');
       }
     } catch (error) {
       console.error(error);
     }
+    setIsLoading(false);
   }
 
   return (
     <Container className="conatiner">
+      {isLoading && <Loader/>}
       <Link to={'/'} className='backIcon'>
         <IoArrowBack/>
       </Link>
