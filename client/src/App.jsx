@@ -15,6 +15,7 @@ import {Dashboard} from "./pages/Dashboard.jsx";
 import { EmailVerified } from './components/modals/emailVarified.jsx';
 import Layout from './layouts/MainLayout.jsx';
 import PageNotFound  from './pages/PageNotFound.jsx';
+import BlogDetailPage from './pages/BlogDetailPage.jsx';
 
 function App() {
   // const navigate = useNavigate()
@@ -25,6 +26,7 @@ function App() {
           
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/blog" element={<BlogDetailPage />} />
             <Route path='/verify-email/:unHashedToken' element={<EmailVerified/>}/>
             {/* for just checking */}
             {/* <Route element={<Layout />}>

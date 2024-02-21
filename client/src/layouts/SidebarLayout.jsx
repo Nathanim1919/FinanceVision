@@ -17,8 +17,9 @@ const Container = styled.div`
         display: flex;
         align-items: center;
         gap: .5rem;
-        font-size: .9rem;
+        font-size: .8rem;
         padding:0 0.3rem;
+        margin: .3rem;
         transition: transform .3s ease-in-out;
         position: relative;
         right: 0;
@@ -35,18 +36,14 @@ const Container = styled.div`
         }
         
 
-
         &:hover{
             background-color: blue;
             cursor: pointer;
             color: #fff;
             border-radius: 5px;
             box-shadow: 0 10px 32px rgba(0,0,0,.3);
-            right: -2%;
         }
     }
-
-    
 `
 
 function SidebarLayout() {

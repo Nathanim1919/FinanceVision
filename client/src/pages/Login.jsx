@@ -49,7 +49,7 @@ export const Login = () => {
       </Link>
         <form onSubmit={authenticateUser}>
             <h2>Login here</h2>
-            <Input name="email" type='email' placeholder='Enter your email' value={userData.email} onChange={onChange}/>
+            <Input name="email" type='text' placeholder='Enter your email' value={userData.email} onChange={onChange}/>
             <Input name="password" type='password' placeholder='Enter your password' value={userData.password} onChange={onChange}/>
             <p className='navigate'>Don't you have an account? <Link to="/register">Signup</Link></p>
             <Input type='submit' value='Login'/>

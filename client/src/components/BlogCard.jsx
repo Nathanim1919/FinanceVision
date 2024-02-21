@@ -1,24 +1,25 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const BlogCard = ({blog}) => {
   return (
     <Container>
-        <img src={blog.image} alt="" />
-        <div>
-        <div className="tags">
-          {(blog.tags || []).map((tag, index) => (
-            <span key={index}>{tag}</span>
-          ))}
-        </div>
-        <h2>{blog.title}</h2>
-        <p>{blog.body.slice(0, 100)} ...</p>
-        </div>
+      <Link to={'/blog'}>
+          <img src={blog.image} alt="" />
+          <div>
+          <div className="tags">
+            {(blog.tags || []).map((tag, index) => (
+              <span key={index}>{tag}</span>
+            ))}
+          </div>
+          <h2>{blog.title}</h2>
+          <p>{blog.body.slice(0, 100)} ...</p>
+          </div>
+      </Link>
     </Container>
   )
 }
-
-
 
 const Container = styled.div`
     display: flex;
@@ -26,7 +27,6 @@ const Container = styled.div`
     cursor: pointer;
     overflow: hidden;
     transition: all .3s ease-in-out;
-
     &:hover{
         transform: scale(1.05);
     }
@@ -63,5 +63,10 @@ const Container = styled.div`
 
     >*{
         margin: 0;
+    }
+
+    a{
+      color: #333;
+      text-decoration: none;
     }
 `
