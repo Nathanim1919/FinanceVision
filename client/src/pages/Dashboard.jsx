@@ -6,6 +6,8 @@ import ExpensePieChart from '../components/graphs/PieChar';
 import { Goals } from './Goals/Goals';
 import welcomeImage from '/images/welcome.png';
 import BardGraph from '../components/graphs/barGrapgh';
+import { Transactions } from './Transactions/Transactions';
+import Notification from './Notification';
 
 const Container = styled.div`
    padding:1rem;
@@ -75,7 +77,6 @@ const Container = styled.div`
       >div{
         flex: 1;
         padding: 0.5rem;
-        border: 1px solid #333;
       }
      }
      
@@ -138,24 +139,17 @@ export const Dashboard = () => {
           <div>
               <BardGraph/>
           </div>
-          <div style={{
-              display:"grid",
-              placeItems:"center"
-            }}>
-          <ExpensePieChart />
+          <div>
+              <Notification/>
           </div>
           <div className='bottomGrid'>
-             <div style={{
-              display:"grid",
-              placeItems:"center"
-            }}>
-                <ExpensePieChart />
+             <div>
+                <Transactions/>
              </div>
              <div style={{
               display:"grid",
               placeItems:"center"
-            }}><ExpensePieChart /> </div>
-             <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis doloremque voluptas culpa recusandae. Labore suscipit iusto, ipsam tempore laboriosam,</div>
+            }}><ExpensePieChart/></div>
           </div>
        </div>
     </Container>
