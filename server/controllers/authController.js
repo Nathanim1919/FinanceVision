@@ -3,7 +3,6 @@ import User from "../models/userModel.js";
 import { sendEmail } from "../utils/mailing.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import crypto from "crypto";
-
 /**
  * Registers a new user.
  *
@@ -215,4 +214,77 @@ export const getCurrentUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, req.user, "Current user fetched successfully"));
+});
+
+export const forgotPasswordRequest = asyncHandler(async (req, res)=>{
+    const {email} = req.body;
+
+    // Get email from the client and check if user exists
+    const user = await User.findOne({email});
+
+    if (!user){
+      res.status(404).json({message:"User does not exists"});
+    }
+
+
+    // Generate a temporary token
+    const {unHashedToken, hashedToken, tokenExpiry} = user.generateTemporaryToken();  // generate password reset creds
+
+    // save the hashed version of the token and expiry in the database
+    user.forgotPasswordToken = hashedToken;
+    user.forgotPasswordExpiry = tokenExpiry;
+    await user.save({validateBeforeSave: false});
+
+
+    // Send mail with the password reset link, It should be the link of the frontend url with token
+
+    await sendEmail({
+      email: user.email,
+      Subject:"Reset Password",
+      text:`If you have sent this reset password request, Click the like http://localhost:5173/resetPassword/${unHashedToken} <br/> but if this request is not from you, you dont have to anything!`
+    })
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          {},
+          "Password reset mail has been sent on your email"
+        )
+      )
+})
+
+export const resetForgottenPassword = asyncHandler(async (req, res)=>{
+    const {resetToken} = req.params;
+    const {newPassword} = req.body;
+
+    // Create a hash of the incoming reset token
+    let hashedToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex')
+
+        // See if user with hash simplar to resetToken exists
+        // If yse then check if token expiry is greater than current date
+
+    const user = await User.findOne({
+      forgotPasswordToken: hashedToken,
+      forgotPasswordExpiry: {$gt: Date.now()}
+    });
+
+    // if either of the one is false that means the token is invalid or expired
+    if (!user){
+      res.status(489).json({
+        message:"Token is invalid or expired"
+      })
+    }
+
+    // if everything is ok and token id valid
+    // reset the forgot password token and expiry
+    user.password = newPassword;
+    await user.save({validateBeforeSave:false});
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Password reset successfully"));
 });
