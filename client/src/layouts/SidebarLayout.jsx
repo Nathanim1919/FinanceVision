@@ -10,9 +10,10 @@ import { NavLink } from "react-router-dom";
 const Container = styled.div`
   background-color: #ffffff;
   display: flex;
+  height: 100vh;
   flex-direction: column;
-  justify-content: space-around;
-  box-shadow: 0 7px 33px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 7px 33px rgba(0, 0, 0, 0.1);
+  gap: 3rem;
 
   div a {
     text-decoration: none;
@@ -71,6 +72,10 @@ function SidebarLayout() {
           <TiExport />
           <p>Expenses</p>
         </NavLink>
+        <NavLink to="/goals" className="sidebarItem" activeClassName="active">
+          <TiExport />
+          <p>Goals</p>
+        </NavLink>
         <NavLink
           to="/transactions"
           className="sidebarItem"
@@ -78,10 +83,6 @@ function SidebarLayout() {
         >
           <GrTransaction />
           <p>Transactions</p>
-        </NavLink>
-        <NavLink to="/reports" className="sidebarItem" activeClassName="active">
-          <MdAutoGraph />
-          <p>Reports</p>
         </NavLink>
         <NavLink
           to="/notifications"

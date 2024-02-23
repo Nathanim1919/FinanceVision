@@ -8,6 +8,7 @@ import welcomeImage from '/images/welcome.png';
 import BardGraph from '../components/graphs/barGrapgh';
 import { Transactions } from './Transactions/Transactions';
 import Notification from './Notification';
+import FinancialBarChart from '../components/graphs/BarChart';
 
 const Container = styled.div`
    padding:1rem;
@@ -133,7 +134,7 @@ export const Dashboard = () => {
                 display:"grid",
                 placeItems:"center"
               }}>
-            <ExpensePieChart />
+           <FinancialBarChart/>
             </div>
           </div>
           <div>
