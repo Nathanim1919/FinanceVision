@@ -60,7 +60,7 @@ const TransactionBox = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #969090;
+  border-bottom: 1px solid #eee;
 
 
   >div.transaction{

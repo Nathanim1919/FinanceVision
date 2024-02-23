@@ -16,6 +16,7 @@ import { EmailVerified } from './components/modals/emailVarified.jsx';
 import Layout from './layouts/MainLayout.jsx';
 import PageNotFound  from './pages/PageNotFound.jsx';
 import BlogDetailPage from './pages/BlogDetailPage.jsx';
+import Notification from './pages/Notification.jsx';
 
 function App() {
   // const navigate = useNavigate()
@@ -36,6 +37,8 @@ function App() {
             <Route element={<ProtectedRoutes />}>
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/goals" element={<Goals/>} />
+                <Route path="/notifications" element={<Notification/>} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/transactions/:transactionId" element={<TransactionDetails />} />
                 <Route path="/goals" element={<Goals />} />
