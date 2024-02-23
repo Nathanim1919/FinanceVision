@@ -6,6 +6,8 @@ import axios from 'axios'
 import { IoArrowBack } from "react-icons/io5";
 import { Loader } from '../components/Loader'
 import { useNavigate } from 'react-router-dom'
+import ForgotPasswordRequest from '../components/modals/ForgotPasswordRequest'
+import ResetPasswordBox from '../components/modals/ResetPasswordBox'
 
 export const Login = () => {
   const [userData, setUserData] = useState({
@@ -14,11 +16,13 @@ export const Login = () => {
   })
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [requestForgotPassword, setRequestForgotPassword]= useState(false);
 
 
   function onChange(e){
     setUserData({...userData, [e.target.name]: e.target.value})
   }
+
 
   const authenticateUser = async (e) => {
     setIsLoading(true)
@@ -44,6 +48,8 @@ export const Login = () => {
   return (
     <Container className="conatiner">
       {isLoading && <Loader/>}
+     {requestForgotPassword && <ForgotPasswordRequest setRequestForgotPassword={setRequestForgotPassword}/>}
+     {/* {requestForgotPassword && <ResetPasswordBox/>} */}
       <Link to={'/'} className='backIcon'>
         <IoArrowBack/>
       </Link>
@@ -54,7 +60,7 @@ export const Login = () => {
             <p className='navigate'>Don't you have an account? <Link to="/register">Signup</Link></p>
             <Input type='submit' value='Login'/>
             <Input type='submit' value='Login with Google'/>
-            <Link className='navigate'>Forgot your password?</Link>
+            <Link className='navigate' onClick={()=>setRequestForgotPassword(true)}>Forgot your password?</Link>
         </form>
     </Container>
   )

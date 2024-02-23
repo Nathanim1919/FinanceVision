@@ -30,6 +30,7 @@ function App() {
             <Route path='/verify-email/:unHashedToken' element={<EmailVerified/>}/>
             {/* for just checking */}
             {/* <Route element={<Layout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/transactions" element={<Transactions />} />
             </Route> */}
             <Route element={<ProtectedRoutes />}>

@@ -8,8 +8,8 @@ import {passswordValidation, emailValidation, usernameValidation} from '../utils
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Success } from '../components/modals/success'
-import { Loader } from '../components/Loader';
 import { IoArrowBack } from "react-icons/io5";
+import { Loader } from '../components/Loader';
 
 
 /**
@@ -27,7 +27,7 @@ export const Register = () => {
   })
   const [isRegistered, setIsRegistered] = useState(false);
   const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   // state to handle password validation
   const [passwordData, setPasswordData] = useState({
@@ -77,8 +77,9 @@ export const Register = () => {
 
 
   // function to register user
-  function registerUser(e){
+  const registerUser = async (e) =>{
     e.preventDefault();
+    setIsLoading(true);
     
     // check if the password and confirm password are the same
     // if(userData.password !== userData.confirmPassword){
@@ -86,34 +87,33 @@ export const Register = () => {
       // }
       
       try{
-      setIsLoading(true);
       // send a post request to the server to register the user
-      axios.post('http://localhost:3000/api/v1/auth/register', userData)
-      .then(res => {
-        console.log("//////////////////", res.data);
-        setError('')
-        setIsRegistered(true);
-      })
-      .catch(err => {
-        if (err.response.status >= 400 && err.response.status < 500){
-          setError(err.response.data.message)
+      const response = await axios.post('http://localhost:3000/api/v1/auth/register', userData)
+      console.log(response);
+      if (response.statusText === 'Created'){
+          setError('')
+          setIsRegistered(true);
+      } else {
+        if (response.status >= 400 && response.status < 500){
+              setError(response.data.message);
+
         } else {
-          setError("Internal server error, Please try again!");
+            setError("Internal server error, Please try again!");
         }
-      })
-      setIsLoading(false);
+      }
     }catch(err){
       console.log(err);
       setError(err);
     }
+    setIsLoading(false);
  }
 
   return (
     <Container className="conatiner">
+      {isLoading && <Loader/>}
       <Link to={'/'} className='backIcon'>
         <IoArrowBack/>
       </Link>
-      {isLoading && <Loader/>}
         <form onSubmit={registerUser}>
          {error && <p className='errorMessage'><IoIosCloseCircle/>{error}</p>}
             <h2>Register For Free</h2>

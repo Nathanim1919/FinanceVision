@@ -17,7 +17,7 @@ const Container = styled.div`
     height: 100%;
     display: grid;
     place-items: center;
-    z-index: 12;
+    z-index: 22;
     background-color: #ffffff64;
     backdrop-filter: blur(2px);
 `

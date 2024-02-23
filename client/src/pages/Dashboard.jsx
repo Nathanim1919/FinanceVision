@@ -3,89 +3,160 @@ import styled from 'styled-components';
 import { selectUser } from '../features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import ExpensePieChart from '../components/graphs/PieChar';
+import { Goals } from './Goals/Goals';
+import welcomeImage from '/images/welcome.png';
+import BardGraph from '../components/graphs/barGrapgh';
 
 const Container = styled.div`
    padding:1rem;
    display: grid;
    gap: .5rem;
+   color: #fff;
+   height: 89vh;
 
-   .welocmepage{
-    background-color: #2c98f7;
+   >*{
+    flex: 1;
+   }
+
+   .firstData{
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
 
-    div:nth-child(1){
-      display: flex;
-      flex-direction: column;
-      
-
-      >*{
-        margin: 0;
-      }
+    >*{
+      flex: 1;
+      gap: .5rem;
     }
+   }
+   .welocmepage{
+      background-color: #2c98f7;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-height: 15vh;
+
+      div.welcomeText{
+        display: flex;
+        height: 100%;
+        gap: 1rem;
+        position: relative;
+        
+
+        img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transform: scale(1.3);
+        }
+        div:nth-child(2){
+          display: flex;
+          flex-direction: column;
+          margin-top: 1rem;
+          
+    
+          >*{
+            margin: 0;
+          }
+        }
+      }
+
    }
 
    .datas{
      display: grid;
      grid-template-columns: repeat(3, 1fr);
      height: 100%;
-     gap: 1rem;
+     gap: .6rem;
+
+     .bottomGrid{
+      display: flex;
+      gap: .5rem;
+      
+
+      >div{
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid #333;
+      }
+     }
      
      >*{
       padding: .3rem;
-      background-color: blue;
+      /* background-color: #12123f; */
      }
 
 
      div:nth-child(1){
       grid-row:span 2;
-      background-color: red;
+      /* background-color: red; */
       
      }
      div:nth-child(4){
       grid-column:span 2;
       grid-row: span 1;
-      background-color: red;
+      /* background-color: red; */
      }
    }
 
    .data2{
-      background-color: red;
+      /* background-color: red; */
       height: 200px;
       width: 100%;
    }
 `
 
 export const Dashboard = () => {
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
   return (
     <Container>
        <div className="welocmepage">
-          <div>
-             <h1>Welocme Back {user.username}</h1>
-             <p>Save, Track, Invest and Grow Exponentially</p>
+          <div className='welcomeText'>
+            <div>
+              <img src={welcomeImage} alt=''/>
+            </div>
+            <div>
+              <h3>Welocme Back Nathanim</h3>
+              <p>Save, Track, Invest and Grow Exponentially</p>
+            </div>
           </div>
 
           <div className="amount">
-            <h1>******* ETB</h1>
+            <h2>******* ETB</h2>
           </div>
        </div>
        <div className="datas">
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque voluptate quo maxime adipisci voluptatibus aliquam ea nihil rerum tempore quas sint quisquam molestias consequatur tenetur, perferendis distinctio quia quam, beatae minima, sapiente sunt hic laudantium! Animi necessitatibus quasi minima. Voluptas ut rerum voluptate perferendis sunt veniam, voluptatibus molestiae sed nostrum tempora? Ex, debitis. Aut, placeat nesciunt? Delectus debitis eveniet eligendi similique natus molestiae laborum reprehenderit accusamus, vel illo recusandae ad ipsum itaque obcaecati rem eius magni mollitia quam cum odio ex asperiores. Quas adipisci architecto reprehenderit laboriosam minima harum tempora temporibus saepe, beatae ipsum. Qui, harum sint. At, necessitatibus nisi.</div>
-          <div style={{
-            display:"grid",
-            placeItems:"center"
-          }}>
-          <ExpensePieChart />
+          <div className='firstData'>
+            <div>
+              <Goals/>
+            </div>
+            <div style={{
+                display:"grid",
+                placeItems:"center"
+              }}>
+            <ExpensePieChart />
+            </div>
+          </div>
+          <div>
+              <BardGraph/>
           </div>
           <div style={{
-            display:"grid",
-            placeItems:"center"
-          }}>
+              display:"grid",
+              placeItems:"center"
+            }}>
           <ExpensePieChart />
           </div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, dignissimos atque! Id ipsum temporibus illum eveniet dolor maxime ratione expedita consequuntur, corrupti tempore sequi voluptatum inventore enim voluptates exercitationem rerum deleniti. Facilis repellat sit et, fuga magnam est nemo minima. Magnam laudantium quasi nisi non aspernatur corporis sunt labore ex! Facere fuga reprehenderit accusamus. Molestiae dicta quae temporibus eos, eveniet rem at, placeat omnis nemo accusantium deserunt aspernatur excepturi quisquam quibusdam modi cumque atque! Ea minima atque molestiae soluta minus.</div>
+          <div className='bottomGrid'>
+             <div style={{
+              display:"grid",
+              placeItems:"center"
+            }}>
+                <ExpensePieChart />
+             </div>
+             <div style={{
+              display:"grid",
+              placeItems:"center"
+            }}><ExpensePieChart /> </div>
+             <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis doloremque voluptas culpa recusandae. Labore suscipit iusto, ipsam tempore laboriosam,</div>
+          </div>
        </div>
     </Container>
   )
