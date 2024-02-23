@@ -10,57 +10,65 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const data = [
+const financialData = [
   {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400
+    month: "January",
+    income: 5000,
+    expenses: 3000
   },
   {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210
+    month: "February",
+    income: 5500,
+    expenses: 3200
   },
   {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290
+    month: "March",
+    income: 6000,
+    expenses: 2800
   },
   {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000
+    month: "April",
+    income: 6200,
+    expenses: 3500
   },
   {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181
+    month: "May",
+    income: 7000,
+    expenses: 4000
   },
   {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500
+    month: "June",
+    income: 7500,
+    expenses: 4200
   },
   {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
+    month: "July",
+    income: 8000,
+    expenses: 3800
+  },
+  {
+    month: "August",
+    income: 8200,
+    expenses: 4300
+  },
+  {
+    month: "September",
+    income: 8500,
+    expenses: 4500
+  },
+  {
+    month: "October",
+    income: 9000,
+    expenses: 4800
   }
 ];
 
 export default function BardGraph() {
   return (
-    <div style={{ width: "100%", height: 300 }}>
+    <div style={{ width: "400px", height: "100%" }}>
       <ResponsiveContainer>
         <AreaChart
-          data={data}
+          data={financialData}
           margin={{
             top: 10,
             right: 30,
@@ -69,10 +77,11 @@ export default function BardGraph() {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+          <Area type="monotone" dataKey="income" stroke="#82ca9d" fill="#82ca9d" />
+          <Area type="monotone" dataKey="expenses" stroke="#8884d8" fill="#8884d8" />
         </AreaChart>
       </ResponsiveContainer>
     </div>

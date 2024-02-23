@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
+import { GoGoal } from "react-icons/go";
 
 export const Goals = () => {
 
@@ -75,7 +76,7 @@ export const Goals = () => {
   return (
     <Container>
     <div className="header">
-      <h2>Goals</h2>
+      <h2><GoGoal/>Goals</h2>
       <Link className='showAllIcon'>
          <GrLinkNext/>
       </Link>
@@ -111,6 +112,8 @@ const Container = styled.div`
     justify-content: space-between;
     padding: .5rem;
 
+   
+
     .showAllIcon{
       width: 15px;
       height: 15px;
@@ -127,7 +130,10 @@ const Container = styled.div`
     }
 
     h2{
-      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1rem;
     }
   }
 `

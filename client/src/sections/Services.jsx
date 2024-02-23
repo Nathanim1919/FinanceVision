@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import CalltoAction from '../../public/images/calltoaction.png'
-import manage from '../../public/images/manage.png'
-import Card from '../../public/images/card.png'
-import Goal from '../../public/images/goal.png'
-import Visual from '../../public/images/visual.png'
-import Track from '../../public/images/track.png'
+import CalltoAction from '/images/calltoaction.png'
+import manage from '/images/manage.png'
+import Card from '/images/card.png'
+import Goal from '/images/goal.png'
+import Visual from '/images/visual.png'
+import Track from '/images/track.png'
 
 
 const Container = styled.div`
