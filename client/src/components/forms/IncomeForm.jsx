@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // You may need to install axios: npm install axios
+import styled from 'styled-components';
+import { IoMdClose } from "react-icons/io";
 
-const IncomeForm = () => {
+const IncomeForm = ({setCreateIncome}) => {
   const [incomeData, setIncomeData] = useState({
     date: '',
     category: '',
     amount: '',
     merchant: '',
-    frequency: 'onetime', // Default frequency
+    frequency: 'onetime',
   });
 
   const handleInputChange = (e) => {
@@ -20,7 +22,7 @@ const IncomeForm = () => {
 
     try {
       // Assuming you have an API endpoint for creating income records
-      await axios.post('/api/incomes', incomeData);
+      await axios.post('http://localhost/api/v1/incomes/createIncome', incomeData);
 
       // Reset form after successful submission
       setIncomeData({
@@ -39,59 +41,129 @@ const IncomeForm = () => {
     }
   };
 
+
+  const Container = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background-color: #0000004e;
+    z-index: 10;
+    color: #333;
+    backdrop-filter: blur(3px);
+
+
+    form{
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.116);
+      gap: .3rem;
+      border-radius: 10px;
+      position: relative;
+
+      .closeIcon{
+        position: absolute;
+        z-index: 3;
+        top: 1rem;
+        right: 1rem;
+        width: 20px;
+        height: 20px;
+        display: grid;
+        padding: 0.3rem;
+        place-items: center;
+        background-color: #eee;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+
+      input{
+        padding: 0.4rem 1rem;
+        border: 1px solid #eee;
+      }
+
+      button{
+        padding: 0.4rem;
+        background-color: #aed7ae;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        
+        &:hover{
+          background-color: #85a285;
+        }
+      }
+
+    }
+  `
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Date:</label>
-      <input
-        type="date"
-        name="date"
-        value={incomeData.date}
-        onChange={handleInputChange}
-        required
-      />
+    <Container>
+        <form onSubmit={handleSubmit}>
+          <div onClick={()=>setCreateIncome(false)} className='closeIcon'>
+            <IoMdClose/>
+          </div>
 
-      <label>Category:</label>
-      <input
-        type="text"
-        name="category"
-        value={incomeData.category}
-        onChange={handleInputChange}
-        required
-      />
+          <h3>Create Income Source</h3>
+          <input
+            type="date"
+            name="date"
+            value={incomeData.date}
+            onChange={handleInputChange}
+            required
+          />
 
-      <label>Amount:</label>
-      <input
-        type="number"
-        name="amount"
-        value={incomeData.amount}
-        onChange={handleInputChange}
-        required
-      />
+         
+          <input
+            type="text"
+            name="category"
+            placeholder='Enter Category'
+            value={incomeData.category}
+            onChange={handleInputChange}
+            required
+          />
 
-      <label>Merchant:</label>
-      <input
-        type="text"
-        name="merchant"
-        value={incomeData.merchant}
-        onChange={handleInputChange}
-        required
-      />
+         
+          <input
+            type="number"
+            name="amount"
+            placeholder='Enter amount'
+            value={incomeData.amount}
+            onChange={handleInputChange}
+            required
+          />
 
-      <label>Frequency:</label>
-      <select
-        name="frequency"
-        value={incomeData.frequency}
-        onChange={handleInputChange}
-      >
-        <option value="onetime">One-time</option>
-        <option value="monthly">Monthly</option>
-        <option value="weekly">Weekly</option>
-        <option value="biweekly">Bi-weekly</option>
-        <option value="custom">Custom</option>
-      </select>
+          
+          <input
+            type="text"
+            name="merchant"
+            placeholder='Who gives you the money?'
+            value={incomeData.merchant}
+            onChange={handleInputChange}
+            required
+          />
 
-      <button type="submit">Create Income</button>
-    </form>
+         
+          <select
+            name="frequency"
+            value={incomeData.frequency}
+            onChange={handleInputChange}
+          >
+            <option value="onetime">One-time</option>
+            <option value="monthly">Monthly</option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Bi-weekly</option>
+            <option value="custom">Custom</option>
+          </select>
+
+          <button type="submit">Create Income</button>
+        </form>
+    </Container>
   );
 };
 

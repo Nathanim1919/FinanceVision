@@ -49,11 +49,22 @@ const Container = styled.div`
   }
 
   div a.active {
-    background-color: blue;
-    color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.3);
+      background-color: blue;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.3);
   }
+  div a.active > *:nth-child(1) {
+      width: 15px;
+      height: 15px;
+      padding: 0.3rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #1029cd;
+      background-color: #fff;
+    }
 `;
 
 function SidebarLayout() {
