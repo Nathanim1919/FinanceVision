@@ -3,9 +3,99 @@ import { GrLinkNext } from "react-icons/gr";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GrTransaction } from "react-icons/gr";
+import { CiCalendarDate } from "react-icons/ci";
+import { BiSolidCategoryAlt } from "react-icons/bi";
+import { IoMdAdd } from "react-icons/io";
+import { FaMoneyBill } from "react-icons/fa";
+
+
 
 export const Transactions = () => {
   const transactionData = [
+    {
+      date: "2024-02-22",
+      category: "Groceries",
+      amount: -150.00,
+      merchant: "Supermarket X",
+      type:"income"
+    },
+    {
+      date: "2024-02-21",
+      category: "Salary",
+      amount: 2500.00,
+      merchant: "Company Payroll",
+      type:"expense"
+    },
+    {
+      date: "2024-02-22",
+      category: "Groceries",
+      amount: -150.00,
+      merchant: "Supermarket X",
+      type:"income"
+    },
+    {
+      date: "2024-02-21",
+      category: "Salary",
+      amount: 2500.00,
+      merchant: "Company Payroll",
+      type:"expense"
+    },
+    {
+      date: "2024-02-22",
+      category: "Groceries",
+      amount: -150.00,
+      merchant: "Supermarket X",
+      type:"income"
+    },
+    {
+      date: "2024-02-21",
+      category: "Salary",
+      amount: 2500.00,
+      merchant: "Company Payroll",
+      type:"expense"
+    },
+    {
+      date: "2024-02-22",
+      category: "Groceries",
+      amount: -150.00,
+      merchant: "Supermarket X",
+      type:"income"
+    },
+    {
+      date: "2024-02-21",
+      category: "Salary",
+      amount: 2500.00,
+      merchant: "Company Payroll",
+      type:"expense"
+    },
+    {
+      date: "2024-02-22",
+      category: "Groceries",
+      amount: -150.00,
+      merchant: "Supermarket X",
+      type:"income"
+    },
+    {
+      date: "2024-02-21",
+      category: "Salary",
+      amount: 2500.00,
+      merchant: "Company Payroll",
+      type:"expense"
+    },
+    {
+      date: "2024-02-22",
+      category: "Groceries",
+      amount: -150.00,
+      merchant: "Supermarket X",
+      type:"income"
+    },
+    {
+      date: "2024-02-21",
+      category: "Salary",
+      amount: 2500.00,
+      merchant: "Company Payroll",
+      type:"expense"
+    },
     {
       date: "2024-02-22",
       category: "Groceries",
@@ -33,22 +123,22 @@ export const Transactions = () => {
     <Content>
     
     <Container>
-      <div className="header">
-        <h2><GrTransaction/>Recent Transactions</h2>
-        <Link className='showAllIcon'>
-          <GrLinkNext/>
-        </Link>
-      </div>
+      <Header>
+          <h2>Nathan's Transactions</h2>
+          <div className='icon' onClick={()=>setCreateIncome(true)}>
+              <IoMdAdd/>
+          </div>
+      </Header>
       <TransactionsContainer className="transactions">
         {transactionData.map(transaction => (
           <TransactionBox key={transaction.date}>
               <div className='transaction upperData'>
-                  <h4>{transaction.category}</h4>
-                  <p style={{backgroundColor:transaction.amount < 0?"red":"blue"}}>{transaction.amount}</p>
+                  <h4><BiSolidCategoryAlt/>{transaction.category}</h4>
+                  <p style={{backgroundColor:transaction.amount < 0?"red":"blue",color:"white"}}><FaMoneyBill/>{transaction.amount} BIRR</p>
               </div>
               <div className='transaction lowerData'>
                   <h4>{transaction.merchant}</h4>
-                  <p>{transaction.date}</p>
+                  <p><CiCalendarDate/>{transaction.date}</p>
               </div>
           </TransactionBox>
         ))}
@@ -62,12 +152,48 @@ export const Transactions = () => {
 const Content = styled.div`
   
 `
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+    .icon{
+        background-color: #cecbcb;
+        width: 20px;
+        height: 20px;
+        padding: .4rem;
+        border-radius: 50%;
+        color: blue;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+    }
+`
 const TransactionBox = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
+  padding: .3rem;
+  transition: all 0.3s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
+    
+    @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+  }
+
+  &:hover{
+    background-color: #f5f5f5;
+  }
 
 
   >div.transaction{
@@ -83,15 +209,21 @@ const TransactionBox = styled.div`
 
     p{
       font-size: .8rem;
-      background-color: #50adff;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      font-size: .7rem;
       border-radius: 10px;
       padding:.1rem .2rem;
-      color: #fff;
+      color: #5e5b5b;
       margin-bottom: .2rem;
     }
   }
   .upperData h4{
     font-size: .8rem;
+    display: flex;
+    align-items: center;
+    gap:.4rem;
   }
   .lowerData h4{
     font-size:.7rem;

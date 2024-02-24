@@ -6,7 +6,7 @@ import ExpensePieChart from '../components/graphs/PieChar';
 import { Goals } from '../components/dashoardComponents/goals';
 import welcomeImage from '/images/welcome.png';
 import BardGraph from '../components/graphs/barGrapgh';
-import Notification from './Notification';
+import Notification from '../components/dashoardComponents/Notification';
 import { Transactions } from '../components/dashoardComponents/Transactions';
 import FinancialBarChart from '../components/graphs/BarChart';
 import IncomeForm from '../components/forms/IncomeForm';
