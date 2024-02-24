@@ -9,6 +9,7 @@ import BardGraph from '../components/graphs/barGrapgh';
 import { Transactions } from './Transactions/Transactions';
 import Notification from './Notification';
 import FinancialBarChart from '../components/graphs/BarChart';
+import IncomeForm from '../components/forms/IncomeForm';
 
 const Container = styled.div`
    padding:1rem;

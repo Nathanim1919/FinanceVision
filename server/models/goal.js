@@ -31,7 +31,7 @@ const goalSchema = new Schema({
         type:String,
         required:true
     },
-    dealine:{
+    deadline:{
         type:Date,
         required:true
     },

@@ -17,6 +17,8 @@ import Layout from './layouts/MainLayout.jsx';
 import PageNotFound  from './pages/PageNotFound.jsx';
 import BlogDetailPage from './pages/BlogDetailPage.jsx';
 import Notification from './pages/Notification.jsx';
+import Income from './pages/Income/Income.jsx';
+import Expense from './pages/Expense/Expense.jsx';
 
 function App() {
   // const navigate = useNavigate()
@@ -31,13 +33,21 @@ function App() {
             <Route path='/verify-email/:unHashedToken' element={<EmailVerified/>}/>
             {/* for just checking */}
             {/* <Route element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/transactions" element={<Transactions />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/goals" element={<Goals/>} />
+                <Route path="/notifications" element={<Notification/>} />
+                <Route path="/transactions" element={<Transactions />} />
+                <Route path="/transactions/:transactionId" element={<TransactionDetails />} />
+                <Route path="/goals" element={<Goals />} />
+                <Route path="/goals/:goalId" element={<GoalDetails />} />
+                <Route path="/settings" element={<Settings />} />
             </Route> */}
             <Route element={<ProtectedRoutes />}>
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/goals" element={<Goals/>} />
+                <Route path="/incomes" element={<Income/>} />
+                <Route path="/expenses" element={<Expense/>} />
                 <Route path="/notifications" element={<Notification/>} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/transactions/:transactionId" element={<TransactionDetails />} />

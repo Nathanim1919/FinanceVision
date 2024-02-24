@@ -20,11 +20,10 @@ const incomeSchema = new Schema({
   },
   frequency: {
     type: String,
-    enum: ['monthly', 'onetime', 'weekly', 'biweekly', 'custom'],
+    enum: ['monthly', 'onetime', 'weekly', 'annually'],
     default: 'onetime'
   }
 });
 
 const Income = mongoose.model('Income', incomeSchema);
-
 module.exports = Income;
