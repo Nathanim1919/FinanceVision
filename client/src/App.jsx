@@ -32,9 +32,9 @@ function App() {
             <Route path="/blog" element={<BlogDetailPage />} />
             <Route path='/verify-email/:unHashedToken' element={<EmailVerified/>}/>
             {/* for just checking */}
-            <Route element={<Layout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            {/* <Route element={<Layout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/goals" element={<Goals/>} />
                 <Route path="/incomes" element={<Income/>} />
                 <Route path="/expenses" element={<Expense/>} />
@@ -44,7 +44,7 @@ function App() {
                 <Route path="/goals" element={<Goals />} />
                 <Route path="/goals/:goalId" element={<GoalDetails />} />
                 <Route path="/settings" element={<Settings />} />
-            </Route>
+            </Route> */}
             <Route element={<ProtectedRoutes />}>
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />} />

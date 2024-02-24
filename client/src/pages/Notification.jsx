@@ -3,9 +3,97 @@ import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
+import { IoMdAdd } from "react-icons/io";
+import { MdCalendarToday } from "react-icons/md";
+
+
 
 function Notification() {
     const notifications = [
+        {
+          "title": "Goal Achieved",
+          "message": "Congratulations! You have successfully achieved your savings goal.",
+          "type": "success",
+          "user": "user_id_1",
+          "createdAt": "2024-02-22T12:00:00Z"
+        },
+        {
+          "title": "Net Worth Warning",
+          "message": "Your net worth has decreased significantly. Review your financial strategy.",
+          "type": "warning",
+          "user": "user_id_2",
+          "createdAt": "2024-02-23T09:30:00Z"
+        },
+        {
+          "title": "Goal Achieved",
+          "message": "Congratulations! You have successfully achieved your savings goal.",
+          "type": "success",
+          "user": "user_id_1",
+          "createdAt": "2024-02-22T12:00:00Z"
+        },
+        {
+          "title": "Net Worth Warning",
+          "message": "Your net worth has decreased significantly. Review your financial strategy.",
+          "type": "warning",
+          "user": "user_id_2",
+          "createdAt": "2024-02-23T09:30:00Z"
+        },
+        {
+          "title": "Goal Achieved",
+          "message": "Congratulations! You have successfully achieved your savings goal.",
+          "type": "success",
+          "user": "user_id_1",
+          "createdAt": "2024-02-22T12:00:00Z"
+        },
+        {
+          "title": "Net Worth Warning",
+          "message": "Your net worth has decreased significantly. Review your financial strategy.",
+          "type": "warning",
+          "user": "user_id_2",
+          "createdAt": "2024-02-23T09:30:00Z"
+        },
+        {
+          "title": "Goal Achieved",
+          "message": "Congratulations! You have successfully achieved your savings goal.",
+          "type": "success",
+          "user": "user_id_1",
+          "createdAt": "2024-02-22T12:00:00Z"
+        },
+        {
+          "title": "Net Worth Warning",
+          "message": "Your net worth has decreased significantly. Review your financial strategy.",
+          "type": "warning",
+          "user": "user_id_2",
+          "createdAt": "2024-02-23T09:30:00Z"
+        },
+        {
+          "title": "Goal Achieved",
+          "message": "Congratulations! You have successfully achieved your savings goal.",
+          "type": "success",
+          "user": "user_id_1",
+          "createdAt": "2024-02-22T12:00:00Z"
+        },
+        {
+          "title": "Net Worth Warning",
+          "message": "Your net worth has decreased significantly. Review your financial strategy.",
+          "type": "warning",
+          "user": "user_id_2",
+          "createdAt": "2024-02-23T09:30:00Z"
+        },
+        {
+          "title": "Goal Achieved",
+          "message": "Congratulations! You have successfully achieved your savings goal.",
+          "type": "success",
+          "user": "user_id_1",
+          "createdAt": "2024-02-22T12:00:00Z"
+        },
+        {
+          "title": "Net Worth Warning",
+          "message": "Your net worth has decreased significantly. Review your financial strategy.",
+          "type": "warning",
+          "user": "user_id_2",
+          "createdAt": "2024-02-23T09:30:00Z"
+        },
         {
           "title": "Goal Achieved",
           "message": "Congratulations! You have successfully achieved your savings goal.",
@@ -31,12 +119,13 @@ function Notification() {
       
   return (
     <Container>
-        <div className="header">
-            <h2><IoIosNotifications/>Notifications</h2>
-            <Link className='showAllIcon'>
-            <GrLinkNext/>
-            </Link>
-      </div>
+      <Content>
+      <Header>
+          <h2>Nathan's Notifications</h2>
+          <div className='icon' onClick={()=>setCreateIncome(true)}>
+              <IoMdAdd/>
+          </div>
+      </Header>
       <NotificationContainer>
         {notifications.map(notification => (
           <NotificationBox key={notification.createdAt}>
@@ -50,17 +139,38 @@ function Notification() {
                     </div>
               </div>
               <div className='timestamp'>
-                 <p>2 days ago</p>
+                 <p className='date'><MdCalendarToday/>2 days ago</p>
               </div>
           </NotificationBox>
         ))}
       </NotificationContainer>
+        
+      </Content>
     </Container>
   )
 }
 
 export default Notification;
 
+
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .icon{
+        background-color: #cecbcb;
+        width: 20px;
+        height: 20px;
+        padding: .4rem;
+        border-radius: 50%;
+        color: blue;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+    }
+`
 
 
 const Container = styled.div`
@@ -102,6 +212,11 @@ const NotificationContainer = styled.div`
   gap: .5rem;
 `
 
+const Content = styled.div`
+  width: 60%;
+  margin: auto;
+`
+
 const NotificationBox = styled.div`
     display: flex;
     justify-content: space-between;
@@ -109,6 +224,27 @@ const NotificationBox = styled.div`
     background-color: #f3e09c75;
     border-radius: 10px;
     padding:.3rem .5rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    animation: fadeIn 0.5s ease-in-out;
+    
+    @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+  }
+
+    &:hover{
+      background-color: #f3e09c4e;
+    }
+
+
     .notification{
         display: flex;
         align-items: center;
@@ -144,5 +280,11 @@ const NotificationBox = styled.div`
 
     .timestamp{
         font-size: 0.7rem;
+
+        p{
+          display: flex;
+          align-items: center;
+          gap: .4rem;
+        }
     }
 `
