@@ -30,8 +30,6 @@ export const Transactions = () => {
   ]
   
   return (
-    <Content>
-    
     <Container>
       <div className="header">
         <h2><GrTransaction/>Recent Transactions</h2>
@@ -54,14 +52,9 @@ export const Transactions = () => {
         ))}
       </TransactionsContainer>
     </Container>
-    </Content>
   )
 }
 
-
-const Content = styled.div`
-  
-`
 
 const TransactionBox = styled.div`
   background-color: #ffffff;
@@ -113,8 +106,6 @@ const TransactionsContainer = styled.div`
 
 const Container = styled.div`
   color: #1e1d1d;
-  width: 60%;
-  margin: auto;
   .header{
     display: flex;
     align-items: center;

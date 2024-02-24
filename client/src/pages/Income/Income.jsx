@@ -156,6 +156,20 @@ const IncomeBox = styled.div`
             }
         }
 
+        transition: all 0.3s ease-in-out;
+        animation: fadeIn 0.5s ease-in-out;
+        
+        @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }}
+
         
 
         >div{
@@ -213,7 +227,7 @@ function Income() {
         <Content>
 
             <Header>
-                <h2>Income Page</h2>
+                <h2>Nathan's Incomes</h2>
                 <div className='icon' onClick={()=>setCreateIncome(true)}>
                     <IoMdAdd/>
                 </div>

@@ -95,54 +95,14 @@ const GoalForm = () => {
     <Container>
         <form onSubmit={handleSubmit}>
           <h3>Create Goal</h3>
-          <input
-            type="date"
-            name="date"
-            value={incomeData.date}
-            onChange={handleInputChange}
-            required
-          />
-
-          <input
-            type="text"
-            name="category"
-            placeholder='Enter Category'
-            value={incomeData.category}
-            onChange={handleInputChange}
-            required
-          />
-         
-          <input
-            type="number"
-            name="amount"
-            placeholder='Enter amount'
-            value={incomeData.amount}
-            onChange={handleInputChange}
-            required
-          />
-
-          <input
-            type="text"
-            name="merchant"
-            placeholder='Who gives you the money?'
-            value={incomeData.merchant}
-            onChange={handleInputChange}
-            required
-          />
-         
-          <select
-            name="frequency"
-            value={incomeData.frequency}
-            onChange={handleInputChange}
-          >
-            <option value="onetime">One-time</option>
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-            <option value="biweekly">Bi-weekly</option>
-            <option value="custom">Custom</option>
-          </select>
-
-          <button type="submit">Create Income</button>
+          <div>
+             <input type="text" placeholder='Title'/>
+             <input type="text" placeholder='Description'/>
+             <input type="Number" placeholder='target amount'/>
+             <input type="date" placeholder='Start date'/>
+             <input type="date" placeholder='Deadline'/>
+             
+          </div>
         </form>
     </Container>
   );

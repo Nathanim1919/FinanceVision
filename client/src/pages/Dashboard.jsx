@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { selectUser } from '../features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import ExpensePieChart from '../components/graphs/PieChar';
-import { Goals } from './Goals/Goals';
+import { Goals } from '../components/dashoardComponents/goals';
 import welcomeImage from '/images/welcome.png';
 import BardGraph from '../components/graphs/barGrapgh';
-import { Transactions } from './Transactions/Transactions';
 import Notification from './Notification';
+import { Transactions } from '../components/dashoardComponents/Transactions';
 import FinancialBarChart from '../components/graphs/BarChart';
 import IncomeForm from '../components/forms/IncomeForm';
 
