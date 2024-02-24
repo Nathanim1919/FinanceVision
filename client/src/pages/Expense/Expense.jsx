@@ -6,7 +6,6 @@ import { CiCalendarDate, CiEdit, CiViewTimeline } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { TbCategoryFilled } from "react-icons/tb";
-import { translateAliases } from '../../../../server/models/goal';
 
 const sampleExpenses = [
   {
@@ -132,7 +131,7 @@ const IncomeBox = styled.div`
         border-bottom: 1px solid #eee;
         padding: 0.5rem;
         cursor: pointer;
-        transition: opacity 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
         animation: fadeIn 0.5s ease-in-out;
         
         @keyframes fadeIn {
