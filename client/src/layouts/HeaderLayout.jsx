@@ -21,12 +21,13 @@ const Profile = styled.div`
     gap: .5rem;
 
     >div.profileImage{
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
         background-color: aliceblue;
     }
 `
+
 function HeaderLayout() {
   return (
     <Header>

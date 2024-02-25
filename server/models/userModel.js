@@ -80,6 +80,13 @@ const userSchema = new Schema(
     forgotPasswordToken: {
       type: String,
     },
+    
+    currency:{
+      type: String,
+      default: "ETB",
+      enum: ["ETB","USD"]
+    },
+
     income: [
       {
         type: Schema.Types.ObjectId,

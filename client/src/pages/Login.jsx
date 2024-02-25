@@ -7,7 +7,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { Loader } from '../components/Loader'
 import { useNavigate } from 'react-router-dom'
 import ForgotPasswordRequest from '../components/modals/ForgotPasswordRequest'
-import ResetPasswordBox from '../components/modals/ResetPasswordBox'
+import ResetPasswordBox from '../components/modals/ResetPasswordBox';
 
 export const Login = () => {
   const [userData, setUserData] = useState({
@@ -30,7 +30,6 @@ export const Login = () => {
     try {
       const response = await axios.post('http://localhost:3000/api/v1/auth/login',{userData});
       const { accessToken } = response.data.data;
-      console.log(response);
 
       if (accessToken && response.statusText === 'OK' && response.data.data !== null) {
         document.cookie = `accessToken=${accessToken}`;

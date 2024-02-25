@@ -33,7 +33,7 @@ function Notification() {
     <Container>
         <div className="header">
             <h2><IoIosNotifications/>Notifications</h2>
-            <Link className='showAllIcon'>
+            <Link to={'/notifications'} className='showAllIcon'>
             <GrLinkNext/>
             </Link>
       </div>
