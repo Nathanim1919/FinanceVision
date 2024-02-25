@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import { MdDashboard, MdAutoGraph } from "react-icons/md";
 import { FaGetPocket } from "react-icons/fa";
@@ -6,6 +6,14 @@ import { IoMdSettings, IoMdLogOut, IoMdNotifications } from "react-icons/io";
 import { GrTransaction } from "react-icons/gr";
 import { TiExport } from "react-icons/ti";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { clearUser } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { Loader } from "../components/Loader";
+import { GoGoal } from "react-icons/go";
+
 
 const Container = styled.div`
   background-color: #ffffff;
@@ -49,7 +57,7 @@ const Container = styled.div`
   }
 
   div a.active {
-      background-color: blue;
+      background:linear-gradient(to right, #4c8eff, blue) ;
       cursor: pointer;
       color: #fff;
       border-radius: 5px;
@@ -68,8 +76,30 @@ const Container = styled.div`
 `;
 
 function SidebarLayout() {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
+
+  const logout = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.post("http://localhost:3000/api/v1/auth/logout", null, {
+        withCredentials: true
+      });
+     
+        dispatch(clearUser());
+        navigate('/login', { replace: true });
+  
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <Container>
+      {isLoading && <Loader />}
       <div className="sidebar">
         <NavLink to="/dashboard" className="sidebarItem" activeClassName="active">
           <MdDashboard />
@@ -84,7 +114,7 @@ function SidebarLayout() {
           <p>Expenses</p>
         </NavLink>
         <NavLink to="/goals" className="sidebarItem" activeClassName="active">
-          <TiExport />
+          <GoGoal />
           <p>Goals</p>
         </NavLink>
         <NavLink
@@ -106,15 +136,15 @@ function SidebarLayout() {
       </div>
 
       <div className="sidebarFooter">
-        <NavLink to="/setting" className="sidebarItem" activeClassName="active">
+        <NavLink to="/settings" className="sidebarItem" activeClassName="active">
           <IoMdSettings />
           <p>Settings</p>
         </NavLink>
 
-        <NavLink to="/logout" className="sidebarItem" activeClassName="active">
+        <Link onClick={logout} className="sidebarItem" activeClassName="active">
           <IoMdLogOut />
           <p>Logout</p>
-        </NavLink>
+        </Link>
       </div>
     </Container>
   );

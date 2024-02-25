@@ -210,6 +210,24 @@ export const loginUser = asyncHandler(async (req, res) => {
     );
 });
 
+export const logoutUser = asyncHandler(async (req, res) =>{
+    await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: {
+          refreshToken: undefined,
+        },
+      },
+      { new: true }
+    );
+
+    return res
+      .status(200)
+      .clearCookie("accessToken")
+      .clearCookie("refreshToken")
+      .json(new ApiResponse(200, {}, "User logged out successfully"));
+})
+
 export const getCurrentUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
@@ -253,7 +271,9 @@ export const forgotPasswordRequest = asyncHandler(async (req, res)=>{
           "Password reset mail has been sent on your email"
         )
       )
-})
+});
+
+
 
 export const resetForgottenPassword = asyncHandler(async (req, res)=>{
     const {resetToken} = req.params;

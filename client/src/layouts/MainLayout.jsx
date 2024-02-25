@@ -8,13 +8,12 @@ import { Outlet } from 'react-router-dom';
 
 const Container = styled.div`
   display: grid;
-  overflow: hidden;
+  grid-template-rows: .1fr .9fr;
 `
 
 const View = styled.div`
   display: grid;
   grid-template-columns: .12fr .88fr;
-  overflow: hidden;
 `
 
 function Layout({ children }) {

@@ -77,7 +77,7 @@ export const Goals = () => {
     <Container>
     <div className="header">
       <h2><GoGoal/>Goals</h2>
-      <Link className='showAllIcon'>
+      <Link to={'/goals'} className='showAllIcon'>
          <GrLinkNext/>
       </Link>
     </div>

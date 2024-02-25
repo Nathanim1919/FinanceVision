@@ -3,6 +3,8 @@ import { GrLinkNext } from "react-icons/gr";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GrTransaction } from "react-icons/gr";
+import { CiCalendarDate } from "react-icons/ci";
+
 
 export const Transactions = () => {
   const transactionData = [
@@ -33,7 +35,7 @@ export const Transactions = () => {
     <Container>
       <div className="header">
         <h2><GrTransaction/>Recent Transactions</h2>
-        <Link className='showAllIcon'>
+        <Link to={'/transactions'} className='showAllIcon'>
           <GrLinkNext/>
         </Link>
       </div>
@@ -42,11 +44,11 @@ export const Transactions = () => {
           <TransactionBox key={transaction.date}>
               <div className='transaction upperData'>
                   <h4>{transaction.category}</h4>
-                  <p style={{backgroundColor:transaction.amount < 0?"red":"blue"}}>{transaction.amount}</p>
+                  <p style={{backgroundColor:transaction.amount < 0?"red":"blue"}}>{transaction.amount} ETB</p>
               </div>
               <div className='transaction lowerData'>
                   <h4>{transaction.merchant}</h4>
-                  <p>{transaction.date}</p>
+                  <p className='date'><CiCalendarDate/>{transaction.date}</p>
               </div>
           </TransactionBox>
         ))}
@@ -78,10 +80,19 @@ const TransactionBox = styled.div`
       font-size: .8rem;
       background-color: #50adff;
       border-radius: 10px;
-      padding:.1rem .2rem;
+      padding:0rem .2rem;
       color: #fff;
       margin-bottom: .2rem;
     }
+    p.date{
+      padding: 0;
+      background-color: transparent;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      font-size: .7rem;
+  }
   }
   .upperData h4{
     font-size: .8rem;
@@ -97,6 +108,8 @@ const TransactionBox = styled.div`
     margin-bottom: .3rem;
     color:#fff;
   }
+
+
 `
 const TransactionsContainer = styled.div`
    display: grid;
@@ -111,8 +124,6 @@ const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: .5rem;
-
-   
 
     .showAllIcon{
       width: 15px;

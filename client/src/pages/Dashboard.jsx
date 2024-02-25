@@ -1,30 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { selectUser } from '../features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import ExpensePieChart from '../components/graphs/PieChar';
 import { Goals } from '../components/dashoardComponents/goals';
-import welcomeImage from '/images/welcome.png';
+import welcomeImage from '/images/coin.png';
 import BardGraph from '../components/graphs/barGrapgh';
 import Notification from '../components/dashoardComponents/Notification';
 import { Transactions } from '../components/dashoardComponents/Transactions';
 import FinancialBarChart from '../components/graphs/BarChart';
 import IncomeForm from '../components/forms/IncomeForm';
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+
 
 const Container = styled.div`
    padding:1rem;
    display: grid;
+   grid-template-rows: .1fr .9fr;
+   overflow: hidden;
+   /* height: 100%; */
    gap: .5rem;
    color: #fff;
-   height: 89vh;
 
    >*{
     flex: 1;
    }
 
    .firstData{
-    display: flex;
-    flex-direction: column;
+      display: flex;
+      flex-direction: column;
 
     >*{
       flex: 1;
@@ -32,24 +37,52 @@ const Container = styled.div`
     }
    }
    .welocmepage{
-      background-color: #2c98f7;
+      background-color: #fff351;
       display: flex;
-      justify-content: space-around;
       align-items: center;
-      max-height: 15vh;
+      max-height: 12vh;
+      color: #000;
+      padding:0 1rem;
+      box-shadow: 0 17px 33px rgba(0, 0, 0, 0.1);
+
+      >*{
+        padding: 0;
+        margin: 0;
+      }
+
+      div.amount{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+
+        >div{
+          width: 35px;
+          height: 35px;
+          background-color: #ada52c;
+          color: #333;
+          display: grid;
+          place-items: center;
+          font-size: 1.4rem;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+        }
 
       div.welcomeText{
         display: flex;
         height: 100%;
-        gap: 1rem;
         position: relative;
-        
+
 
         img{
           width: 100%;
           height: 100%;
+          position: relative;
           object-fit: cover;
-          transform: scale(1.3);
+          transform: scale(.8);
+          
         }
         div:nth-child(2){
           display: flex;
@@ -108,7 +141,8 @@ const Container = styled.div`
 `
 
 export const Dashboard = () => {
-  // const user = useSelector(selectUser);
+  const user = useSelector(selectUser);
+  const [show, setShow] = useState(false);
   return (
     <Container>
        <div className="welocmepage">
@@ -117,13 +151,16 @@ export const Dashboard = () => {
               <img src={welcomeImage} alt=''/>
             </div>
             <div>
-              <h3>Welocme Back Nathanim</h3>
+              <h3>Hi, {(user.username)[0].toUpperCase() + (user.username).slice(1)}</h3>
               <p>Save, Track, Invest and Grow Exponentially</p>
             </div>
           </div>
 
           <div className="amount">
-            <h2>******* ETB</h2>
+            <h2>{show?"*******":"400,000"} ETB</h2>
+            <div onClick={()=>setShow(!show)}>
+              {show?<FaEye/>:<FaEyeSlash/>}
+            </div>
           </div>
        </div>
        <div className="datas">
