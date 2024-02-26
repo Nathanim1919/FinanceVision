@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { IoMdAdd } from "react-icons/io";
 import styled from 'styled-components';
 import { CiCalendarDate, CiEdit, CiViewTimeline } from "react-icons/ci";
@@ -6,10 +6,17 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { TbCategoryFilled } from "react-icons/tb";
 import IncomeForm from '../../components/forms/IncomeForm';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../features/auth/authSlice';
 import axios from 'axios';
 import { Loader } from '../../components/Loader';
+import { BsThreeDots } from "react-icons/bs";
+
+
+
+// import from incomeSlice
+import { selectIncomes } from '../../features/incomes/incomeSlice';
+import { fetchIncomes, deleteIncomeAsync } from '../../features/incomes/incomeSlice';
 
 
 
@@ -17,19 +24,28 @@ import { Loader } from '../../components/Loader';
 const Container = styled.div`
     /* background-color: blue; */
     color: #333;
+    
 `
 
 const Content = styled.div`
     width: 60%;
     margin: 0 auto;
+    height: 85vh;
+    overflow-y: auto;
 `
 
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 1rem;
 
-    .icon{
+    .icons{
+        display: flex;
+        gap: .5rem;
+        align-items: center;
+
+        >div{
         background-color: #cecbcb;
         width: 20px;
         height: 20px;
@@ -39,7 +55,10 @@ const Header = styled.div`
         cursor: pointer;
         display: grid;
         place-items: center;
+        }
     }
+
+ 
 `
 const IncomeBox = styled.div`
         display: grid;
@@ -127,32 +146,39 @@ const IncomeBox = styled.div`
 function Income() {
     const [createIncome, setCreateIncome] = useState(false);
     const user = useSelector(selectUser);
-    const [isLoading, setIsLoading] = useState(false);
+    const incomes = useSelector(selectIncomes);
+    const isLoading = useSelector((state) => state.income.loading);
+    console.log(incomes);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(fetchIncomes(user._id));
+    },[dispatch, user])
 
 
-    const handleDelete = async (id) => {
-      setIsLoading(true);
-      try {
-        await axios.delete(`http://localhost:3000/api/v1/incomes/${id}`);
-        console.log('Income deleted successfully!');
-      } catch (error) {
-        console.error('Error deleting income:', error.message);
-      }
-      setIsLoading(false);
+    const handleDelete = (id) => {
+        dispatch(deleteIncomeAsync(id, user._id));
+        dispatch(fetchIncomes(user._id));
     }
 
   return (
+    isLoading ? <Loader/> :
     <Container>
         {createIncome && <IncomeForm setCreateIncome={setCreateIncome}/>}
         <Content>
             <Header>
                 <h2>{user.username}'s Incomes</h2>
-                <div className='icon' onClick={()=>setCreateIncome(true)}>
-                    <IoMdAdd/>
+                <div className='icons'>
+                    <div className='icon' onClick={()=>setCreateIncome(true)}>
+                        <IoMdAdd/>
+                    </div>
+                    <div>
+                        <BsThreeDots/>
+                    </div>
                 </div>
             </Header>
         <IncomeBox>
-            {(user.incomes).map(income => (
+            {incomes && incomes?.map(income => (
                 <div key={income.id}>
                     <div>
                         <h3><TbCategoryFilled/>{income.category}</h3>

@@ -7,7 +7,7 @@ import { getIncomes, createIncome, updateIncome, deleteIncome } from '../control
 
 router.get('/', getIncomes);
 router.post('/', createIncome);
-router.delete('/:id', deleteIncome);
+router.post('/:id', deleteIncome);
 router.patch('/:id', updateIncome);
 
 export default router;

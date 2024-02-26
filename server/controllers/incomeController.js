@@ -6,10 +6,11 @@ import mongoose from "mongoose";
 
 // Get all incomes
 const getIncomes = asyncHandler(async (req, res) => {
+  const { userId } = req.query;
   try {
-    const incomes = await Income.find();
+    const user = await User.findById(userId).populate("incomes");
     res.status(200).json(
-        new ApiResponse(200, incomes, "Incomes fetched successfully")
+        new ApiResponse(200, user, "Incomes fetched successfully")
     );
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -56,21 +57,19 @@ const updateIncome = asyncHandler(async (req, res) => {
 // Delete an existing income
 const deleteIncome = asyncHandler(async (req, res) => {
     const { id } = req.params;
-  
+    const {userId} = req.body;
 
     try {
-      // Find the current user using authentication information
-      const currentUser = await User.findById(req.user._id);
-      console.log(currentUser)
+      const currentUser = await User.findById(userId);
   
       // Remove the income ID from the current user's incomes array
-      currentUser.incomes.pull(id);
+      currentUser.incomes = currentUser.incomes.filter((income) => income != id);
   
       // Save the updated user
       await currentUser.save();
   
       // Delete the income document
-      await Income.findByIdAndRemove(id);
+      await Income.findByIdAndDelete(id);
   
       res.json(
         new ApiResponse(200, {}, "Income deleted successfully")
@@ -80,5 +79,4 @@ const deleteIncome = asyncHandler(async (req, res) => {
     }
   });
   
-
 export { getIncomes, createIncome, updateIncome, deleteIncome };

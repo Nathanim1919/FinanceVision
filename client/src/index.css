@@ -5,8 +5,30 @@ html{
     overflow-x: hidden;
 }
 
+
 body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f100;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #dcd8d8fb;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #827f57;
+  }
