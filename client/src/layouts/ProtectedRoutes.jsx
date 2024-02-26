@@ -16,8 +16,6 @@ export function ProtectedRoutes({ children }) {
   useEffect(() => {
     const checkAuthentication = async () => {
       setIsLoading(true); // Show loading indicator
-      console.log('Checking authentication...');
-      console.log(user);
 
       if (user) {
         setIsLoading(false); // Hide loading indicator
@@ -26,7 +24,6 @@ export function ProtectedRoutes({ children }) {
 
       try {
         const response = await axios.get('http://localhost:3000/api/v1/auth/getUser', { withCredentials: true });
-        console.log(response.data.data);
 
         if (response.statusText === 'OK' && response.data.data !== null) {
           dispatch(setUser(response.data.data));
@@ -35,7 +32,6 @@ export function ProtectedRoutes({ children }) {
           navigate('/login', { replace: true });
         }
       } catch (error) {
-        console.error('Error checking authentication:', error);
         dispatch(clearUser());
         navigate('/login', { replace: true });
       } finally {
@@ -46,11 +42,10 @@ export function ProtectedRoutes({ children }) {
     checkAuthentication();
   }, [dispatch, navigate]);
 
-  // Conditional rendering based on authentication and loading state
   return (
     <Container>
       {isLoading ? (
-       <Loader/>// Replace with your loading indicator UI
+       <Loader/>
       ) : isLoggedIn ? (
         <Outlet/>
       ) : (

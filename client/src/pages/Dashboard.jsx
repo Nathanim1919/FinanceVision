@@ -60,7 +60,7 @@ const Container = styled.div`
         >div{
           width: 35px;
           height: 35px;
-          background-color: #ada52c;
+          background-color: #fffbae;
           color: #333;
           display: grid;
           place-items: center;
@@ -141,8 +141,10 @@ const Container = styled.div`
 `
 
 export const Dashboard = () => {
+  
   const user = useSelector(selectUser);
   const [show, setShow] = useState(false);
+
   return (
     <Container>
        <div className="welocmepage">
@@ -157,7 +159,7 @@ export const Dashboard = () => {
           </div>
 
           <div className="amount">
-            <h2>{show?"*******":"400,000"} ETB</h2>
+            <h2>{show?"*******":user.deposit} ETB</h2>
             <div onClick={()=>setShow(!show)}>
               {show?<FaEye/>:<FaEyeSlash/>}
             </div>

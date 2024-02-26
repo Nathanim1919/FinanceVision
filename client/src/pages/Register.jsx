@@ -88,7 +88,7 @@ export const Register = () => {
       
       try{
       // send a post request to the server to register the user
-      const response = await axios.post('http://localhost:3 ', userData)
+      const response = await axios.post('http://localhost:3000/api/v1/auth/register', userData)
       console.log(response);
       if (response.statusText === 'Created'){
           setError('')

@@ -15,7 +15,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     
     try {
         const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-        req.user = await User.findById(decoded._id);
+        req.user = await User.findById(decoded._id).populate("incomes");
         next();
     } catch (error) {
         res.status(401).json({
