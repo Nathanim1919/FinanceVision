@@ -8,108 +8,10 @@ import { TbCategoryFilled } from "react-icons/tb";
 import IncomeForm from '../../components/forms/IncomeForm';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/auth/authSlice';
+import axios from 'axios';
+import { Loader } from '../../components/Loader';
 
 
-
-const sampleIncomes = [
-  {
-    id: 1,
-    date: '2024-02-25',
-    category: 'Salary',
-    amount: 2500.00,
-    description: 'Monthly salary from Company X',
-    frequency: 'monthly',
-  },
-  {
-    id: 2,
-    date: '2024-02-20',
-    category: 'Freelance',
-    amount: 800.00,
-    description: 'Freelance project payment',
-    frequency: 'onetime',
-  },
-  {
-    id: 1,
-    date: '2024-02-25',
-    category: 'Salary',
-    amount: 2500.00,
-    description: 'Monthly salary from Company X',
-    frequency: 'monthly',
-  },
-  {
-    id: 2,
-    date: '2024-02-20',
-    category: 'Freelance',
-    amount: 800.00,
-    description: 'Freelance project payment',
-    frequency: 'onetime',
-  },
-  {
-    id: 1,
-    date: '2024-02-25',
-    category: 'Salary',
-    amount: 2500.00,
-    description: 'Monthly salary from Company X',
-    frequency: 'monthly',
-  },
-  {
-    id: 2,
-    date: '2024-02-20',
-    category: 'Freelance',
-    amount: 800.00,
-    description: 'Freelance project payment',
-    frequency: 'onetime',
-  },
-  {
-    id: 1,
-    date: '2024-02-25',
-    category: 'Salary',
-    amount: 2500.00,
-    description: 'Monthly salary from Company X',
-    frequency: 'monthly',
-  },
-  {
-    id: 2,
-    date: '2024-02-20',
-    category: 'Freelance',
-    amount: 800.00,
-    description: 'Freelance project payment',
-    frequency: 'onetime',
-  },
-  {
-    id: 1,
-    date: '2024-02-25',
-    category: 'Salary',
-    amount: 2500.00,
-    description: 'Monthly salary from Company X',
-    frequency: 'monthly',
-  },
-  {
-    id: 2,
-    date: '2024-02-20',
-    category: 'Freelance',
-    amount: 800.00,
-    description: 'Freelance project payment',
-    frequency: 'onetime',
-  },
-  {
-    id: 1,
-    date: '2024-02-25',
-    category: 'Salary',
-    amount: 2500.00,
-    description: 'Monthly salary from Company X',
-    frequency: 'monthly',
-  },
-  {
-    id: 2,
-    date: '2024-02-20',
-    category: 'Freelance',
-    amount: 800.00,
-    description: 'Freelance project payment',
-    frequency: 'onetime',
-  },
-  // Add more sample incomes as needed
-];
 
 
 const Container = styled.div`
@@ -225,6 +127,20 @@ const IncomeBox = styled.div`
 function Income() {
     const [createIncome, setCreateIncome] = useState(false);
     const user = useSelector(selectUser);
+    const [isLoading, setIsLoading] = useState(false);
+
+
+    const handleDelete = async (id) => {
+      setIsLoading(true);
+      try {
+        await axios.delete(`http://localhost:3000/api/v1/incomes/${id}`);
+        console.log('Income deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting income:', error.message);
+      }
+      setIsLoading(false);
+    }
+
   return (
     <Container>
         {createIncome && <IncomeForm setCreateIncome={setCreateIncome}/>}
@@ -250,7 +166,7 @@ function Income() {
                         <div className='edit'>
                             <CiEdit/>
                         </div>
-                        <div className='delete'>
+                        <div className='delete' onClick={()=>handleDelete(income._id)}>
                             <MdDeleteOutline/>
                         </div>
                     </div>
