@@ -86,8 +86,11 @@ const userSchema = new Schema(
       default: "ETB",
       enum: ["ETB","USD"]
     },
-
-    income: [
+    deposit: {
+      type: Number,
+      default: 0,
+    },
+    incomes: [
       {
         type: Schema.Types.ObjectId,
         ref: "Income",

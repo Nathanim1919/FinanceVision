@@ -6,6 +6,9 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { TbCategoryFilled } from "react-icons/tb";
 import IncomeForm from '../../components/forms/IncomeForm';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/auth/authSlice';
+
 
 
 const sampleIncomes = [
@@ -221,19 +224,19 @@ const IncomeBox = styled.div`
 `
 function Income() {
     const [createIncome, setCreateIncome] = useState(false);
+    const user = useSelector(selectUser);
   return (
     <Container>
         {createIncome && <IncomeForm setCreateIncome={setCreateIncome}/>}
         <Content>
-
             <Header>
-                <h2>Nathan's Incomes</h2>
+                <h2>{user.username}'s Incomes</h2>
                 <div className='icon' onClick={()=>setCreateIncome(true)}>
                     <IoMdAdd/>
                 </div>
             </Header>
         <IncomeBox>
-            {sampleIncomes.map(income => (
+            {(user.incomes).map(income => (
                 <div key={income.id}>
                     <div>
                         <h3><TbCategoryFilled/>{income.category}</h3>
@@ -241,7 +244,6 @@ function Income() {
                     </div>
                     <div>
                         <h3><FaMoneyBillWave/>{income.amount} <span>BIRR</span></h3>
-                        {/* <p>{income.description}</p> */}
                         <p><CiViewTimeline/>{income.frequency}</p>
                     </div>
                     <div className='icons'>

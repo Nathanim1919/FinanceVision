@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter  from "./routes/authRoute.js";
+import incomeRouter from "./routes/incomeRoute.js";
 dotenv.config();
 
 const startServer = async () => {
@@ -23,6 +24,7 @@ const startServer = async () => {
 
     // Routes
     app.use("/api/v1/auth", userRouter);
+    app.use("/api/v1/incomes", incomeRouter);
 
     // Start Server
     app.listen(port, () => {
