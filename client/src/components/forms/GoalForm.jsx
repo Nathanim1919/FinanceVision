@@ -101,7 +101,6 @@ const GoalForm = () => {
              <input type="Number" placeholder='target amount'/>
              <input type="date" placeholder='Start date'/>
              <input type="date" placeholder='Deadline'/>
-             
           </div>
         </form>
     </Container>
