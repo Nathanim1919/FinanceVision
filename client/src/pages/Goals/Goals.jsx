@@ -256,22 +256,23 @@ export const Goals = () => {
 
 
 const Content = styled.div`
-    /* background-color: blue; */
+   margin: 0 auto;
+    height: 85vh;
+    overflow-y: auto;
 `
 
 
 const Container = styled.div`
   color: #333;
   width: 60%;
-  margin: auto;
+  margin: 0 auto;
+
 
   .header{
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: .5rem;
-
-   
 
     .showAllIcon{
       width: 15px;
@@ -400,7 +401,6 @@ const Card = styled.div`
 
   &:hover{
     opacity: .7;
-    transform: scale(.95);
   }
 
   &:hover .icons{

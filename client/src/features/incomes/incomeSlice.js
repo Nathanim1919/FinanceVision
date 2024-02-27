@@ -30,6 +30,21 @@ const incomeSlice = createSlice({
   },
 });
 
+
+// Async action for creating incomes
+export const createIncomes  = (incomeData, userId) => async (dispatch) => {
+  dispatch(incomeSlice.actions.setLoading(true));
+  try {
+    const response = await axios.post('http://localhost:3000/api/v1/incomes/',{incomeData, userId});
+    dispatch(incomeSlice.actions.addIncome(response.data.data));
+  } catch (error) {
+    dispatch(incomeSlice.actions.setError(error.message));
+  }
+  dispatch(incomeSlice.actions.setLoading(false));
+};
+
+
+
 // Async action for fetching incomes
 export const fetchIncomes = (userId) => async (dispatch) => {
   dispatch(incomeSlice.actions.setLoading(true));
@@ -41,6 +56,8 @@ export const fetchIncomes = (userId) => async (dispatch) => {
   }
   dispatch(incomeSlice.actions.setLoading(false));
 };
+
+
 
 // Async action for deleting income
 export const deleteIncomeAsync = (id, userId) => async (dispatch) => {
@@ -55,8 +72,8 @@ export const deleteIncomeAsync = (id, userId) => async (dispatch) => {
   dispatch(incomeSlice.actions.setLoading(false));
 };
 
+
+
 // Selector to get incomes from the state
 export const selectIncomes = (state) => state.income.incomes;
-
-
 export default incomeSlice.reducer;

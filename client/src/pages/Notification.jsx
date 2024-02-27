@@ -175,6 +175,9 @@ const Header = styled.div`
 
 const Container = styled.div`
   color: #1e1d1d;
+  margin: 0 auto;
+  height: 88vh;
+  overflow-y: auto;
   .header{
     display: flex;
     align-items: center;

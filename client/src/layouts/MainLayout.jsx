@@ -9,6 +9,8 @@ import { Outlet } from 'react-router-dom';
 const Container = styled.div`
   display: grid;
   grid-template-rows: .1fr .9fr;
+  max-height: 100vh;
+  overflow: hidden;
 `
 
 const View = styled.div`
