@@ -38,7 +38,7 @@ export const fetchExpenses = (usersId) => async (dispatch) => {
     dispatch(expenseSlice.actions.setLoading(true));
     try{
         const response = await axios.get(`http://localhost:3000/api/v1/expenses?userId=${usersId}`);
-        dispatch(expenseSlice.actions.setExpense(response.data.data.expenses));
+        dispatch(expenseSlice.actions.setExpense(response.data.data.expense));
     } catch (error) {
         dispatch(expenseSlice.actions.setError(error.message));
     }
@@ -47,8 +47,30 @@ export const fetchExpenses = (usersId) => async (dispatch) => {
 }
 
 
-export const deleteExpense = (expenseId, userId) => async (dispatch) => {
+export const createExpense = (expenseData, userId) => async (dispatch) => {
+    dispatch(expenseSlice.actions.setLoading(true));
+    try {
+        const response = await axios.post('http://localhost:3000/api/v1/expenses/',{expenseData, userId});
+        console.log(response.data);
+        dispatch(expenseSlice.actions.addExpense(response.data.data));
+    } catch (error) {
+        dispatch(expenseSlice.actions.setError(error.message));
+    }
+    dispatch(expenseSlice.actions.setLoading(false));
+}
 
+
+// async action for deleting expenses
+export const deleteExpense = (id, userId) => async (dispatch) => {
+    dispatch(expenseSlice.actions.setLoading(true));
+    try {
+        const response = await axios.post(`http://localhost:3000/api/v1/expenses/${id}`,{userId});
+        console.log(response)
+        dispatch(expenseSlice.actions.deleteExpense(id));
+    } catch (error) {
+        dispatch(expenseSlice.actions.setError(error.message));
+    }
+    dispatch(expenseSlice.actions.setLoading(false));
 }
 
 
@@ -56,4 +78,6 @@ export const deleteExpense = (expenseId, userId) => async (dispatch) => {
 export const selectExpenses = (state) => state.expense.expenses;
 export const selectLoading = (state) => state.expense.loading;
 export const selectError = (state) => state.expense.error;
+
+// export the reducer
 export default expenseSlice.reducer;

@@ -3,8 +3,12 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+
+// Routes
 import userRouter  from "./routes/authRoute.js";
 import incomeRouter from "./routes/incomeRoute.js";
+import expenseRouter from "./routes/expenseRoute.js";
+
 dotenv.config();
 
 const startServer = async () => {
@@ -25,6 +29,7 @@ const startServer = async () => {
     // Routes
     app.use("/api/v1/auth", userRouter);
     app.use("/api/v1/incomes", incomeRouter);
+    app.use("/api/v1/expenses", expenseRouter);
 
     // Start Server
     app.listen(port, () => {

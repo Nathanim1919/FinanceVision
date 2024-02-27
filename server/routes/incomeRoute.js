@@ -1,10 +1,10 @@
 import express from 'express';
+import { getIncomes, createIncome, updateIncome, deleteIncome } from '../controllers/incomeController.js';
 
 
 const router = express.Router();
 
-import { getIncomes, createIncome, updateIncome, deleteIncome } from '../controllers/incomeController.js';
-
+//  /api/v1/incomes
 router.get('/', getIncomes);
 router.post('/', createIncome);
 router.post('/:id', deleteIncome);
