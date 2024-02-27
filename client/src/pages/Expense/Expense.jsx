@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ExpenseForm from '../../components/forms/ExpenseForm';
 import { IoMdAdd } from "react-icons/io";
 import styled, { keyframes } from 'styled-components';
@@ -6,6 +6,11 @@ import { CiCalendarDate, CiEdit, CiViewTimeline } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { TbCategoryFilled } from "react-icons/tb";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchExpenses, deleteExpense } from '../../features/expenses/expenseSlice';
+import { Loader } from '../../components/Loader';
+import { selectUser } from '../../features/auth/authSlice';
+
 
 const sampleExpenses = [
   {
@@ -216,20 +221,40 @@ const IncomeBox = styled.div`
 `
 
 function Expense() {
-    const [createExpense, setCreateExpense] = useState(false)
+    const [createExpense, setCreateExpense] = useState(false);
+    const isLoading = useSelector(state => state.expense.loading);
+    const user = useSelector(selectUser);
+    const expenses = useSelector(state => state.expense.expenses);
+    const dispatch = useDispatch();
+
+
+    useEffect(()=>{
+        dispatch(fetchExpenses(user._id));
+        console.log(expenses)
+    },[dispatch, user]);
+
+
+    const handleDeleteExpense = (id) => {
+        dispatch(deleteExpense(id, user._id));
+        dispatch(fetchExpenses(user._id));
+    }
+
+
+
   return (
+    isLoading ? <Loader/> :
     <Container>
         {createExpense && <ExpenseForm setCreateExpense={setCreateExpense}/>}
         <Content>
 
             <Header>
-                <h2>Nathan's expenses</h2>
+                <h2>{user.username}'s expenses</h2>
                 <div className='icon' onClick={()=>setCreateExpense(true)}>
                     <IoMdAdd/>
                 </div>
             </Header>
         <IncomeBox>
-            {sampleExpenses.map(income => (
+            {expenses && expenses.slice().reverse().map(income => (
                 <div key={income.id}>
                     <div>
                         <h3><TbCategoryFilled/>{income.category}</h3>
@@ -244,12 +269,11 @@ function Expense() {
                         <div className='edit'>
                             <CiEdit/>
                         </div>
-                        <div className='delete'>
+                        <div className='delete' onClick={()=>handleDeleteExpense(income._id)}>
                             <MdDeleteOutline/>
                         </div>
                     </div>
                 </div>
-            
             ))}
         </IncomeBox>
         </Content>

@@ -6,10 +6,11 @@ import { FaArrowRotateLeft } from "react-icons/fa6";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-
+import { createExpense } from '../../features/expenses/expenseSlice';
 
 const ExpenseForm = ({setCreateExpense}) => {
   const isLoading = useSelector((state) => state.expense.loading);
+  const user = useSelector((state) => state.auth.user);
   const dispatch  = useDispatch();
   const [incomeData, setIncomeData] = useState({
     date: '',
@@ -33,29 +34,122 @@ const ExpenseForm = ({setCreateExpense}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      // Assuming you have an API endpoint for creating income records
-      await axios.post('http://localhost/api/v1/incomes/createIncome', incomeData);
+    // create new income 
+    dispatch(createExpense(incomeData, user._id));
 
-      // Reset form after successful submission
-      setIncomeData({
-        date: '',
-        category: '',
-        amount: '',
-        merchant: '',
-        frequency: 'onetime',
-      });
-
-      // You can also add a success message or redirect the user
-      console.log('Income created successfully!');
-    } catch (error) {
-      // Handle error - display an error message, log the error, etc.
-      console.error('Error creating income:', error.message);
-    }
+    // Reset form after successful submission
+    setIncomeData({
+      date: '',
+      category: '',
+      amount: '',
+      merchant: '',
+      frequency: 'onetime',
+    });
+    setCreateExpense(false);
   };
 
 
-  const Container = styled.div`
+  
+
+  return (
+    <Container>
+        <form onSubmit={handleSubmit}>
+          <div onClick={()=>setCreateExpense(false)} className='closeIcon'>
+            <IoMdClose/>
+          </div>
+          <h3>Create Expense</h3>
+          <input
+            type="date"
+            name="date"
+            value={incomeData.date}
+            onChange={handleInputChange}
+            required
+          />
+
+         
+          <input
+            type="text"
+            name="category"
+            placeholder='Enter Category'
+            value={incomeData.category}
+            onChange={handleInputChange}
+            required
+          />
+
+         
+          <input
+            type="number"
+            name="amount"
+            placeholder='Enter amount'
+            value={incomeData.amount}
+            onChange={handleInputChange}
+            required
+          />
+
+          
+          <input
+            type="text"
+            name="merchant"
+            placeholder='Who gives you the money?'
+            value={incomeData.merchant}
+            onChange={handleInputChange}
+            required
+          />
+
+         
+        <div className="frequency">
+          <li onClick={setFrequency}>
+            {incomeData.frequency !== "onetime" ? (
+              <MdOutlineRadioButtonUnchecked />
+            ) : (
+              <MdOutlineRadioButtonChecked />
+            )}
+            onetime
+          </li>
+          <li onClick={setFrequency}>
+            {incomeData.frequency !== "weekly" ? (
+              <MdOutlineRadioButtonUnchecked />
+            ) : (
+              <MdOutlineRadioButtonChecked />
+            )}
+            weekly
+          </li>
+          <li onClick={setFrequency}>
+            {incomeData.frequency !== "monthly" ? (
+              <MdOutlineRadioButtonUnchecked />
+            ) : (
+              <MdOutlineRadioButtonChecked />
+            )}
+            monthly
+          </li>
+          <li onClick={setFrequency}>
+            {incomeData.frequency !== "annually" ? (
+              <MdOutlineRadioButtonUnchecked />
+            ) : (
+              <MdOutlineRadioButtonChecked />
+            )}
+            annually
+          </li>
+        </div>
+
+
+          {!isLoading?<button type="submit">Create Expense</button>:
+          <button className='loadingState'><FaArrowRotateLeft/><span></span> Creating ...</button>}
+        </form>
+    </Container>
+  );
+};
+
+export default ExpenseForm;
+
+
+
+
+
+
+
+// the styled components
+const Container = styled.div`
     position: fixed;
     top: 0;
     left: 0;
@@ -163,94 +257,3 @@ const ExpenseForm = ({setCreateExpense}) => {
 
     }
   `
-
-  return (
-    <Container>
-        <form onSubmit={handleSubmit}>
-          <div onClick={()=>setCreateExpense(false)} className='closeIcon'>
-            <IoMdClose/>
-          </div>
-          <h3>Create Expense</h3>
-          <input
-            type="date"
-            name="date"
-            value={incomeData.date}
-            onChange={handleInputChange}
-            required
-          />
-
-         
-          <input
-            type="text"
-            name="category"
-            placeholder='Enter Category'
-            value={incomeData.category}
-            onChange={handleInputChange}
-            required
-          />
-
-         
-          <input
-            type="number"
-            name="amount"
-            placeholder='Enter amount'
-            value={incomeData.amount}
-            onChange={handleInputChange}
-            required
-          />
-
-          
-          <input
-            type="text"
-            name="merchant"
-            placeholder='Who gives you the money?'
-            value={incomeData.merchant}
-            onChange={handleInputChange}
-            required
-          />
-
-         
-<div className="frequency">
-          <li onClick={setFrequency}>
-            {incomeData.frequency !== "onetime" ? (
-              <MdOutlineRadioButtonUnchecked />
-            ) : (
-              <MdOutlineRadioButtonChecked />
-            )}
-            onetime
-          </li>
-          <li onClick={setFrequency}>
-            {incomeData.frequency !== "weekly" ? (
-              <MdOutlineRadioButtonUnchecked />
-            ) : (
-              <MdOutlineRadioButtonChecked />
-            )}
-            weekly
-          </li>
-          <li onClick={setFrequency}>
-            {incomeData.frequency !== "monthly" ? (
-              <MdOutlineRadioButtonUnchecked />
-            ) : (
-              <MdOutlineRadioButtonChecked />
-            )}
-            monthly
-          </li>
-          <li onClick={setFrequency}>
-            {incomeData.frequency !== "annually" ? (
-              <MdOutlineRadioButtonUnchecked />
-            ) : (
-              <MdOutlineRadioButtonChecked />
-            )}
-            annually
-          </li>
-        </div>
-
-
-          {!isLoading?<button type="submit">Create Income</button>:
-          <button className='loadingState'><FaArrowRotateLeft/><span></span> Creating ...</button>}
-        </form>
-    </Container>
-  );
-};
-
-export default ExpenseForm;
