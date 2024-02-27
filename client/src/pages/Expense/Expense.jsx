@@ -96,10 +96,13 @@ const sampleExpenses = [
 const Container = styled.div`
     /* background-color: blue; */
     color: #333;
+    margin: 0 auto;
+    height: 85vh;
+    overflow-y: auto;
     
 `
 
-
+8
 const Content = styled.div`
     width: 60%;
     margin: 0 auto;
@@ -221,7 +224,7 @@ function Expense() {
 
             <Header>
                 <h2>Nathan's expenses</h2>
-                <div className='icon' onClick={()=>setCreateIncome(true)}>
+                <div className='icon' onClick={()=>setCreateExpense(true)}>
                     <IoMdAdd/>
                 </div>
             </Header>

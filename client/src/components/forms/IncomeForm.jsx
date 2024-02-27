@@ -4,14 +4,15 @@ import styled from 'styled-components';
 import { IoMdClose } from "react-icons/io";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
-import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/auth/authSlice';
 import { FaArrowRotateLeft } from "react-icons/fa6";
-
+import { createIncomes, fetchIncomes } from '../../features/incomes/incomeSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const IncomeForm = ({setCreateIncome}) => {
   const user = useSelector(selectUser);
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useSelector((state) => state.income.loading);
+  const dispatch  = useDispatch();
   const [incomeData, setIncomeData] = useState({
     date: '',
     category: '',
@@ -33,29 +34,17 @@ const IncomeForm = ({setCreateIncome}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(incomeData)
-    setIsLoading(true)
-    try {
-      // Assuming you have an API endpoint for creating income records
-      await axios.post('http://localhost:3000/api/v1/incomes/', {incomeData, userId:user._id});
+    // create new income
+    dispatch(createIncomes(incomeData, user._id));
 
-      // Reset form after successful submission
-      setIncomeData({
-        date: '',
-        category: '',
-        amount: '',
-        merchant: '',
-        frequency: 'onetime',
-      });
-
-      // You can also add a success message or redirect the user
-      console.log('Income created successfully!');
-      console.log(incomeData)
-    } catch (error) {
-      // Handle error - display an error message, log the error, etc.
-      console.error('Error creating income:', error.message);
-    }
-    setIsLoading(false);
+    // Reset form after successful submission
+    setIncomeData({
+      date: '',
+      category: '',
+      amount: '',
+      merchant: '',
+      frequency: 'onetime',
+    });
     setCreateIncome(false)
   };
 

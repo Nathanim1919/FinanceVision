@@ -1,11 +1,11 @@
 import React from 'react';
 import { BlogCard } from '../components/BlogCard';
-import b1 from '../../public/blog/b1.jpg';
-import b2 from '../../public/blog/b2.jpg';
-import b3 from '../../public/blog/b3.jpg';
-import b4 from '../../public/blog/b4.jpg';
-import b5 from '../../public/blog/b5.jpg';
-import b6 from '../../public/blog/b6.jpg';
+import b1 from '/blog/b1.jpg';
+import b2 from '/blog/b2.jpg';
+import b3 from '/blog/b3.jpg';
+import b4 from '/blog/b4.jpg';
+import b5 from '/blog/b5.jpg';
+import b6 from '/blog/b6.jpg';
 import styled from 'styled-components';
 
 

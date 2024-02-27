@@ -13,25 +13,23 @@ import { Loader } from '../../components/Loader';
 import { BsThreeDots } from "react-icons/bs";
 
 
-
 // import from incomeSlice
 import { selectIncomes } from '../../features/incomes/incomeSlice';
 import { fetchIncomes, deleteIncomeAsync } from '../../features/incomes/incomeSlice';
 
 
-
-
 const Container = styled.div`
     /* background-color: blue; */
     color: #333;
+    margin: 0 auto;
+    height: 85vh;
+    overflow-y: auto;
     
 `
 
 const Content = styled.div`
     width: 60%;
     margin: 0 auto;
-    height: 85vh;
-    overflow-y: auto;
 `
 
 const Header = styled.div`
@@ -95,7 +93,6 @@ const IncomeBox = styled.div`
         }}
 
         
-
         >div{
             display: flex;
             flex-direction: column;
@@ -148,7 +145,6 @@ function Income() {
     const user = useSelector(selectUser);
     const incomes = useSelector(selectIncomes);
     const isLoading = useSelector((state) => state.income.loading);
-    console.log(incomes);
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -178,7 +174,7 @@ function Income() {
                 </div>
             </Header>
         <IncomeBox>
-            {incomes && incomes?.map(income => (
+        {incomes && incomes.slice().reverse().map(income => (
                 <div key={income.id}>
                     <div>
                         <h3><TbCategoryFilled/>{income.category}</h3>

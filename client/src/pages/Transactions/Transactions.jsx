@@ -150,7 +150,9 @@ export const Transactions = () => {
 
 
 const Content = styled.div`
-  
+    margin: 0 auto;
+    height: 85vh;
+    overflow-y: auto;
 `
 const Header = styled.div`
     display: flex;
