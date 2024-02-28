@@ -26,6 +26,7 @@ const createIncome = asyncHandler(async (req, res) => {
   // add the new income to users incomes array
   const user = await User.findById(userId);
         user.incomes.push(newIncome._id);
+        user.deposit += newIncome.amount;
         await user.save();
 
   console.log(user)      

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import HeroImage from "../../public/images/hero.jpg";
+import HeroImage from "/images/hero.jpg";
 import { FaBitcoin } from "react-icons/fa";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import Services from "../sections/Services";

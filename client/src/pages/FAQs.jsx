@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FAQImage from '../../public/images/faq.png';
+import FAQImage from '/images/faq.png';
 import styled from 'styled-components';
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";

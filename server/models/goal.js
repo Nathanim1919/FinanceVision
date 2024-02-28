@@ -25,11 +25,14 @@ const goalSchema = new Schema({
     category:{
         type:String,
         default:'General',
+        enum:['General','Health','Education','Business','Travel','Entertainment','Family','Other'],
         required:true
     },
     status:{
         type:String,
-        required:true
+        required:true,
+        default:'In Progress',
+        enum:['In Progress','Completed']
     },
     deadline:{
         type:Date,

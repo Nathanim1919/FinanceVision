@@ -26,9 +26,8 @@ const createExpense = asyncHandler(async (req, res) => {
   // add the new expense to users expenses array
   const user = await User.findById(userId);
         user.expense.push(newExpense._id);
+        user.deposit -= newExpense.amount;
         await user.save();
-
-
   try {
     await newExpense.save();
     res.status(201).json(
@@ -47,7 +46,7 @@ const updateIncome = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send("No income with that id");
 
-  const updatedIncome = await Income.findByIdAndUpdate(_id, income, { new: true });
+  const updatedIncome = await Expense.findByIdAndUpdate(_id, income, { new: true });
   res.json(
       new ApiResponse(200, updatedIncome, "Income updated successfully")
   );
