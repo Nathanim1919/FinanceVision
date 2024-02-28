@@ -8,8 +8,10 @@ import { MdDeleteOutline } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { GiProgression } from "react-icons/gi";
 import { TbCategoryFilled } from "react-icons/tb";
+import GoalForm from '../../components/forms/GoalForm';
 
 export const Goals = () => {
+  const [createGoal, setCreateGoal] = React.useState(false);
 
   const goals = [
     {
@@ -212,10 +214,11 @@ export const Goals = () => {
   
   return (
     <Content>
+      {createGoal && <GoalForm setCreateGoal={setCreateGoal}/>}
           <Container>
-            <Header>
+              <Header>
                   <h2><GoGoal/>Nathan's Goals</h2>
-                  <div className='icon' onClick={()=>setCreateIncome(true)}>
+                  <div className='icon' onClick={()=>setCreateGoal(true)}>
                       <IoMdAdd/>
                   </div>
               </Header>
