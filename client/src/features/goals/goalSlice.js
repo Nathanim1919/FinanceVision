@@ -1,68 +1,99 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 const initialState = {
-    goals: [],
-    loading: false,
-    error: null,
-    };
+  goals: [],
+  loading: false,
+  error: null,
+};
 
+export const fetchGoals = createAsyncThunk(
+  'goal/fetchGoals',
+  async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/v1/goals?userId=${userId}`);
+      return response.data.data.goals; // Assuming the response structure
+    } catch (error) {
+      throw error; // Re-throw for error handling in reducers
+    }
+  }
+);
+
+export const createGoal = createAsyncThunk(
+  'goal/createGoal',
+  async ({goalData, userId}) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/goals/', { goalData, userId });
+      console.log("response is here:  ",response);
+      return response.data.data; // Assuming the response structure
+    } catch (error) {
+      throw error; // Re-throw for error handling in reducers
+    }
+  }
+);
+
+export const deleteGoal = createAsyncThunk(
+  'goal/deleteGoal',
+  async (id, userId) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/v1/goals/${id}`);
+      return id; // Return the deleted goal ID for successful deletion handling
+    } catch (error) {
+      throw error; // Re-throw for error handling in reducers
+    }
+  }
+);
 
 const goalSlice = createSlice({
-    name: 'goal',
-    initialState,
-    reducers: {
-        setGoals: (state, action) => {
-            state.goals = action.payload;
-        },
-        addGoal: (state, action) => {
-            state.goals.push(action.payload);
-        },
-        deleteGoal: (state, action) => {
-            state.goals = state.goals.filter((goal) => goal._id !== action.payload);
-        },
-        setLoading: (state, action) => {
-            state.loading = action.payload;
-        },
-        setError: (state, action) => {
-            state.error = action.payload;
-        },
+  name: 'goal',
+  initialState,
+  reducers: {
+    setError: (state, action) => {
+      state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchGoals.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchGoals.fulfilled, (state, action) => {
+        state.loading = false;
+        state.goals = action.payload;
+      })
+      .addCase(fetchGoals.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(createGoal.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createGoal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.goals.push(action.payload);
+      })
+      .addCase(createGoal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteGoal.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteGoal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.goals = state.goals.filter((goal) => goal._id !== action.payload);
+      })
+      .addCase(deleteGoal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
 });
-
-export const createGoal = (goalData, userId) => async (dispatch) => {
-    dispatch(goalSlice.actions.setLoading(true));
-    try {
-        const response = await axios.post('http://localhost:3000/api/v1/goals/',{goalData, userId});
-        dispatch(goalSlice.actions.addGoal(response.data.data));
-    } catch (error) {
-        dispatch(goalSlice.actions.setError(error.message));
-    }
-    dispatch(goalSlice.actions.setLoading(false));
-};
-
-export const fetchGoals = (userId) => async (dispatch) => {
-    dispatch(goalSlice.actions.setLoading(true));
-    try {
-        const response = await axios.get(`http://localhost:3000/api/v1/goals?userId=${userId}`);
-        dispatch(goalSlice.actions.setGoals(response.data.data.goals));
-    } catch (error) {
-        dispatch(goalSlice.actions.setError(error.message));
-    }
-    dispatch(goalSlice.actions.setLoading(false));
-};
-
-export const deleteGoalAsync = (id, userId) => async (dispatch) => {
-    dispatch(goalSlice.actions.setLoading(true));
-    try {
-        await axios.delete(`http://localhost:3000/api/v1/goals/${id}`);
-        dispatch(goalSlice.actions.deleteGoal(id));
-    } catch (error) {
-        dispatch(goalSlice.actions.setError(error.message));
-    }
-    dispatch(goalSlice.actions.setLoading(false));
-};
 
 export const selectGoals = (state) => state.goal.goals;
 export const selectLoading = (state) => state.goal.loading;
 export const selectError = (state) => state.goal.error;
+
 export default goalSlice.reducer;

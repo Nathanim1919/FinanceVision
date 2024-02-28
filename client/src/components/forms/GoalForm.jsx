@@ -13,59 +13,60 @@ import { SiYourtraveldottv } from "react-icons/si";
 import { FaRegLaugh } from "react-icons/fa";
 import { MdFamilyRestroom } from "react-icons/md";
 import { BsMotherboard } from "react-icons/bs";
-
-
+import { createGoal } from '../../features/goals/goalSlice';
+import {useSelector, useDispatch} from 'react-redux';
 
 
 
 const GoalForm = ({setCreateGoal}) => {
-  const [openCategory, setOpenCategory] = useState(false)
-  const [incomeData, setIncomeData] = useState({
-    title:"",
-    description:"",
-    target:0,
-    current:0,
-    category:"General",
-    status:"In progress",
-    deadline:null,
-    startDate:null
+  const [openCategory, setOpenCategory] = useState(false);
+  const user = useSelector(state => state.auth.user)
+  const dispatch = useDispatch();
+  const [goalData, setGoalData] = useState({
+    title: "",
+    description: "",
+    target: 0,
+    category: "General",
+    status: "In progress",
+    deadline: null,
+    startDate: null,
   });
 
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setIncomeData({ ...incomeData, [name]: value });
+    setGoalData({ ...goalData, [e.target.name]: e.target.value });
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(incomeData);
-
     try {
-      // Assuming you have an API endpoint for creating income records
-      await axios.post('http://localhost/api/v1/incomes/createIncome', incomeData);
-
-      // Reset form after successful submission
-      setIncomeData({
-        title:"",
-        description:"",
-        target:0,
-        current:0,
-        category:"General",
-        status:"",
-        deadline:null,
-        startDate:null
+      dispatch(createGoal({goalData,userId:user._id}));
+      setGoalData({  // Reset form data
+        title: "",
+        description: "",
+        target: 0,
+        deadline: null,
+        startDate: null,
       });
-
-      // You can also add a success message or redirect the user
-      console.log('Income created successfully!');
+      setCreateGoal(false);
     } catch (error) {
-      // Handle error - display an error message, log the error, etc.
-      console.error('Error creating income:', error.message);
+      // Handle API call errors (e.g., display error message, retry logic)
+      console.error("Error creating goal:", error);
     }
+  };
+  
+
+  // Combined category and dropdown logic for cleaner structure
+  const handleCategoryChange = (newCategory) => {
+    setGoalData({ ...goalData, category: newCategory });
+  };
+
+  const toggleCategoryDropdown = () => {
+    setOpenCategory(!openCategory);
   };
 
 
-  
   return (
     <Container>
         <form onSubmit={handleSubmit}>
@@ -80,16 +81,16 @@ const GoalForm = ({setCreateGoal}) => {
              <input onChange={handleInputChange} name='startDate' type="date" placeholder='Start date'/>
              <input onChange={handleInputChange} name='deadline' type="date" placeholder='Deadline'/>
              <div class="custom-select">
-                <span onClick={()=>setOpenCategory(!openCategory)} class="selected-option">{incomeData.category}{!openCategory?<IoIosArrowDown/>:<IoIosArrowUp/>}</span>
+                <span onClick={toggleCategoryDropdown} class="selected-option">{goalData.category}{!openCategory?<IoIosArrowDown/>:<IoIosArrowUp/>}</span>
                 {openCategory && <ul class="options" openCategory={openCategory}>
-                  <li onClick={(e)=>{setIncomeData({...incomeData, [incomeData.category]:e.target.innerText }); setOpenCategory(false)}} value="General"><LuGoal/>General</li>
-                  <li onClick={(e)=>{setIncomeData({...incomeData, [incomeData.category]:e.target.innerText }); setOpenCategory(false)}} value="Health"><RiHealthBookFill/>Health</li>
-                  <li onClick={(e)=>{setIncomeData({...incomeData, [incomeData.category]:e.target.innerText }); setOpenCategory(false)}} value="Education"><MdCastForEducation/>Education</li>
-                  <li onClick={(e)=>{setIncomeData({...incomeData, [incomeData.category]:e.target.innerText }); setOpenCategory(false)}} value="Business"><FaBusinessTime/>Business</li>
-                  <li onClick={(e)=>{setIncomeData({...incomeData, [incomeData.category]:e.target.innerText }); setOpenCategory(false)}} value="Travel"><SiYourtraveldottv/>Travel</li>
-                  <li onClick={(e)=>{setIncomeData({...incomeData, [incomeData.category]:e.target.innerText }); setOpenCategory(false)}} value="Entertainment"><FaRegLaugh/>Entertainment</li>
-                  <li onClick={(e)=>{setIncomeData({...incomeData, [incomeData.category]:e.target.innerText }); setOpenCategory(false)}} value="Family"><MdFamilyRestroom/>Family</li>
-                  <li onClick={(e)=>{setIncomeData({...incomeData, [incomeData.category]:e.target.innerText }); setOpenCategory(false)}} value="Other"><BsMotherboard/>Other</li>
+                  <li onClick={()=> {handleCategoryChange("General");setOpenCategory(false)}} value="General"><LuGoal/>General</li>
+                  <li onClick={()=> {handleCategoryChange("Health");setOpenCategory(false)}} value="Health"><RiHealthBookFill/>Health</li>
+                  <li onClick={()=> {handleCategoryChange("Education");setOpenCategory(false)}} value="Education"><MdCastForEducation/>Education</li>
+                  <li onClick={()=> {handleCategoryChange("Business");setOpenCategory(false)}} value="Business"><FaBusinessTime/>Business</li>
+                  <li onClick={()=> {handleCategoryChange("Travel");setOpenCategory(false)}} value="Travel"><SiYourtraveldottv/>Travel</li>
+                  <li onClick={()=> {handleCategoryChange("Entertainment");setOpenCategory(false)}} value="Entertainment"><FaRegLaugh/>Entertainment</li>
+                  <li onClick={()=> {handleCategoryChange("Family");setOpenCategory(false)}} value="Family"><MdFamilyRestroom/>Family</li>
+                  <li onClick={()=> {handleCategoryChange("Other");setOpenCategory(false)}} value="Other"><BsMotherboard/>Other</li>
                 </ul>}
               </div>
            <button type='submit'>Create</button>

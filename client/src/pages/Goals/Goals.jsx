@@ -9,9 +9,14 @@ import { IoMdAdd } from "react-icons/io";
 import { GiProgression } from "react-icons/gi";
 import { TbCategoryFilled } from "react-icons/tb";
 import GoalForm from '../../components/forms/GoalForm';
+import { useSelector } from 'react-redux';
+import { selectGoals, selectLoading } from '../../features/goals/goalSlice';
+import { Loader } from '../../components/Loader';
 
 export const Goals = () => {
   const [createGoal, setCreateGoal] = React.useState(false);
+  const isLoading = useSelector(selectLoading);
+  const goal = useSelector(selectGoals);
 
   const goals = [
     {
@@ -213,6 +218,7 @@ export const Goals = () => {
   
   
   return (
+    isLoading ? <Loader/> :
     <Content>
       {createGoal && <GoalForm setCreateGoal={setCreateGoal}/>}
           <Container>
