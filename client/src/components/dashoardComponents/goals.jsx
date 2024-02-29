@@ -1,78 +1,92 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
 import { GoGoal } from "react-icons/go";
+import { fetchGoals, selectGoals, selectLoading } from '../../features/goals/goalSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Goals = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+  const goals = useSelector(selectGoals);
+  const loading = useSelector(selectLoading);
 
-  const goals = [
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
+
+  useEffect(() => {
+    dispatch(fetchGoals(user._id));
+  }, [dispatch, user]);
+
+
+  console.log(goals)
+
+  // const goals = [
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
   
-    // New Goal 5
-    {
-      title: "Learn a New Language",
-      targetAmount: 343120,  // Can set a targetAmount if applicable
-      targetDate: "2024-12-31",
-      progress: 70,
-      description: "Learn a new language by the end of the year.",
-      milestones: [
-        {
-          title: "Complete Beginner Course",
-          achieved: true,
-          date: "2024-05-01"
-        },
-        {
-          title: "Hold Basic Conversations",
-          achieved: false,
-          date: "2024-08-15"
-        }
-      ]
-    },
+  //   // New Goal 5
+  //   {
+  //     title: "Learn a New Language",
+  //     targetAmount: 343120,  // Can set a targetAmount if applicable
+  //     targetDate: "2024-12-31",
+  //     progress: 70,
+  //     description: "Learn a new language by the end of the year.",
+  //     milestones: [
+  //       {
+  //         title: "Complete Beginner Course",
+  //         achieved: true,
+  //         date: "2024-05-01"
+  //       },
+  //       {
+  //         title: "Hold Basic Conversations",
+  //         achieved: false,
+  //         date: "2024-08-15"
+  //       }
+  //     ]
+  //   },
   
-    // New Goal 6
-    {
-      title: "Travel to a New Country",
-      targetAmount: 232130,  // Can set a targetAmount if applicable
-      targetDate: "2024-11-30",
-      progress: 58,
-      description: "Explore a new country by the end of November.",
-      milestones: [
-        {
-          title: "Research Potential Destinations",
-          achieved: true,
-          date: "2024-04-30"
-        },
-        {
-          title: "Book Flights",
-          achieved: false,
-          date: "2024-06-01"
-        }
-      ]
-    },
+  //   // New Goal 6
+  //   {
+  //     title: "Travel to a New Country",
+  //     targetAmount: 232130,  // Can set a targetAmount if applicable
+  //     targetDate: "2024-11-30",
+  //     progress: 58,
+  //     description: "Explore a new country by the end of November.",
+  //     milestones: [
+  //       {
+  //         title: "Research Potential Destinations",
+  //         achieved: true,
+  //         date: "2024-04-30"
+  //       },
+  //       {
+  //         title: "Book Flights",
+  //         achieved: false,
+  //         date: "2024-06-01"
+  //       }
+  //     ]
+  //   },
     
-  ]
-  
- 
-  
+  // ]
+
+
+  if(loading) return <h1>Loading...</h1>
   return (
     <Container>
     <div className="header">
@@ -82,7 +96,7 @@ export const Goals = () => {
       </Link>
     </div>
     <GoalContainer>
-      {goals.map(goal => (
+      {user.goal?.map(goal => (
         <div key={goal.title}>
           <div className='titles'>
             <h4>{goal.title}</h4>
