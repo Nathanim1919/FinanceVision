@@ -20,7 +20,12 @@ const goalSchema = new Schema({
     },
     current:{
         type:Number,
+        default:0,
         required:true
+    },
+    progress:{
+        type:Number,
+        default:0
     },
     category:{
         type:String,
