@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
@@ -8,222 +8,242 @@ import { MdDeleteOutline } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { GiProgression } from "react-icons/gi";
 import { TbCategoryFilled } from "react-icons/tb";
+import GoalForm from '../../components/forms/GoalForm';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectGoals, selectLoading } from '../../features/goals/goalSlice';
+import { Loader } from '../../components/Loader';
+import { fetchGoals } from '../../features/goals/goalSlice';
 
 export const Goals = () => {
+  const [createGoal, setCreateGoal] = React.useState(false);
+  const isLoading = useSelector(selectLoading);
+  const goals = useSelector(selectGoals);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
 
-  const goals = [
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
-    {
-      title: "Start Investment Portfolio",
-      targetAmount: 50000,
-      targetDate: "2024-08-31",
-      progress: 20,
-      description: "Begin building an investment portfolio by August 31st.",
-      milestones: [
-        {
-          title: "Research Investment Options",
-          achieved: true,
-          date: "2024-03-15"
-        },
-        {
-          title: "Open Investment Account",
-          achieved: false,
-          date: "2024-04-01"
-        }
-      ]
-    },
+
+
+  useEffect(() => {
+    dispatch(fetchGoals(user._id));
+  }, [dispatch, user]);
+
+  console.log(user.goal)
+
+  // const goals = [
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     title: "Start Investment Portfolio",
+  //     targetAmount: 50000,
+  //     targetDate: "2024-08-31",
+  //     progress: 20,
+  //     description: "Begin building an investment portfolio by August 31st.",
+  //     milestones: [
+  //       {
+  //         title: "Research Investment Options",
+  //         achieved: true,
+  //         date: "2024-03-15"
+  //       },
+  //       {
+  //         title: "Open Investment Account",
+  //         achieved: false,
+  //         date: "2024-04-01"
+  //       }
+  //     ]
+  //   },
   
-    // New Goal 5
-    {
-      title: "Learn a New Language",
-      targetAmount: 343120,  // Can set a targetAmount if applicable
-      targetDate: "2024-12-31",
-      progress: 70,
-      description: "Learn a new language by the end of the year.",
-      milestones: [
-        {
-          title: "Complete Beginner Course",
-          achieved: true,
-          date: "2024-05-01"
-        },
-        {
-          title: "Hold Basic Conversations",
-          achieved: false,
-          date: "2024-08-15"
-        }
-      ]
-    },
+  //   // New Goal 5
+  //   {
+  //     title: "Learn a New Language",
+  //     targetAmount: 343120,  // Can set a targetAmount if applicable
+  //     targetDate: "2024-12-31",
+  //     progress: 70,
+  //     description: "Learn a new language by the end of the year.",
+  //     milestones: [
+  //       {
+  //         title: "Complete Beginner Course",
+  //         achieved: true,
+  //         date: "2024-05-01"
+  //       },
+  //       {
+  //         title: "Hold Basic Conversations",
+  //         achieved: false,
+  //         date: "2024-08-15"
+  //       }
+  //     ]
+  //   },
   
-    // New Goal 6
-    {
-      title: "Travel to a New Country",
-      targetAmount: 232130,  // Can set a targetAmount if applicable
-      targetDate: "2024-11-30",
-      progress: 58,
-      description: "Explore a new country by the end of November.",
-      milestones: [
-        {
-          title: "Research Potential Destinations",
-          achieved: true,
-          date: "2024-04-30"
-        },
-        {
-          title: "Book Flights",
-          achieved: false,
-          date: "2024-06-01"
-        }
-      ]
-    },
+  //   // New Goal 6
+  //   {
+  //     title: "Travel to a New Country",
+  //     targetAmount: 232130,  // Can set a targetAmount if applicable
+  //     targetDate: "2024-11-30",
+  //     progress: 58,
+  //     description: "Explore a new country by the end of November.",
+  //     milestones: [
+  //       {
+  //         title: "Research Potential Destinations",
+  //         achieved: true,
+  //         date: "2024-04-30"
+  //       },
+  //       {
+  //         title: "Book Flights",
+  //         achieved: false,
+  //         date: "2024-06-01"
+  //       }
+  //     ]
+  //   },
     
-  ]
+  // ]
   
   
   return (
+    isLoading ? <Loader/> :
     <Content>
+      {createGoal && <GoalForm setCreateGoal={setCreateGoal}/>}
           <Container>
-            <Header>
+              <Header>
                   <h2><GoGoal/>Nathan's Goals</h2>
-                  <div className='icon' onClick={()=>setCreateIncome(true)}>
+                  <div className='icon' onClick={()=>setCreateGoal(true)}>
                       <IoMdAdd/>
                   </div>
               </Header>
               <GoalContainer>
-                {goals.map(goal => (
-                  <Card key={goal.title}>
+                {user.goal?.map(item => (
+                  <Card key={item.title}>
                     <div className='titles'>
-                      <h4><TbCategoryFilled/>{goal.title}</h4>
+                      <h4><TbCategoryFilled/>{item.title}</h4>
                       <div>
                         <h2><GiProgression/>4000 BIRR</h2>
                         <p className='daysleft'>7 days left</p>
@@ -232,11 +252,11 @@ export const Goals = () => {
                     <div className='progress'>
                       <div>
                         <div className='outter'>
-                          <div style={{ width: `${goal.progress}%` }} className='inner'></div>
+                          <div style={{ width: `${item.progress}%` }} className='inner'></div>
                         </div>
-                        <h4><span>{goal.progress}</span>%</h4>
+                        <h4><span>{item.progress}</span>%</h4>
                       </div>
-                      <h2><GoGoal/>{goal.targetAmount} BIRR</h2>
+                      <h2><GoGoal/>{item.targetAmount} BIRR</h2>
                     </div>
                     <div className='icons'>
                         <div className='edit'>

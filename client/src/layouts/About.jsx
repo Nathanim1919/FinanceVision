@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import AboutImage from '../../public/blog/about.png';
+import AboutImage from '/blog/about.png';
 import { FaCheckCircle } from "react-icons/fa";
 
 const AboutUs = () => {

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const {Schema} = mongoose;
 
 const goalSchema = new Schema({
     user_id:{
@@ -20,7 +20,12 @@ const goalSchema = new Schema({
     },
     current:{
         type:Number,
+        default:0,
         required:true
+    },
+    progress:{
+        type:Number,
+        default:0
     },
     category:{
         type:String,
@@ -48,5 +53,5 @@ const goalSchema = new Schema({
 });
 
 
-const User = mongoose.model('Goal', goalSchema);
-module.exports = User;
+const Goal = mongoose.model('Goal', goalSchema);
+export default Goal;

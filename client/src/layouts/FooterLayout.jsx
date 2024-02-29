@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import FooterImage from '/blog/foot.png';
-import FooterImage2 from '/public/blog/footer.png';
+import FooterImage2 from '/blog/footer.png';
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";

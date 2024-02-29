@@ -7,6 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import  authReducer from './features/auth/authSlice';
 import incomeReducer from './features/incomes/incomeSlice.js';
 import expenseReducer from './features/expenses/expenseSlice.js';
+import goalReducer from './features/goals/goalSlice.js'
 
 
 const store = configureStore({
@@ -14,6 +15,7 @@ const store = configureStore({
     auth: authReducer,
     income:incomeReducer,
     expense:expenseReducer,
+    goal:goalReducer,
     // Add other reducers if needed
   },
 });
