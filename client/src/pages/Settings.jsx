@@ -45,6 +45,15 @@ export const Settings = () => {
                     </div>}
                 </div>
             </div>
+            <div className="userSettings">
+                
+                    <h3>Low Balance Range</h3>
+                    <div>
+                        <input type="number" placeholder='Maximum Value' id="darkMode" name="darkMode"/>
+                    </div>
+            </div>
+
+
          </Content>
     </Container>
   );

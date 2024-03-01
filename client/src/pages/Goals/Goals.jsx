@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
@@ -13,11 +13,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectGoals, selectLoading } from '../../features/goals/goalSlice';
 import { Loader } from '../../components/Loader';
 import { fetchGoals } from '../../features/goals/goalSlice';
+import { GoalDetails } from './GoalDetails';
 
 export const Goals = () => {
   const [createGoal, setCreateGoal] = React.useState(false);
   const isLoading = useSelector(selectLoading);
   const goals = useSelector(selectGoals);
+  const [selectGoal, setSelectGoal] = useState({});
+  const [showDetails, setShowDetails] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
 
@@ -25,12 +28,15 @@ export const Goals = () => {
     dispatch(fetchGoals(user._id));
   }, [dispatch, user]);
 
-  console.log(goals)
-
+  const handleGoalSelect = (goal) => {
+    setSelectGoal(goal);
+    setShowDetails(true);
+  }
 
   return (
     isLoading ? <Loader/> :
     <Content>
+      {(showDetails && selectGoal) && <GoalDetails setShowDetails={setShowDetails} goal={selectGoal}/>}
       {createGoal && <GoalForm setCreateGoal={setCreateGoal}/>}
           <Container>
               <Header>
@@ -41,7 +47,7 @@ export const Goals = () => {
               </Header>
               <GoalContainer>
                 {goals?.map(item => (
-                  <Card key={item.title} onClick={()=>alert(item._id)}>
+                  <Card key={item.title} onClick={()=>handleGoalSelect(item)}>
                     <div className='titles'>
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
                       <div className='current-progress'>

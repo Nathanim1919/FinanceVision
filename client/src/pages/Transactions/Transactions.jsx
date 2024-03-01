@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../features/auth/authSlice';
 import { fetchTransactions } from '../../features/transactions/transactionSlice';
 import { Loader } from '../../components/Loader';
+import { formatDate } from '../../utils/Formatting';
+import { CiLocationOn } from "react-icons/ci";
 
 
 
@@ -41,12 +43,12 @@ export const Transactions = () => {
         {transactions?.map(transaction => (
           <TransactionBox key={transaction.date}>
               <div className='transaction upperData'>
-                  <h4><BiSolidCategoryAlt/>{transaction.title}</h4>
+                  <h4><BiSolidCategoryAlt/>{transaction.title}<span>{transaction.type}</span></h4>
                   <p style={{backgroundColor:transaction.amount < 0?"red":"blue",color:"white"}}><FaMoneyBill/>{transaction.amount} BIRR</p>
               </div>
               <div className='transaction lowerData'>
-                  <h4>{transaction.merchant}</h4>
-                  <p><CiCalendarDate/>{transaction.date}</p>
+                  <h4><CiLocationOn/>{transaction.merchant}</h4>
+                  <p><CiCalendarDate/>{formatDate(transaction.date)}<span>{transaction.frequency}</span></p>
               </div>
           </TransactionBox>
         ))}
@@ -134,17 +136,32 @@ const TransactionBox = styled.div`
     display: flex;
     align-items: center;
     gap:.4rem;
+
+    span{
+      background-color: #eee;
+      font-size: .7rem;
+      padding: 0.1rem .3rem;
+      font-weight: 300;
+      border-radius: 30px;
+    }
   }
   .lowerData h4{
     font-size:.7rem;
     font-weight: 600;
     background-color: #9cb89c;
-    display: grid;
+    display: flex;
+    gap: .2rem;
     place-items: center;
     padding:.1rem .3rem;
     border-radius: 10px;
     margin-bottom: .3rem;
     color:#fff;
+  }
+
+  p span{
+    background-color: #eee;
+    padding:.1rem .3rem;
+    border-radius: 30px;
   }
 `
 const TransactionsContainer = styled.div`
