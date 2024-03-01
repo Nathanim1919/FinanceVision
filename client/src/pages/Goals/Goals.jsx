@@ -52,7 +52,7 @@ export const Goals = () => {
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
                       <div className='current-progress'>
                         <p className='daysleft'>7 days left</p>
-                        <h2><GiProgression/>4000 ETB</h2>
+                        <h2><GoGoal/>{item.target} ETB</h2>
                       </div>
                     </div>
                     <div className='progress'>
@@ -63,7 +63,7 @@ export const Goals = () => {
                        
                       </div>
                       <div className='target-goal'>
-                        <h2><GoGoal/>{item.target} ETB</h2>
+                        <h2><GiProgression/>4000 ETB</h2>
                         <div className='percent'>
                              <p>30</p>
                              %
