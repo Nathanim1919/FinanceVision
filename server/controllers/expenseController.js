@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import User from "../models/userModel.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import mongoose from "mongoose";
+import Transaction from "../models/transaction.js";
 
 // Get all expenses
 const getExpenses = asyncHandler(async (req, res) => {
@@ -20,23 +21,65 @@ const getExpenses = asyncHandler(async (req, res) => {
 // Create a new expense
 const createExpense = asyncHandler(async (req, res) => {
   const {expenseData, userId} = req.body;
-//   console.log(expenseData)
-  const newExpense = new Expense(expenseData);
 
-  // add the new expense to users expenses array
-  const user = await User.findById(userId);
-        user.expense.push(newExpense._id);
-        user.deposit -= newExpense.amount;
-        await user.save();
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
-    await newExpense.save();
-    res.status(201).json(
-        new ApiResponse(201, newExpense, "Expense created successfully")
-    );
+      // Check if user exists
+      const user = await User.findById(userId);
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+
+      // Create new expense and transaction
+      const newExpense = new Expense(expenseData);
+      const transaction = new Transaction({
+          user: userId,
+          title: expenseData.category,
+          amount: (expenseData.amount)*-1,
+          merchant: expenseData.merchant,
+          type: "withdraw",
+          date: expenseData.date,
+      });
+
+      // Push IDs to user's arrays and update deposit
+      user.expense.push(newExpense._id);
+      user.transactions.push(transaction._id);
+      user.deposit -= newExpense.amount;
+
+      // Save user and associated documents atomically
+      await user.save({ session });
+      await newExpense.save({ session });
+      await transaction.save({ session });
+
+      // Commit the transaction
+      await session.commitTransaction();
+      session.endSession();
+
+      res.status(201).json(
+          new ApiResponse(201, newExpense, "Expense created successfully")
+      )
   } catch (error) {
-    res.status(409).json({ message: error.message });
+      // Explicitly log the full error for debugging
+      console.error(error);
+
+      // Rollback the transaction if an error occurs
+      await session.abortTransaction();
+      session.endSession();
+
+      // Handle specific errors, if possible
+      if (error.code === 11000) { // Duplicate key error (MongoDB code)
+          res.status(409).json({ message: "Duplicate income data found." });
+      } else {
+          // Default error handling for other cases
+          res.status(500).json({ message: "Internal server error" });
+      }
   }
+
 });
+
 
 // Update an existing income
 const updateIncome = asyncHandler(async (req, res) => {

@@ -5,11 +5,16 @@ import { Link } from 'react-router-dom';
 import { GoGoal } from "react-icons/go";
 import { fetchGoals, selectGoals, selectLoading } from '../../features/goals/goalSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '../Loader';
+import { CiCalendarDate } from "react-icons/ci";
+import { PiTargetThin } from "react-icons/pi";
+
+
 
 export const Goals = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
-  const goals = useSelector(selectGoals);
+  const goals = (useSelector(selectGoals)).slice(0,3);
   const loading = useSelector(selectLoading);
 
 
@@ -18,76 +23,8 @@ export const Goals = () => {
   }, [dispatch, user]);
 
 
-  console.log(goals)
-
-  // const goals = [
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  
-  //   // New Goal 5
-  //   {
-  //     title: "Learn a New Language",
-  //     targetAmount: 343120,  // Can set a targetAmount if applicable
-  //     targetDate: "2024-12-31",
-  //     progress: 70,
-  //     description: "Learn a new language by the end of the year.",
-  //     milestones: [
-  //       {
-  //         title: "Complete Beginner Course",
-  //         achieved: true,
-  //         date: "2024-05-01"
-  //       },
-  //       {
-  //         title: "Hold Basic Conversations",
-  //         achieved: false,
-  //         date: "2024-08-15"
-  //       }
-  //     ]
-  //   },
-  
-  //   // New Goal 6
-  //   {
-  //     title: "Travel to a New Country",
-  //     targetAmount: 232130,  // Can set a targetAmount if applicable
-  //     targetDate: "2024-11-30",
-  //     progress: 58,
-  //     description: "Explore a new country by the end of November.",
-  //     milestones: [
-  //       {
-  //         title: "Research Potential Destinations",
-  //         achieved: true,
-  //         date: "2024-04-30"
-  //       },
-  //       {
-  //         title: "Book Flights",
-  //         achieved: false,
-  //         date: "2024-06-01"
-  //       }
-  //     ]
-  //   },
-    
-  // ]
-
-
-  if(loading) return <h1>Loading...</h1>
   return (
+    loading?<Loader/>:
     <Container>
     <div className="header">
       <h2><GoGoal/>Goals</h2>
@@ -96,17 +33,17 @@ export const Goals = () => {
       </Link>
     </div>
     <GoalContainer>
-      {user.goal?.map(goal => (
+      {goals?.map(goal => (
         <div key={goal.title}>
           <div className='titles'>
-            <h4>{goal.title}</h4>
-            <h4>{goal.targetAmount}</h4>
+            <h4>{(goal.title).slice(0,10)}<span>{goal.category}</span></h4>
+            <h4><PiTargetThin/>{goal.target}</h4>
           </div>
           <div className='progress'>
             <div className='outter'>
-              <div style={{ width: `${goal.progress}%` }} className='inner'></div>
+              <div style={{ width: `${49}%` }} className='inner'></div>
             </div>
-            <p>778 days left</p>
+            <p><CiCalendarDate/>7 days left</p>
           </div>
         </div>
       ))}
@@ -155,8 +92,28 @@ const Container = styled.div`
 const GoalContainer = styled.div`
   display: grid;
   position: relative;
-  /* background-color: red; */
   gap: .5rem;
+
+
+  .titles{
+    h4{
+      display: flex;
+      align-items: center;
+      gap: .2rem;
+
+
+      span{
+        font-size: .7rem;
+        background-color: #eee;
+        color: #333;
+        padding: 0.1rem .5rem;
+        border-radius: 20px;
+        font-weight: 300;
+      }
+    }
+  }
+
+  
 
 
   >div{
@@ -170,7 +127,6 @@ const GoalContainer = styled.div`
     padding: 0.3rem;
     flex-direction: column;
     gap: .1rem;
-    /* background-color: blue; */
 
     
     
@@ -183,13 +139,16 @@ const GoalContainer = styled.div`
       padding: 0;
 
       >*:nth-child(2){
-        background-color: #a2dbbf;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-direction: row;
+        gap: .2rem;
+        background-color: #eee;
         padding:0.1rem 0.4rem;
         border-radius: 20px;
         font-size: .7rem;
-        color: #fff;
-        display: grid;
-        place-items: center;
+        color: #333;
       }
     }
     h4{

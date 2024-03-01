@@ -8,6 +8,7 @@ import  authReducer from './features/auth/authSlice';
 import incomeReducer from './features/incomes/incomeSlice.js';
 import expenseReducer from './features/expenses/expenseSlice.js';
 import goalReducer from './features/goals/goalSlice.js'
+import transactionReducer from './features/transactions/transactionSlice.js'
 
 
 const store = configureStore({
@@ -16,6 +17,7 @@ const store = configureStore({
     income:incomeReducer,
     expense:expenseReducer,
     goal:goalReducer,
+    transaction:transactionReducer,
     // Add other reducers if needed
   },
 });

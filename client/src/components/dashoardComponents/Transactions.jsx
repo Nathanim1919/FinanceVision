@@ -1,37 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GrLinkNext } from "react-icons/gr";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GrTransaction } from "react-icons/gr";
 import { CiCalendarDate } from "react-icons/ci";
+import { fetchTransactions } from '../../features/transactions/transactionSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '../../components/Loader';
+import { CiMoneyCheck1 } from "react-icons/ci";
+import { CiLocationOn } from "react-icons/ci";
+import { formatDate } from '../../utils/Formatting';
+
 
 
 export const Transactions = () => {
-  const transactionData = [
-    {
-      date: "2024-02-22",
-      category: "Groceries",
-      amount: -150.00,
-      merchant: "Supermarket X",
-      type:"income"
-    },
-    {
-      date: "2024-02-21",
-      category: "Salary",
-      amount: 2500.00,
-      merchant: "Company Payroll",
-      type:"expense"
-    },
-    {
-      date: "2024-02-20",
-      category: "Utilities",
-      amount: -50.00,
-      merchant: "Electric Company",
-      type:"income"
-    },
-  ]
-  
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+  const transactions = useSelector(state => state.transaction.transactions).slice(0,3);
+  const loading = useSelector(state => state.transaction.loading);
+
+
+  useEffect(() => {
+    dispatch(fetchTransactions(user._id));
+  }, [dispatch, user]);
+
   return (
+    loading?<Loader/>:
     <Container>
       <div className="header">
         <h2><GrTransaction/>Recent Transactions</h2>
@@ -40,15 +34,15 @@ export const Transactions = () => {
         </Link>
       </div>
       <TransactionsContainer className="transactions">
-        {transactionData.map(transaction => (
+        {transactions.map(transaction => (
           <TransactionBox key={transaction.date}>
               <div className='transaction upperData'>
-                  <h4>{transaction.category}</h4>
-                  <p style={{backgroundColor:transaction.amount < 0?"red":"blue"}}>{transaction.amount} ETB</p>
+                  <h4>{transaction.title}</h4>
+                  <p style={{backgroundColor:transaction.amount < 0?"red":"blue"}}><CiMoneyCheck1/>{transaction.amount} ETB</p>
               </div>
               <div className='transaction lowerData'>
-                  <h4>{transaction.merchant}</h4>
-                  <p className='date'><CiCalendarDate/>{transaction.date}</p>
+                  <h4><CiLocationOn/>{transaction.merchant}</h4>
+                  <p className='date'><CiCalendarDate/>{formatDate(transaction.date)}</p>
               </div>
           </TransactionBox>
         ))}
@@ -74,7 +68,11 @@ const TransactionBox = styled.div`
     >*{
       margin: 0;
       padding: 0;
+      display: flex;
+      align-items: center;
+      gap: .1rem;
     }
+    
 
     p{
       font-size: .8rem;
@@ -101,8 +99,6 @@ const TransactionBox = styled.div`
     font-size:.7rem;
     font-weight: 600;
     background-color: #9cb89c;
-    display: grid;
-    place-items: center;
     padding:.1rem .3rem;
     border-radius: 10px;
     margin-bottom: .3rem;

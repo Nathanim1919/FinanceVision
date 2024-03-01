@@ -9,6 +9,7 @@ import userRouter  from "./routes/authRoute.js";
 import incomeRouter from "./routes/incomeRoute.js";
 import expenseRouter from "./routes/expenseRoute.js";
 import goalRouter from './routes/goalRoute.js';
+import transactionRouter from './routes/transactionRoute.js'; 
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ const startServer = async () => {
     app.use("/api/v1/incomes", incomeRouter);
     app.use("/api/v1/expenses", expenseRouter);
     app.use("/api/v1/goals", goalRouter);
+    app.use("/api/v1/transactions", transactionRouter);
 
 
     // Start Server

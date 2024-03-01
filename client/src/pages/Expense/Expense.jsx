@@ -10,93 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchExpenses, deleteExpense } from '../../features/expenses/expenseSlice';
 import { Loader } from '../../components/Loader';
 import { selectUser } from '../../features/auth/authSlice';
-
-
-const sampleExpenses = [
-  {
-    id: 1,
-    frequency:"OneTime",
-    date: '2024-02-22',
-    category: 'Groceries',
-    amount: -150.00,
-    merchant: 'Supermarket X',
-    description: 'Monthly grocery shopping',
-  },
-  {
-    id: 1,
-    frequency:"Monthlly",
-    date: '2024-02-22',
-    category: 'Groceries',
-    amount: -150.00,
-    merchant: 'Supermarket X',
-    description: 'Monthly grocery shopping',
-  },
-  {
-    id: 1,
-    frequency:"OneTime",
-    date: '2024-02-22',
-    category: 'Groceries',
-    amount: -450.00,
-    merchant: 'Supermarket X',
-    description: 'Monthly grocery shopping',
-  },
-  {
-    id: 1,
-    frequency:"OneTime",
-    date: '2024-02-22',
-    category: 'Groceries',
-    amount: -100.00,
-    merchant: 'Supermarket X',
-    description: 'Monthly grocery shopping',
-  },
-  {
-    id: 1,
-    frequency:"Monthlly",
-    date: '2024-02-22',
-    category: 'Groceries',
-    amount: -90.00,
-    merchant: 'Supermarket X',
-    description: 'Monthly grocery shopping',
-  },
-  {
-    id: 1,
-    frequency:"OneTime",
-    date: '2024-02-22',
-    category: 'Groceries',
-    amount: -30.00,
-    merchant: 'Supermarket X',
-    description: 'Monthly grocery shopping',
-  },
-  {
-    id: 1,
-    frequency:"Annually",
-    date: '2024-02-22',
-    category: 'Groceries',
-    amount: -50.00,
-    merchant: 'Supermarket X',
-    description: 'Monthly grocery shopping',
-  },
-  {
-    id: 1,
-    frequency:"OneTime",
-    date: '2024-02-22',
-    category: 'Groceries',
-    amount: -150.00,
-    merchant: 'Supermarket X',
-    description: 'Monthly grocery shopping',
-  },
-  {
-    id: 2,
-    frequency:"Monthlly",
-    date: '2024-02-20',
-    category: 'Utilities',
-    amount: -150.00,
-    merchant: 'Electric Company',
-    description: 'Electricity bill payment',
-  },
-];
-
-
+import { formatDate } from '../../utils/Formatting';
 
 const Container = styled.div`
     /* background-color: blue; */
@@ -258,7 +172,7 @@ function Expense() {
                 <div key={income.id}>
                     <div>
                         <h3><TbCategoryFilled/>{income.category}</h3>
-                        <p><CiCalendarDate/>{income.date}<span className='frequency'>{income.frequency}</span></p>
+                        <p><CiCalendarDate/>{formatDate(income.date)}<span className='frequency'>{income.frequency}</span></p>
                     </div>
                     <div>
                         <h3><FaMoneyBillWave/>{income.amount} <span>BIRR</span></h3>
