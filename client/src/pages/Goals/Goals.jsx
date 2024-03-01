@@ -21,213 +21,13 @@ export const Goals = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
 
-
-
   useEffect(() => {
     dispatch(fetchGoals(user._id));
   }, [dispatch, user]);
 
-  console.log(user.goal)
+  console.log(goals)
 
-  // const goals = [
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     title: "Start Investment Portfolio",
-  //     targetAmount: 50000,
-  //     targetDate: "2024-08-31",
-  //     progress: 20,
-  //     description: "Begin building an investment portfolio by August 31st.",
-  //     milestones: [
-  //       {
-  //         title: "Research Investment Options",
-  //         achieved: true,
-  //         date: "2024-03-15"
-  //       },
-  //       {
-  //         title: "Open Investment Account",
-  //         achieved: false,
-  //         date: "2024-04-01"
-  //       }
-  //     ]
-  //   },
-  
-  //   // New Goal 5
-  //   {
-  //     title: "Learn a New Language",
-  //     targetAmount: 343120,  // Can set a targetAmount if applicable
-  //     targetDate: "2024-12-31",
-  //     progress: 70,
-  //     description: "Learn a new language by the end of the year.",
-  //     milestones: [
-  //       {
-  //         title: "Complete Beginner Course",
-  //         achieved: true,
-  //         date: "2024-05-01"
-  //       },
-  //       {
-  //         title: "Hold Basic Conversations",
-  //         achieved: false,
-  //         date: "2024-08-15"
-  //       }
-  //     ]
-  //   },
-  
-  //   // New Goal 6
-  //   {
-  //     title: "Travel to a New Country",
-  //     targetAmount: 232130,  // Can set a targetAmount if applicable
-  //     targetDate: "2024-11-30",
-  //     progress: 58,
-  //     description: "Explore a new country by the end of November.",
-  //     milestones: [
-  //       {
-  //         title: "Research Potential Destinations",
-  //         achieved: true,
-  //         date: "2024-04-30"
-  //       },
-  //       {
-  //         title: "Book Flights",
-  //         achieved: false,
-  //         date: "2024-06-01"
-  //       }
-  //     ]
-  //   },
-    
-  // ]
-  
-  
+
   return (
     isLoading ? <Loader/> :
     <Content>
@@ -240,23 +40,26 @@ export const Goals = () => {
                   </div>
               </Header>
               <GoalContainer>
-                {user.goal?.map(item => (
-                  <Card key={item.title}>
+                {goals?.map(item => (
+                  <Card key={item.title} onClick={()=>alert(item._id)}>
                     <div className='titles'>
-                      <h4><TbCategoryFilled/>{item.title}</h4>
-                      <div>
-                        <h2><GiProgression/>4000 BIRR</h2>
+                      <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
+                      <div className='current-progress'>
                         <p className='daysleft'>7 days left</p>
+                        <h2><GiProgression/>4000 BIRR</h2>
                       </div>
                     </div>
                     <div className='progress'>
                       <div>
                         <div className='outter'>
-                          <div style={{ width: `${item.progress}%` }} className='inner'></div>
+                          <div style={{ width: `${40}%` }} className='inner'></div>
                         </div>
-                        <h4><span>{item.progress}</span>%</h4>
+                       
                       </div>
-                      <h2><GoGoal/>{item.targetAmount} BIRR</h2>
+                      <div className='target-goal'>
+                        <h2><GoGoal/>{item.target} BIRR</h2>
+                        <h4><span>{30}</span>%</h4>
+                      </div>
                     </div>
                     <div className='icons'>
                         <div className='edit'>
@@ -322,13 +125,19 @@ const Header = styled.div`
     justify-content: space-between;
     align-items: center;
 
+    h2{
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
     .icon{
-        background-color: #cecbcb;
+        background-color: #eeee;
         width: 20px;
         height: 20px;
         padding: .4rem;
         border-radius: 50%;
-        color: blue;
+        color: #3e3e3f;
         cursor: pointer;
         display: grid;
         place-items: center;
@@ -367,14 +176,14 @@ const GoalContainer = styled.div`
         }
 
         h4 span{
-          background-color: #83b5ff;
-          width: 30px;
-          height: 30px;
+          background-color: #eee;
+          width: 20px;
+          height: 20px;
           border-radius: 50%;
           display: grid;
           place-items: center;
-          color: #fff;
-          font-size: .9rem;
+          color: #333;
+          font-size: .7rem;
         }
       }
 
@@ -405,6 +214,11 @@ const Card = styled.div`
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   animation: fadeIn 0.5s ease-in-out;
+
+  >*:nth-child(1){
+    flex: 1;
+    width: 100%;
+  }
         
   @keyframes fadeIn {
   from {
@@ -423,10 +237,6 @@ const Card = styled.div`
     opacity: .7;
   }
 
-  &:hover .icons{
-    opacity: 1;
-    transform: translateX(0px);
-  }
 
   h2{
     font-size: .9rem;
@@ -450,11 +260,38 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
 
+    .current-progress{
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+
+      h2{
+        color: #333;
+      }
+
+      p{
+        font-size: .7rem;
+        background-color: #639463;
+        color: #fff;
+        padding: 0.1rem .4rem;
+        border-radius: 20px;
+      }
+    }
+
     h4{
       font-size: .9rem;
       display: flex;
       align-items: center;
       gap: .3rem;
+
+      span{
+        font-size: .8rem;
+        background-color: #eee;
+        font-weight: 300;
+        padding:0rem .5rem;
+        border-radius: 30px;
+        color: #706969;
+      }
     }
 
 
@@ -479,8 +316,6 @@ const Card = styled.div`
     display: flex;
     align-items: center;
     gap: .5rem;
-    opacity: 0;
-    transform: translateX(30px);
     transition: all .3s ease-in-out;
     font-size: 1.1rem;
     align-self: flex-start;

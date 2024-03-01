@@ -27,7 +27,7 @@ const GoalForm = ({setCreateGoal}) => {
     description: "",
     target: 0,
     category: "General",
-    status: "In progress",
+    status: "In Progress",
     deadline: null,
     startDate: null,
   });

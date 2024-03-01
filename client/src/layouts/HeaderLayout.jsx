@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 
 const Header = styled.div`
@@ -29,6 +30,7 @@ const Profile = styled.div`
 `
 
 function HeaderLayout() {
+  const user = useSelector(state => state.auth.user);
   return (
     <Header>
         <div className="logo">
@@ -38,7 +40,7 @@ function HeaderLayout() {
         <Profile className="profile">
             <div className="profileImage"></div>
             <div className="profileName">
-                <p>John Doe</p>
+                <p>{user.username}</p>
             </div>
         </Profile>
     </Header>

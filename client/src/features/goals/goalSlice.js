@@ -1,27 +1,27 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+
+
 const initialState = {
   goals: [],
   loading: false,
   error: null,
 };
 
+
 export const fetchGoals = createAsyncThunk(
   'goal/fetchGoals',
   async (userId) => {
-    const dispatch = useDispatch();
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/goals?userId=${userId}`);
-      goalSlice.actions.setGoals(response.data.data.goal);
-      dispatch(goalSlice.actions.setGoals(response.data.data.goal));
-      console.log("response is here:  ",goalSlice.actions.state.goals);
-      return response.data.data.goal; // Assuming the response structure
+      console.log('hey', response.data.data)
+      return (response.data.data.goal).reverse();
     } catch (error) {
-      throw error; // Re-throw for error handling in reducers
+      throw error;
     }
   }
 );
+
 
 export const createGoal = createAsyncThunk(
   'goal/createGoal',
@@ -36,6 +36,7 @@ export const createGoal = createAsyncThunk(
   }
 );
 
+
 export const deleteGoal = createAsyncThunk(
   'goal/deleteGoal',
   async (id, userId) => {
@@ -47,6 +48,7 @@ export const deleteGoal = createAsyncThunk(
     }
   }
 );
+
 
 const goalSlice = createSlice({
   name: 'goal',
