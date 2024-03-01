@@ -52,7 +52,7 @@ export const Goals = () => {
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
                       <div className='current-progress'>
                         <p className='daysleft'>7 days left</p>
-                        <h2><GiProgression/>4000 BIRR</h2>
+                        <h2><GiProgression/>4000 ETB</h2>
                       </div>
                     </div>
                     <div className='progress'>
@@ -63,8 +63,11 @@ export const Goals = () => {
                        
                       </div>
                       <div className='target-goal'>
-                        <h2><GoGoal/>{item.target} BIRR</h2>
-                        <h4><span>{30}</span>%</h4>
+                        <h2><GoGoal/>{item.target} ETB</h2>
+                        <div className='percent'>
+                             <p>30</p>
+                             %
+                        </div>
                       </div>
                     </div>
                     <div className='icons'>
@@ -156,7 +159,19 @@ const GoalContainer = styled.div`
     .progress{
       display: flex;
       flex-direction: column;
+      gap: .3rem;
       flex: 1;
+
+      .target-goal{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: .8rem;
+        font-weight: 300;
+        background-color: #eee;
+        padding: 0.1rem .3rem;
+        border-radius: 30px;
+      }
 
       >*{
         margin: 0;
@@ -167,7 +182,16 @@ const GoalContainer = styled.div`
         padding: 0;
       }
       }
-      
+      .percent{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* background-color: #73a47d; */
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        font-size: .7rem;
+      }
 
       >div{
         display: flex;
