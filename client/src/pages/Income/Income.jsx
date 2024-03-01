@@ -11,7 +11,7 @@ import { selectUser } from '../../features/auth/authSlice';
 import axios from 'axios';
 import { Loader } from '../../components/Loader';
 import { BsThreeDots } from "react-icons/bs";
-
+import { formatDate } from '../../utils/Formatting';
 
 // import from incomeSlice
 import { selectIncomes } from '../../features/incomes/incomeSlice';
@@ -178,7 +178,7 @@ function Income() {
                 <div key={income.id}>
                     <div>
                         <h3><TbCategoryFilled/>{income.category}</h3>
-                        <p><CiCalendarDate/>{income.date}</p>
+                        <p><CiCalendarDate/>{formatDate(income.date)}</p>
                     </div>
                     <div>
                         <h3><FaMoneyBillWave/>{income.amount} <span>BIRR</span></h3>

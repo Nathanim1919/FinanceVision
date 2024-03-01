@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { GrLinkNext } from "react-icons/gr";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -7,119 +7,27 @@ import { CiCalendarDate } from "react-icons/ci";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import { FaMoneyBill } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../features/auth/authSlice';
+import { fetchTransactions } from '../../features/transactions/transactionSlice';
+import { Loader } from '../../components/Loader';
+
 
 
 
 export const Transactions = () => {
-  const transactionData = [
-    {
-      date: "2024-02-22",
-      category: "Groceries",
-      amount: -150.00,
-      merchant: "Supermarket X",
-      type:"income"
-    },
-    {
-      date: "2024-02-21",
-      category: "Salary",
-      amount: 2500.00,
-      merchant: "Company Payroll",
-      type:"expense"
-    },
-    {
-      date: "2024-02-22",
-      category: "Groceries",
-      amount: -150.00,
-      merchant: "Supermarket X",
-      type:"income"
-    },
-    {
-      date: "2024-02-21",
-      category: "Salary",
-      amount: 2500.00,
-      merchant: "Company Payroll",
-      type:"expense"
-    },
-    {
-      date: "2024-02-22",
-      category: "Groceries",
-      amount: -150.00,
-      merchant: "Supermarket X",
-      type:"income"
-    },
-    {
-      date: "2024-02-21",
-      category: "Salary",
-      amount: 2500.00,
-      merchant: "Company Payroll",
-      type:"expense"
-    },
-    {
-      date: "2024-02-22",
-      category: "Groceries",
-      amount: -150.00,
-      merchant: "Supermarket X",
-      type:"income"
-    },
-    {
-      date: "2024-02-21",
-      category: "Salary",
-      amount: 2500.00,
-      merchant: "Company Payroll",
-      type:"expense"
-    },
-    {
-      date: "2024-02-22",
-      category: "Groceries",
-      amount: -150.00,
-      merchant: "Supermarket X",
-      type:"income"
-    },
-    {
-      date: "2024-02-21",
-      category: "Salary",
-      amount: 2500.00,
-      merchant: "Company Payroll",
-      type:"expense"
-    },
-    {
-      date: "2024-02-22",
-      category: "Groceries",
-      amount: -150.00,
-      merchant: "Supermarket X",
-      type:"income"
-    },
-    {
-      date: "2024-02-21",
-      category: "Salary",
-      amount: 2500.00,
-      merchant: "Company Payroll",
-      type:"expense"
-    },
-    {
-      date: "2024-02-22",
-      category: "Groceries",
-      amount: -150.00,
-      merchant: "Supermarket X",
-      type:"income"
-    },
-    {
-      date: "2024-02-21",
-      category: "Salary",
-      amount: 2500.00,
-      merchant: "Company Payroll",
-      type:"expense"
-    },
-    {
-      date: "2024-02-20",
-      category: "Utilities",
-      amount: -50.00,
-      merchant: "Electric Company",
-      type:"income"
-    },
-  ]
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const transactions = useSelector(state => state.transaction.transactions);
+  const loading = useSelector(state => state.transaction.loading);
+
+
+  useEffect(() => {
+    dispatch(fetchTransactions(user._id));
+  }, [dispatch, user]);
   
   return (
+    loading?<Loader/>:
     <Content>
     
     <Container>
@@ -130,10 +38,10 @@ export const Transactions = () => {
           </div>
       </Header>
       <TransactionsContainer className="transactions">
-        {transactionData.map(transaction => (
+        {transactions?.map(transaction => (
           <TransactionBox key={transaction.date}>
               <div className='transaction upperData'>
-                  <h4><BiSolidCategoryAlt/>{transaction.category}</h4>
+                  <h4><BiSolidCategoryAlt/>{transaction.title}</h4>
                   <p style={{backgroundColor:transaction.amount < 0?"red":"blue",color:"white"}}><FaMoneyBill/>{transaction.amount} BIRR</p>
               </div>
               <div className='transaction lowerData'>

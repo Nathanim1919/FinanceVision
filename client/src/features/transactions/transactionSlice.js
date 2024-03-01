@@ -21,6 +21,7 @@ export const fetchTransactions = createAsyncThunk(
     async (userId) => {
         try {
             const response = await axios.get(`http://localhost:3000/api/v1/transactions?userId=${userId}`);
+            console.log(response.data.data)
             return (response.data.data.transactions).reverse();
         } catch (error) {
             throw error;
