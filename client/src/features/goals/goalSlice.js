@@ -14,7 +14,6 @@ export const fetchGoals = createAsyncThunk(
   async (userId) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/goals?userId=${userId}`);
-      console.log('hey', response.data.data)
       return (response.data.data.goal).reverse();
     } catch (error) {
       throw error;
@@ -48,6 +47,19 @@ export const deleteGoal = createAsyncThunk(
     }
   }
 );
+
+
+export const updateGoal = createAsyncThunk(
+  'goal/updateGoal',
+  async (id, data) => {
+    try{
+      const response = await axios.post(`http://localhost:3000/api/v1/goals/${id}`,{data});
+      console.log(response)
+    } catch (error){
+      console.log(error)
+    }
+  }
+)
 
 
 const goalSlice = createSlice({

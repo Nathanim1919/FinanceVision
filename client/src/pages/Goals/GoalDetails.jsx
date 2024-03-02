@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { IoMdClose } from "react-icons/io";
 import styled from 'styled-components';
 import { PiSubtitles } from "react-icons/pi";
@@ -12,8 +12,129 @@ import { TbProgress } from "react-icons/tb";
 import { formatDate } from '../../utils/Formatting';
 import { CiCalendarDate } from "react-icons/ci";
 import { MdCalendarToday } from "react-icons/md";
+import { RiLuggageDepositLine } from "react-icons/ri";
+import axios from 'axios';
+import {useSelector, useDispatch} from 'react-redux';
+import { updateGoal } from '../../features/goals/goalSlice';
 
 
+export const GoalDetails = ({ goal, setShowDetails }) => {
+
+  const [data, setData] = useState({
+    title:goal.title,
+    description: goal.description,
+    target:goal.target,
+    depositAmount: 0,
+  });
+
+  const [errorMessage, setErrorMessage] = useState(''); // State for error message
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    const newDepositAmount = parseInt(e.target.value, 10);
+
+    if (isNaN(newDepositAmount) || newDepositAmount < 0) {
+      setErrorMessage('Please enter a valid non-negative number for deposit amount.');
+      return; // Prevent state update if input is invalid
+    }
+
+    setData({ ...data, depositAmount: newDepositAmount });
+    setErrorMessage(''); // Clear any previous error message
+  };
+
+
+
+  const handleDeposit = async (id) => {
+    try {
+      dispatch(updateGoal(id, data))
+      setData({ ...data, depositAmount: 0 }); // Reset deposit amount after successful update
+      setShowDetails(false); // Close modal after successful update (optional)
+    } catch (error) {
+      console.error('Error updating goal progress:', error);
+      setErrorMessage('An error occurred while depositing funds. Please try again later.');
+    }
+  };
+
+  return (
+    <Overlay>
+      <Container>
+        <Header className="header">
+          <h2><BsFillTicketDetailedFill />Goal Details</h2>
+          <div className='closeIcon' onClick={() => setShowDetails(false)}>
+            <IoMdClose />
+          </div>
+        </Header>
+
+        <Content className="goal-details">
+          <div className='titles'>
+            <div>
+              <BsCardHeading />
+              <h2>{goal.title}</h2>
+            </div>
+            <div>
+              <PiSubtitles />
+              <p>{goal.description}</p>
+            </div>
+          </div>
+
+          <div className='targetValues'>
+            <div>
+              <h4><GoGoal />Target</h4>
+              <p><FaMoneyBillWave />{goal.target} ETB</p>
+            </div>
+            <div>
+              <h4><GiProgression />Current</h4>
+              <p><FaMoneyBillWave />{goal.current} ETB</p>
+            </div>
+          </div>
+
+          <div className="depositeInput">
+            <h4><RiLuggageDepositLine />Deposite</h4>
+            <div>
+              <input onChange={handleChange} type="text" value={data.depositAmount} />
+              <button onClick={()=>handleDeposit(goal._id)}>Add</button>
+            </div>
+            {/* {errorMessage && <p className="error">{errorMessage}</p>} */}
+          </div>
+
+          <div className="progress">
+            <div>
+              <div className='outter'>
+                <div style={{ width: `${goal.progress}%` }} className='inner'></div>
+              </div>
+              <div className='percent'>
+                <p>{goal.progress}</p>
+                %
+              </div>
+            </div>
+            <p><MdCalendarToday />7 days left</p>
+          </div>
+
+          <div className='statusAndCategory'>
+            <p><BiCategory />{goal.category}</p>
+            <p><TbProgress />{goal.status}</p>
+          </div>
+
+          <div className="date">
+            <p><CiCalendarDate />{formatDate(goal.startDate)}</p>
+            <p><CiCalendarDate />{formatDate(goal.deadline)}</p>
+          </div>
+        </Content>
+      </Container>
+    </Overlay>
+  );
+};
+
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,.5);
+  z-index: 1;
+`
 
 
 const Container = styled.div`
@@ -21,7 +142,7 @@ const Container = styled.div`
   background-color: white;
   position: absolute;
   height: 100vh;
-  width: 30vw;
+  width: 40vw;
   right: 0;
   top: 0;
   z-index: 2;
@@ -59,6 +180,12 @@ const Content = styled.div`
   margin: 0 auto;
   padding: 1rem 2rem;
 
+  h4{
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+      }
+
   .titles{
      div{
       display: flex;
@@ -66,6 +193,40 @@ const Content = styled.div`
       gap: 1rem;
       border-bottom: 1px solid #ddd;
      }
+  }
+
+  .depositeInput{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:1rem;
+
+    div{
+      background-color: #eee;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+
+      button{
+        background-color: #1f9af8;
+        color: #fff;
+        padding: 0.1rem 1rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      input{
+        border: none;
+        outline: none;
+        display: grid;
+        place-items: center;
+        padding-left: 1rem;
+        width: 100px;
+      }
+    }
   }
 
   .targetValues{
@@ -79,11 +240,7 @@ const Content = styled.div`
       gap: 1rem;
       border-bottom: 1px solid #ddd;
 
-      h4{
-        display: flex;
-        align-items: center;
-        gap: .5rem;
-      }
+    
 
 
       p{
@@ -191,69 +348,3 @@ const Content = styled.div`
     }
   }
 `
-
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0,0,0,.5);
-  z-index: 1;
-`
-export const GoalDetails = ({goal, setShowDetails}) => {
-  return (
-    <Overlay>
-      <Container>
-          <Header className="header">
-              <h2><BsFillTicketDetailedFill/>Goal Details</h2>
-              <div className='closeIcon' onClick={()=>setShowDetails(false)}>
-                <IoMdClose/>
-              </div>
-          </Header>
-          <Content className="goal-details">
-            <div className='titles'>
-              <div>
-                <BsCardHeading/> 
-                <h2>{goal.title}</h2>
-              </div>
-              <div>
-                <PiSubtitles/>
-                <p>{goal.description}</p>
-              </div>
-            </div>
-            <div className='targetValues'>
-                <div>
-                  <h4><GoGoal/>Target</h4>
-                  <p><FaMoneyBillWave/>{goal.target} ETB</p>
-                </div>
-                <div>
-                  <h4><GiProgression/>Current</h4>
-                  <p><FaMoneyBillWave/>{goal.current} ETB</p>
-                </div>
-            </div>
-            <div className="progress">
-              <div>
-                <div className='outter'>
-                  <div style={{ width: `${49}%`,}} className='inner'></div>
-                </div>
-                <div className='percent'>
-                  <p>30</p>
-                  %
-                </div>
-              </div>
-              <p><MdCalendarToday/>7 days left</p>
-            </div>
-            <div className='statusAndCategory'>
-                <p><BiCategory/>{goal.category}</p>
-                <p><TbProgress/>{goal.status}</p>
-            </div>
-            <div className="date">
-                <p><CiCalendarDate/>{formatDate(goal.startDate)}</p>
-                <p><CiCalendarDate/>{formatDate(goal.deadline)}</p>
-            </div>
-          </Content>
-      </Container>
-    </Overlay>
-  )
-}

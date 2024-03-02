@@ -9,7 +9,6 @@ export const getTransactions = asyncHandler(async (req, res) => {
     const { userId } = req.query;
     try {
         const user = await User.findById(userId).populate("transactions");
-        console.log("hey", user)
         res.status(200).json(
             new ApiResponse(200, user, "Transactions fetched successfully")
         );

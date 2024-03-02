@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
 import { GrLinkNext } from "react-icons/gr";
@@ -6,116 +6,138 @@ import { Link } from 'react-router-dom';
 import { IoMdAdd } from "react-icons/io";
 import { MdCalendarToday } from "react-icons/md";
 
+import io from 'socket.io-client'; // Assuming you have socket.io-client installed
+
+
 
 
 function Notification() {
-    const notifications = [
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Account Update",
-          "message": "Important: There is a scheduled maintenance for your financial account tomorrow.",
-          "type": "info",
-          "user": "user_id_3",
-          "createdAt": "2024-02-24T15:45:00Z"
-        }
-      ]
+  const socket = io('http://localhost:3000');
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    // Fetch notifications on component mount
+    socket.emit('get_notifications');
+  
+    // Update notifications on socket events
+    socket.on('notifications_received', (data) => {
+      setNotifications(data);
+    });
+  
+    return () => {
+      // Cleanup function to unsubscribe from socket events on unmount
+      socket.off('notifications_received');
+    };
+  }, []);
+  
+
+    // const notifications = [
+    //     {
+    //       "title": "Goal Achieved",
+    //       "message": "Congratulations! You have successfully achieved your savings goal.",
+    //       "type": "success",
+    //       "user": "user_id_1",
+    //       "createdAt": "2024-02-22T12:00:00Z"
+    //     },
+    //     {
+    //       "title": "Net Worth Warning",
+    //       "message": "Your net worth has decreased significantly. Review your financial strategy.",
+    //       "type": "warning",
+    //       "user": "user_id_2",
+    //       "createdAt": "2024-02-23T09:30:00Z"
+    //     },
+    //     {
+    //       "title": "Goal Achieved",
+    //       "message": "Congratulations! You have successfully achieved your savings goal.",
+    //       "type": "success",
+    //       "user": "user_id_1",
+    //       "createdAt": "2024-02-22T12:00:00Z"
+    //     },
+    //     {
+    //       "title": "Net Worth Warning",
+    //       "message": "Your net worth has decreased significantly. Review your financial strategy.",
+    //       "type": "warning",
+    //       "user": "user_id_2",
+    //       "createdAt": "2024-02-23T09:30:00Z"
+    //     },
+    //     {
+    //       "title": "Goal Achieved",
+    //       "message": "Congratulations! You have successfully achieved your savings goal.",
+    //       "type": "success",
+    //       "user": "user_id_1",
+    //       "createdAt": "2024-02-22T12:00:00Z"
+    //     },
+    //     {
+    //       "title": "Net Worth Warning",
+    //       "message": "Your net worth has decreased significantly. Review your financial strategy.",
+    //       "type": "warning",
+    //       "user": "user_id_2",
+    //       "createdAt": "2024-02-23T09:30:00Z"
+    //     },
+    //     {
+    //       "title": "Goal Achieved",
+    //       "message": "Congratulations! You have successfully achieved your savings goal.",
+    //       "type": "success",
+    //       "user": "user_id_1",
+    //       "createdAt": "2024-02-22T12:00:00Z"
+    //     },
+    //     {
+    //       "title": "Net Worth Warning",
+    //       "message": "Your net worth has decreased significantly. Review your financial strategy.",
+    //       "type": "warning",
+    //       "user": "user_id_2",
+    //       "createdAt": "2024-02-23T09:30:00Z"
+    //     },
+    //     {
+    //       "title": "Goal Achieved",
+    //       "message": "Congratulations! You have successfully achieved your savings goal.",
+    //       "type": "success",
+    //       "user": "user_id_1",
+    //       "createdAt": "2024-02-22T12:00:00Z"
+    //     },
+    //     {
+    //       "title": "Net Worth Warning",
+    //       "message": "Your net worth has decreased significantly. Review your financial strategy.",
+    //       "type": "warning",
+    //       "user": "user_id_2",
+    //       "createdAt": "2024-02-23T09:30:00Z"
+    //     },
+    //     {
+    //       "title": "Goal Achieved",
+    //       "message": "Congratulations! You have successfully achieved your savings goal.",
+    //       "type": "success",
+    //       "user": "user_id_1",
+    //       "createdAt": "2024-02-22T12:00:00Z"
+    //     },
+    //     {
+    //       "title": "Net Worth Warning",
+    //       "message": "Your net worth has decreased significantly. Review your financial strategy.",
+    //       "type": "warning",
+    //       "user": "user_id_2",
+    //       "createdAt": "2024-02-23T09:30:00Z"
+    //     },
+    //     {
+    //       "title": "Goal Achieved",
+    //       "message": "Congratulations! You have successfully achieved your savings goal.",
+    //       "type": "success",
+    //       "user": "user_id_1",
+    //       "createdAt": "2024-02-22T12:00:00Z"
+    //     },
+    //     {
+    //       "title": "Net Worth Warning",
+    //       "message": "Your net worth has decreased significantly. Review your financial strategy.",
+    //       "type": "warning",
+    //       "user": "user_id_2",
+    //       "createdAt": "2024-02-23T09:30:00Z"
+    //     },
+    //     {
+    //       "title": "Account Update",
+    //       "message": "Important: There is a scheduled maintenance for your financial account tomorrow.",
+    //       "type": "info",
+    //       "user": "user_id_3",
+    //       "createdAt": "2024-02-24T15:45:00Z"
+    //     }
+    //   ]
       
   return (
     <Container>
