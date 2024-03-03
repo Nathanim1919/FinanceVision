@@ -51,10 +51,9 @@ export const deleteGoal = createAsyncThunk(
 
 export const updateGoal = createAsyncThunk(
   'goal/updateGoal',
-  async (id, data) => {
+  async ({id, depositAmount}) => {
     try{
-      const response = await axios.post(`http://localhost:3000/api/v1/goals/${id}`,{data});
-      console.log(response)
+      const response = await axios.post(`http://localhost:3000/api/v1/goals/${id}`,{depositAmount});
     } catch (error){
       console.log(error)
     }
@@ -110,7 +109,19 @@ const goalSlice = createSlice({
       .addCase(deleteGoal.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      });
+      })
+      .addCase(updateGoal.pending, (state) => {
+        state.loading = true;
+        state.error = null
+      })
+      .addCase(updateGoal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.goals.push(action.payload);
+      })
+      .addCase(updateGoal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message
+      })
   },
 });
 

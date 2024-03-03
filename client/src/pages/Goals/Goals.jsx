@@ -51,21 +51,21 @@ export const Goals = () => {
                     <div className='titles'>
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
                       <div className='current-progress'>
-                        <p className='daysleft'>7 days left</p>
+                        <p className='daysleft'>{item.progress === 100?'Completed':'7 days left'}</p>
                         <h2><GoGoal/>{item.target} ETB</h2>
                       </div>
                     </div>
                     <div className='progress'>
                       <div>
                         <div className='outter'>
-                          <div style={{ width: `${40}%` }} className='inner'></div>
+                          <div style={{backgroundColor:item.progress === 100?"#41cc87":"#1b76ff",width: `${item.progress}%`}} className='inner'></div>
                         </div>
                        
                       </div>
                       <div className='target-goal'>
-                        <h2><GiProgression/>4000 ETB</h2>
+                        <h4><GiProgression/>{item.current} ETB</h4>
                         <div className='percent'>
-                             <p>30</p>
+                             <p>{item.progress}</p>
                              %
                         </div>
                       </div>
@@ -92,8 +92,6 @@ const Content = styled.div`
     height: 85vh;
     overflow-y: auto;
 `
-
-
 const Container = styled.div`
   color: #333;
   width: 60%;
@@ -168,25 +166,32 @@ const GoalContainer = styled.div`
         justify-content: space-between;
         font-size: .8rem;
         font-weight: 300;
-        background-color: #eee;
         padding: 0.1rem .3rem;
         border-radius: 30px;
-      }
+        background-color: #eee;
 
-      >*{
-        margin: 0;
-        padding: 0;
+        h4{
+          display: flex;
+          align-items: center;
+          gap: .3rem;
+          opacity: .8;
+          font-weight: 400;
+        }
+      }
 
         >*{
-        margin: 0;
-        padding: 0;
-      }
+          margin: 0;
+          padding: 0;
+
+          >*{
+          margin: 0;
+          padding: 0;
+        }
       }
       .percent{
         display: flex;
         align-items: center;
         justify-content: center;
-        /* background-color: #73a47d; */
         width: 25px;
         height: 25px;
         border-radius: 50%;
@@ -202,17 +207,14 @@ const GoalContainer = styled.div`
           display: flex;
           align-items: center;
           margin: 0 .4rem;
-          color: #989393;
         }
 
         h4 span{
-          background-color: #eee;
           width: 20px;
           height: 20px;
           border-radius: 50%;
           display: grid;
           place-items: center;
-          color: #333;
           font-size: .7rem;
         }
       }
@@ -228,13 +230,12 @@ const GoalContainer = styled.div`
 
       .inner{
         height: 100%;
-        background-color: #1b76ff;
+        background-color: ${(props) => (props.progress === 100 ? 'green' : '#1b76ff')};
         position: absolute;
         left: 0;
       }
     }
 `
-
 const Card = styled.div`
   display: flex;
   justify-content: space-between;

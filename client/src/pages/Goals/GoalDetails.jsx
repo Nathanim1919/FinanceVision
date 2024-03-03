@@ -16,16 +16,12 @@ import { RiLuggageDepositLine } from "react-icons/ri";
 import axios from 'axios';
 import {useSelector, useDispatch} from 'react-redux';
 import { updateGoal } from '../../features/goals/goalSlice';
-
+import { useNavigate } from 'react-router-dom';
 
 export const GoalDetails = ({ goal, setShowDetails }) => {
+  const navigate = useNavigate()
 
-  const [data, setData] = useState({
-    title:goal.title,
-    description: goal.description,
-    target:goal.target,
-    depositAmount: 0,
-  });
+  const [depositAmount, setDepositAmount] = useState(0);
 
   const [errorMessage, setErrorMessage] = useState(''); // State for error message
   const dispatch = useDispatch();
@@ -38,7 +34,7 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
       return; // Prevent state update if input is invalid
     }
 
-    setData({ ...data, depositAmount: newDepositAmount });
+    setDepositAmount(newDepositAmount);
     setErrorMessage(''); // Clear any previous error message
   };
 
@@ -46,9 +42,10 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
 
   const handleDeposit = async (id) => {
     try {
-      dispatch(updateGoal(id, data))
-      setData({ ...data, depositAmount: 0 }); // Reset deposit amount after successful update
-      setShowDetails(false); // Close modal after successful update (optional)
+      dispatch(updateGoal({id, depositAmount}))
+      setDepositAmount(0);
+      setShowDetails(false); 
+      navigate('/dashboard')
     } catch (error) {
       console.error('Error updating goal progress:', error);
       setErrorMessage('An error occurred while depositing funds. Please try again later.');
@@ -91,7 +88,7 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
           <div className="depositeInput">
             <h4><RiLuggageDepositLine />Deposite</h4>
             <div>
-              <input onChange={handleChange} type="text" value={data.depositAmount} />
+              <input onChange={handleChange} type="text" value={depositAmount} />
               <button onClick={()=>handleDeposit(goal._id)}>Add</button>
             </div>
             {/* {errorMessage && <p className="error">{errorMessage}</p>} */}
@@ -107,7 +104,7 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
                 %
               </div>
             </div>
-            <p><MdCalendarToday />7 days left</p>
+            <p><MdCalendarToday />{goal.progress === 100?'Completed':'7 days left'}</p>
           </div>
 
           <div className='statusAndCategory'>

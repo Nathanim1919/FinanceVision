@@ -159,7 +159,7 @@ export const Dashboard = () => {
           </div>
 
           <div className="amount">
-            <h2>{show?"*******":user.deposit} ETB</h2>
+            <h2>{!show?"*******":user.deposit} ETB</h2>
             <div onClick={()=>setShow(!show)}>
               {show?<FaEye/>:<FaEyeSlash/>}
             </div>
