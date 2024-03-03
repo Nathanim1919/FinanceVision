@@ -4,16 +4,31 @@ import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
-import http from 'http'
+import Notification from "./models/notification.js";
 // Routes
 import userRouter  from "./routes/authRoute.js";
 import incomeRouter from "./routes/incomeRoute.js";
 import expenseRouter from "./routes/expenseRoute.js";
 import goalRouter from './routes/goalRoute.js';
 import transactionRouter from './routes/transactionRoute.js'; 
-import Goal from "./models/goal.js";
+import notificationRouter from './routes/notificationRoute.js';
+
 
 dotenv.config();
+
+
+
+export const io = new Server(5000, {
+  cors: {
+    origin: 'http://localhost:5173',
+    credentials: true,
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+});
+
 
 const startServer = async () => {
   try {
@@ -25,48 +40,15 @@ const startServer = async () => {
 
     // Create Express Server
     const app = new Express();
-    const server = http.createServer(app);
-    const io = new Server(server, {
-      cors: {
-        origin: 'http://localhost:5173',
-        credentials: true,
-      }
-    });
-
-
-    // Socket io event listner
-    io.on('connection', (socket) => {
-      console.log("Connected");
-
-      socket.on('goal-progress-update', async (goalId) => {
-        try {
-          const goal = await Goal.findById(goalId);
-            if (goal.process === 100){
-                const notification = new Notification({
-                  title:"Goal Achieved!",
-                  message:`Congratulations! You've reached your goal of ${goal.title}`,
-                  type:'success',
-                  user: goal.user,
-                })
-                await notification.save();
-
-
-                // Emiit notification to the connected user
-                io.to(socket.id).emit('notification-created', notification);
-            }
-          
-        } catch (error) {
-          console.error('Error handling goal progress update:', error)
-        }
-      });
-    });
-
 
     app.use(cookieParser());
     app.use(Express.json());
-    app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
-    const port = process.env.PORT || 3000;
+    app.use(cors({ 
+      origin: 'http://localhost:5173', 
+      credentials: true 
+    }));
 
+    const port = process.env.PORT || 3000;
     
     // Routes
     app.use("/api/v1/auth", userRouter);
@@ -74,7 +56,7 @@ const startServer = async () => {
     app.use("/api/v1/expenses", expenseRouter);
     app.use("/api/v1/goals", goalRouter);
     app.use("/api/v1/transactions", transactionRouter);
-
+    app.use("/api/v1/notifications", notificationRouter);
 
     // Start Server
     app.listen(port, () => {
