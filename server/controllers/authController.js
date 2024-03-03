@@ -98,7 +98,6 @@ export const verifyEmail = asyncHandler(async (req, res) => {
     .update(unHashedToken)
     .digest("hex");
 
-  console.log("first - 22222222222222222222222222  ", hashedToken);
 
   // While registering the user, same time when we are sending the verification mail
   // we have saved a hashed value of the original email verification token in the db
@@ -159,8 +158,6 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   const { email, password } = userData;
 
-  console.log("email is: ", email);
-  console.log("password is: ", password);
 
   if (!userData.email) {
     res.status(400).json({

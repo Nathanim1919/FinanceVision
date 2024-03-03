@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import ProfileImage from '/images/profile.png'
 
 
 const Header = styled.div`
@@ -26,6 +27,13 @@ const Profile = styled.div`
         height: 35px;
         border-radius: 50%;
         background-color: aliceblue;
+
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
     }
 `
 
@@ -38,7 +46,9 @@ function HeaderLayout() {
         </div>
 
         <Profile className="profile">
-            <div className="profileImage"></div>
+            <div className="profileImage">
+                <img src={ProfileImage} alt="" />
+            </div>
             <div className="profileName">
                 <p>{user.username}</p>
             </div>

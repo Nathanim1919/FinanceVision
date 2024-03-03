@@ -18,8 +18,8 @@ const Container = styled.div`
     display: grid;
     place-items: center;
     z-index: 22;
-    background-color: #ffffff64;
-    backdrop-filter: blur(2px);
+    background-color: #ffffff49;
+    backdrop-filter: blur(1px);
 `
 const Loading = styled.div `
     width: 50px;

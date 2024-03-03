@@ -42,6 +42,7 @@ const createExpense = asyncHandler(async (req, res) => {
           merchant: expenseData.merchant,
           type: "withdraw",
           date: expenseData.date,
+          frequency: expenseData.frequency,
       });
 
       // Push IDs to user's arrays and update deposit

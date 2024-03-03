@@ -154,13 +154,11 @@ function Expense() {
     }
 
 
-
   return (
     isLoading ? <Loader/> :
     <Container>
         {createExpense && <ExpenseForm setCreateExpense={setCreateExpense}/>}
         <Content>
-
             <Header>
                 <h2>{user.username}'s expenses</h2>
                 <div className='icon' onClick={()=>setCreateExpense(true)}>
@@ -176,7 +174,6 @@ function Expense() {
                     </div>
                     <div>
                         <h3><FaMoneyBillWave/>{income.amount} <span>BIRR</span></h3>
-                        {/* <p>{income.description}</p> */}
                         <p><CiViewTimeline/>{income.merchant}</p>
                     </div>
                     <div className='icons'>

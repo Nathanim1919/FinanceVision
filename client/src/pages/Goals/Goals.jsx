@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
@@ -13,11 +13,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectGoals, selectLoading } from '../../features/goals/goalSlice';
 import { Loader } from '../../components/Loader';
 import { fetchGoals } from '../../features/goals/goalSlice';
+import { GoalDetails } from './GoalDetails';
 
 export const Goals = () => {
   const [createGoal, setCreateGoal] = React.useState(false);
   const isLoading = useSelector(selectLoading);
   const goals = useSelector(selectGoals);
+  const [selectGoal, setSelectGoal] = useState({});
+  const [showDetails, setShowDetails] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
 
@@ -25,12 +28,15 @@ export const Goals = () => {
     dispatch(fetchGoals(user._id));
   }, [dispatch, user]);
 
-  console.log(goals)
-
+  const handleGoalSelect = (goal) => {
+    setSelectGoal(goal);
+    setShowDetails(true);
+  }
 
   return (
     isLoading ? <Loader/> :
     <Content>
+      {(showDetails && selectGoal) && <GoalDetails setShowDetails={setShowDetails} goal={selectGoal}/>}
       {createGoal && <GoalForm setCreateGoal={setCreateGoal}/>}
           <Container>
               <Header>
@@ -41,24 +47,27 @@ export const Goals = () => {
               </Header>
               <GoalContainer>
                 {goals?.map(item => (
-                  <Card key={item.title} onClick={()=>alert(item._id)}>
+                  <Card key={item.title} onClick={()=>handleGoalSelect(item)}>
                     <div className='titles'>
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
                       <div className='current-progress'>
-                        <p className='daysleft'>7 days left</p>
-                        <h2><GiProgression/>4000 BIRR</h2>
+                        <p className='daysleft'>{item.progress === 100?'Completed':'7 days left'}</p>
+                        <h2><GoGoal/>{item.target} ETB</h2>
                       </div>
                     </div>
                     <div className='progress'>
                       <div>
                         <div className='outter'>
-                          <div style={{ width: `${40}%` }} className='inner'></div>
+                          <div style={{backgroundColor:item.progress === 100?"#41cc87":"#1b76ff",width: `${item.progress}%`}} className='inner'></div>
                         </div>
                        
                       </div>
                       <div className='target-goal'>
-                        <h2><GoGoal/>{item.target} BIRR</h2>
-                        <h4><span>{30}</span>%</h4>
+                        <h4><GiProgression/>{item.current} ETB</h4>
+                        <div className='percent'>
+                             <p>{item.progress}</p>
+                             %
+                        </div>
                       </div>
                     </div>
                     <div className='icons'>
@@ -83,8 +92,6 @@ const Content = styled.div`
     height: 85vh;
     overflow-y: auto;
 `
-
-
 const Container = styled.div`
   color: #333;
   width: 60%;
@@ -150,18 +157,46 @@ const GoalContainer = styled.div`
     .progress{
       display: flex;
       flex-direction: column;
+      gap: .3rem;
       flex: 1;
 
-      >*{
-        margin: 0;
-        padding: 0;
+      .target-goal{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: .8rem;
+        font-weight: 300;
+        padding: 0.1rem .3rem;
+        border-radius: 30px;
+        background-color: #eee;
+
+        h4{
+          display: flex;
+          align-items: center;
+          gap: .3rem;
+          opacity: .8;
+          font-weight: 400;
+        }
+      }
 
         >*{
-        margin: 0;
-        padding: 0;
+          margin: 0;
+          padding: 0;
+
+          >*{
+          margin: 0;
+          padding: 0;
+        }
       }
+      .percent{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        font-size: .7rem;
       }
-      
 
       >div{
         display: flex;
@@ -172,17 +207,14 @@ const GoalContainer = styled.div`
           display: flex;
           align-items: center;
           margin: 0 .4rem;
-          color: #989393;
         }
 
         h4 span{
-          background-color: #eee;
           width: 20px;
           height: 20px;
           border-radius: 50%;
           display: grid;
           place-items: center;
-          color: #333;
           font-size: .7rem;
         }
       }
@@ -198,13 +230,12 @@ const GoalContainer = styled.div`
 
       .inner{
         height: 100%;
-        background-color: #1b76ff;
+        background-color: ${(props) => (props.progress === 100 ? 'green' : '#1b76ff')};
         position: absolute;
         left: 0;
       }
     }
 `
-
 const Card = styled.div`
   display: flex;
   justify-content: space-between;

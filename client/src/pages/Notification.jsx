@@ -1,122 +1,69 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
 import { IoMdAdd } from "react-icons/io";
 import { MdCalendarToday } from "react-icons/md";
+import io from 'socket.io-client';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 
 function Notification() {
-    const notifications = [
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Goal Achieved",
-          "message": "Congratulations! You have successfully achieved your savings goal.",
-          "type": "success",
-          "user": "user_id_1",
-          "createdAt": "2024-02-22T12:00:00Z"
-        },
-        {
-          "title": "Net Worth Warning",
-          "message": "Your net worth has decreased significantly. Review your financial strategy.",
-          "type": "warning",
-          "user": "user_id_2",
-          "createdAt": "2024-02-23T09:30:00Z"
-        },
-        {
-          "title": "Account Update",
-          "message": "Important: There is a scheduled maintenance for your financial account tomorrow.",
-          "type": "info",
-          "user": "user_id_3",
-          "createdAt": "2024-02-24T15:45:00Z"
+  const [notifications, setNotifications] = useState([]);
+  const user = useSelector(state => state.auth.user);
+  const socket = io('http://localhost:5000');
+
+  socket.on('connect', () => {
+    console.log('Connected to server');
+  });
+
+  function calculateTimeDifference(notificationCreatedAt) {
+    const now = Date.now();
+    const notificationDate = new Date(notificationCreatedAt);
+    const timeDifference = Math.floor((now - notificationDate.getTime()) / 1000); // Convert to seconds
+  
+    const units = [
+      { name: "day", value: 24 * 60 * 60 },
+      { name: "hour", value: 60 * 60 },
+      { name: "minute", value: 60 },
+      { name: "second", value: 1 },
+    ];
+  
+    for (const unit of units) {
+      const elapsed = Math.floor(timeDifference / unit.value);
+      if (elapsed >= 1) {
+        return `${elapsed} ${unit.name}${elapsed > 1 ? 's' : ''} ago`;
+      }
+    }
+  
+    return "just now";
+  }
+  
+
+  useEffect(() => {
+      const fetchNotifications = async () => {
+        try {
+          const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
+          setNotifications(fetchedNotifications.data);
+          console.log((fetchedNotifications.data));
+        } catch (error) {
+          console.error("Error fetching notifications:", error);
+          // Handle errors appropriately
         }
-      ]
-      
+      };
+
+      fetchNotifications();
+
+      socket.on('notification-created', (data) => {
+        setNotifications((item) => [...item, data]);
+      });
+
+      return () => socket.off('notification-created');
+  }, []);
+
   return (
     <Container>
       <Content>
@@ -127,7 +74,7 @@ function Notification() {
           </div>
       </Header>
       <NotificationContainer>
-        {notifications.map(notification => (
+        {(notifications?.slice(0,).reverse()).map(notification => (
           <NotificationBox key={notification.createdAt}>
               <div className='notification'>
                     <div>
@@ -139,7 +86,7 @@ function Notification() {
                     </div>
               </div>
               <div className='timestamp'>
-                 <p className='date'><MdCalendarToday/>2 days ago</p>
+                 <p className='date'><MdCalendarToday/>{calculateTimeDifference(notification.createdAt)}</p>
               </div>
           </NotificationBox>
         ))}

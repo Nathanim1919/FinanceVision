@@ -3,15 +3,32 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import { Server } from "socket.io";
+import Notification from "./models/notification.js";
 // Routes
 import userRouter  from "./routes/authRoute.js";
 import incomeRouter from "./routes/incomeRoute.js";
 import expenseRouter from "./routes/expenseRoute.js";
 import goalRouter from './routes/goalRoute.js';
 import transactionRouter from './routes/transactionRoute.js'; 
+import notificationRouter from './routes/notificationRoute.js';
+
 
 dotenv.config();
+
+
+
+export const io = new Server(5000, {
+  cors: {
+    origin: 'http://localhost:5173',
+    credentials: true,
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+});
+
 
 const startServer = async () => {
   try {
@@ -23,11 +40,15 @@ const startServer = async () => {
 
     // Create Express Server
     const app = new Express();
+
     app.use(cookieParser());
     app.use(Express.json());
-    app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
-    const port = process.env.PORT || 3000;
+    app.use(cors({ 
+      origin: 'http://localhost:5173', 
+      credentials: true 
+    }));
 
+    const port = process.env.PORT || 3000;
     
     // Routes
     app.use("/api/v1/auth", userRouter);
@@ -35,7 +56,7 @@ const startServer = async () => {
     app.use("/api/v1/expenses", expenseRouter);
     app.use("/api/v1/goals", goalRouter);
     app.use("/api/v1/transactions", transactionRouter);
-
+    app.use("/api/v1/notifications", notificationRouter);
 
     // Start Server
     app.listen(port, () => {

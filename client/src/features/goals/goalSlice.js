@@ -14,7 +14,6 @@ export const fetchGoals = createAsyncThunk(
   async (userId) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/goals?userId=${userId}`);
-      console.log('hey', response.data.data)
       return (response.data.data.goal).reverse();
     } catch (error) {
       throw error;
@@ -48,6 +47,18 @@ export const deleteGoal = createAsyncThunk(
     }
   }
 );
+
+
+export const updateGoal = createAsyncThunk(
+  'goal/updateGoal',
+  async ({id, depositAmount}) => {
+    try{
+      const response = await axios.post(`http://localhost:3000/api/v1/goals/${id}`,{depositAmount});
+    } catch (error){
+      console.log(error)
+    }
+  }
+)
 
 
 const goalSlice = createSlice({
@@ -98,7 +109,19 @@ const goalSlice = createSlice({
       .addCase(deleteGoal.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      });
+      })
+      .addCase(updateGoal.pending, (state) => {
+        state.loading = true;
+        state.error = null
+      })
+      .addCase(updateGoal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.goals.push(action.payload);
+      })
+      .addCase(updateGoal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message
+      })
   },
 });
 

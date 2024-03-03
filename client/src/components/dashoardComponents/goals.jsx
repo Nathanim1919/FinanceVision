@@ -41,9 +41,9 @@ export const Goals = () => {
           </div>
           <div className='progress'>
             <div className='outter'>
-              <div style={{ width: `${49}%` }} className='inner'></div>
+              <div progress={goal.progress} style={{backgroundColor:goal.progress === 100?"#41cc87":"#1b76ff",width: `${goal.progress}%`}} className='inner'></div>
             </div>
-            <p><CiCalendarDate/>7 days left</p>
+            <p><CiCalendarDate/>{goal.progress === 100?"completed":"7 days left"}</p>
           </div>
         </div>
       ))}
@@ -166,14 +166,14 @@ const GoalContainer = styled.div`
         border-radius: 5px;
         position: relative;
         overflow: hidden;
+
+          .inner{
+            height: 100%;
+            position: absolute;
+            left: 0;
+          }
       }
 
-      .inner{
-        height: 100%;
-        background-color: #1b76ff;
-        position: absolute;
-        left: 0;
-      }
     }
   }
 `

@@ -11,6 +11,11 @@ const transactionSchema = new Schema({
         type: String,
         required: true,
     },
+    frequency: {
+        type: String,
+        enum: ["monthly", "onetime", "weekly", "annually"],
+        default: "onetime",
+    },
     amount: {
         type: Number,
         required: true,
