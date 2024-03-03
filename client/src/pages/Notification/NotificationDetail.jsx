@@ -6,6 +6,8 @@ import Info from '/notiIcon/info.png';
 import Warning from '/notiIcon/warning.png';
 import axios from 'axios';
 import { formatDate } from '../../utils/Formatting';
+import { CiCalendarDate } from "react-icons/ci";
+
 
 export const NotificationDetail = ({ notification, setNotificationId }) => {
 
@@ -24,7 +26,7 @@ export const NotificationDetail = ({ notification, setNotificationId }) => {
             </div>
             <div className='content'>
                 <p>{notification.message}</p>
-                <p className='data'>{formatDate(notification.createdAt)}</p>  
+                <p className='date'><CiCalendarDate/>{formatDate(notification.createdAt)}</p>  
             </div>
         </div>
       </div>
@@ -58,11 +60,13 @@ const ReadNotificationContainer = styled.div`
         padding: 1rem;
       }
       
-      .data{
-        display: grid;
-        place-items: end;
+      .date{
+        display:flex ;
+        align-items: center;
+        justify-content: flex-end;
         padding: 1rem;
-        font-size: .9rem;
+        gap: .4rem;
+        font-size: .7rem;
         color: #656262;
         padding: 0.3rem 1rem;
       }

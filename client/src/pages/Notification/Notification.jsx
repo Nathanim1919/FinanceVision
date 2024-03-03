@@ -47,10 +47,9 @@ function Notification() {
   }
 
   const setRead = async (id) => {
-    setNotificationId(id)
     const readNotification = await axios.patch(`http://localhost:3000/api/v1/notifications/${id}`);
-    const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
-    setNotifications(fetchedNotifications.data);
+    console.log(readNotification);
+    setNotificationId(id)
   }
   
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import { MdDashboard, MdAutoGraph } from "react-icons/md";
 import { FaGetPocket } from "react-icons/fa";
@@ -10,7 +10,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { clearUser } from "../features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../components/Loader";
 import { GoGoal } from "react-icons/go";
 
@@ -35,6 +35,21 @@ const Container = styled.div`
     transition: transform 0.3s ease-in-out;
     position: relative;
     right: 0;
+    
+
+    .notificationNumber{
+      background-color: red;
+      position: absolute;
+      top: -.4rem;
+      width: 14px;
+      height: 14px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      font-size: .5rem;
+      right: -.41rem;
+    }
 
     &:hover > *:nth-child(1) {
       width: 15px;
@@ -80,6 +95,8 @@ function SidebarLayout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const user = useSelector((state) => state.auth.user);
+  const [notifications, setNotifications] = useState([]);
 
   const logout = async () => {
     setIsLoading(true);
@@ -96,6 +113,24 @@ function SidebarLayout() {
     }
     setIsLoading(false);
   };
+
+  const fetchNotifications = async () => {
+    try {
+      const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
+      setNotifications(fetchedNotifications.data);
+      console.log((fetchedNotifications.data));
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      // Handle errors appropriately
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+
+  const unreadNotifications = notifications.filter((notification) => notification.isRead === false);
 
   return (
     <Container>
@@ -130,7 +165,10 @@ function SidebarLayout() {
           className="sidebarItem"
           activeClassName="active"
         >
-          <IoMdNotifications />
+          <div style={{position:'relative'}}>
+            <span className="notificationNumber">{unreadNotifications.length}</span>
+             <IoMdNotifications />
+          </div>
           <p>Notifications</p>
         </NavLink>
       </div>
