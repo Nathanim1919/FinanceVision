@@ -19,6 +19,41 @@ export const getNotifications = async (req, res) => {
   }
 };
 
+export const readNotification = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const notification = await Notification.findByIdAndUpdate(id, { isRead: true }, { new: true });
+    res.status(200).json(notification);
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const handleGoalProgressUpdate = async (goalId) => {
 //   try {
 //     const goal = await Goal.findById(goalId);

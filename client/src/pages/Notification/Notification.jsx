@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
 import { IoIosWarning,IoMdNotifications } from "react-icons/io";
-
+import { NotificationDetail } from './NotificationDetail';
 
 
 
@@ -45,6 +45,13 @@ function Notification() {
   
     return "just now";
   }
+
+  const setRead = async (id) => {
+    setNotificationId(id)
+    const readNotification = await axios.patch(`http://localhost:3000/api/v1/notifications/${id}`);
+    const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
+    setNotifications(fetchedNotifications.data);
+  }
   
 
   useEffect(() => {
@@ -76,8 +83,10 @@ function Notification() {
       </Header>
       <NotificationContainer>
         {(notifications?.slice(0,).reverse()).map(notification => (
-          <NotificationBox key={notification.createdAt} onClick={()=> {setNotificationId(notification._id)}}>
-              {notification._id === notificationId && notificationId !== null && <ReadNotification notification={notification} setNotificationId={setNotificationId} notificationId={notificationId}/>}
+          <>
+         
+          {notification._id === notificationId && notificationId !== null && <NotificationDetail notification={notification} setNotificationId={setNotificationId} notificationId={notificationId}/>}
+          <NotificationBox key={notification.createdAt} onClick={()=>setRead(notification._id)}>
               <div className='notification'>
                     <div>
                         <IoIosNotifications/>
@@ -100,6 +109,7 @@ function Notification() {
                  <p className='date'><MdCalendarToday/>{calculateTimeDifference(notification.createdAt)}</p>
               </div>
           </NotificationBox>
+          </>
         ))}
       </NotificationContainer>
         
@@ -111,65 +121,6 @@ function Notification() {
 export default Notification;
 
 
-
-// ReadNotification.js
-
-import { IoMdClose } from "react-icons/io";
-
-const ReadNotification = ({ notification, setNotificationId }) => {
-
-  return (
-    <ReadNotificationContainer>
-      <div>
-        <div onClick={()=>setNotificationId(null)} className='closeIcon'>
-          <IoMdClose/>
-        </div>
-        <div>
-          <h4>{notification.title}</h4>
-          <p>{notification.message}</p>
-        </div>
-      </div>
-    </ReadNotificationContainer>
-  );
-};
-
-
-
-
-const ReadNotificationContainer = styled.div`
-    position:fixed;
-    top: 0;
-    left: 0;
-    display: grid;
-    place-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.171);
-    z-index: 2;
-    backdrop-filter: blur(0px);
-
-    >div{
-      background-color: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 8px 45px rgba(0,0,0,.05);
-      position: relative;
-
-      .closeIcon{
-        position: absolute;
-        top: .2rem;
-        right: .2rem;
-        width: 20px;
-        height: 20px;
-        display: grid;
-        place-items: center;
-        background-color: #eee;
-        padding: 0.3rem;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-    }
-`
 
 
 const Header = styled.div`
