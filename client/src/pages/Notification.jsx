@@ -8,11 +8,15 @@ import { MdCalendarToday } from "react-icons/md";
 import io from 'socket.io-client';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
+import { IoIosWarning,IoMdNotifications } from "react-icons/io";
+
 
 
 
 function Notification() {
   const [notifications, setNotifications] = useState([]);
+  const [notificationId, setNotificationId] = useState(null);
   const user = useSelector(state => state.auth.user);
   const socket = io('http://localhost:5000');
 
@@ -69,23 +73,30 @@ function Notification() {
       <Content>
       <Header>
           <h2>Nathan's Notifications</h2>
-          <div className='icon' onClick={()=>setCreateIncome(true)}>
-              <IoMdAdd/>
-          </div>
       </Header>
       <NotificationContainer>
         {(notifications?.slice(0,).reverse()).map(notification => (
-          <NotificationBox key={notification.createdAt}>
+          <NotificationBox key={notification.createdAt} onClick={()=> {setNotificationId(notification._id)}}>
+              {notification._id === notificationId && notificationId !== null && <ReadNotification notification={notification} setNotificationId={setNotificationId} notificationId={notificationId}/>}
               <div className='notification'>
                     <div>
                         <IoIosNotifications/>
                     </div>
                     <div className='data'>
                         <h4>{notification.title}</h4>
-                        <p style={{backgroundColor:notification.type === "success"?"green":notification.type === "warning"?"red":"blue"}}>{notification.type}</p>
+                        {notification.type === 'success' && <p style={{backgroundColor:"green"}}>
+                          <FaCheckCircle/>{notification.type}
+                        </p>}
+                        {notification.type === 'info' && <p style={{backgroundColor:"blue"}}>
+                          <FaInfoCircle/>{notification.type}
+                        </p>}
+                        {notification.type === 'warning' && <p style={{backgroundColor:"red"}}>
+                          <IoIosWarning/>{notification.type}
+                        </p>}
                     </div>
               </div>
               <div className='timestamp'>
+                {notification.isRead === false && <p className='new'><IoMdNotifications/>New</p>}
                  <p className='date'><MdCalendarToday/>{calculateTimeDifference(notification.createdAt)}</p>
               </div>
           </NotificationBox>
@@ -99,6 +110,66 @@ function Notification() {
 
 export default Notification;
 
+
+
+// ReadNotification.js
+
+import { IoMdClose } from "react-icons/io";
+
+const ReadNotification = ({ notification, setNotificationId }) => {
+
+  return (
+    <ReadNotificationContainer>
+      <div>
+        <div onClick={()=>setNotificationId(null)} className='closeIcon'>
+          <IoMdClose/>
+        </div>
+        <div>
+          <h4>{notification.title}</h4>
+          <p>{notification.message}</p>
+        </div>
+      </div>
+    </ReadNotificationContainer>
+  );
+};
+
+
+
+
+const ReadNotificationContainer = styled.div`
+    position:fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.171);
+    z-index: 2;
+    backdrop-filter: blur(0px);
+
+    >div{
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 45px rgba(0,0,0,.05);
+      position: relative;
+
+      .closeIcon{
+        position: absolute;
+        top: .2rem;
+        right: .2rem;
+        width: 20px;
+        height: 20px;
+        display: grid;
+        place-items: center;
+        background-color: #eee;
+        padding: 0.3rem;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+`
 
 
 const Header = styled.div`
@@ -171,7 +242,8 @@ const NotificationBox = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f3e09c75;
+    background-color: #eee;
+    border-bottom: 1px solid #eee;
     border-radius: 10px;
     padding:.3rem .5rem;
     cursor: pointer;
@@ -203,6 +275,7 @@ const NotificationBox = styled.div`
         .data{
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
 
             h4{
                 font-size: .8rem;
@@ -211,10 +284,12 @@ const NotificationBox = styled.div`
 
             p{
                 color: #fff;
+                display: flex;
+                align-items: center;
+                gap: .3rem;
                 border-radius: 10px;
                 font-size: .7rem;
-                display: grid;
-                place-items: center;
+                padding: 0.1rem .3rem;
             }
 
 
@@ -230,11 +305,30 @@ const NotificationBox = styled.div`
 
     .timestamp{
         font-size: 0.7rem;
+        display: flex;
+        align-items: flex-end;
+        gap: .4rem;
+        flex-direction: column;
+
+        P{
+            margin: 0;
+            padding: 0;
+        }
 
         p{
           display: flex;
           align-items: center;
           gap: .4rem;
+        }
+
+        .new{
+          color: #fff;
+          background-color: red;
+          padding: 0.1rem .3rem;
+          display: flex;
+          align-items: center;
+          gap: .2rem;
+          border-radius: 30px;
         }
     }
 `
