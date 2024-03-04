@@ -13,6 +13,7 @@ import { clearUser } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../components/Loader";
 import { GoGoal } from "react-icons/go";
+import io from 'socket.io-client';
 
 
 const Container = styled.div`
@@ -97,6 +98,7 @@ function SidebarLayout() {
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const user = useSelector((state) => state.auth.user);
   const [notifications, setNotifications] = useState([]);
+  const socket = io('http://localhost:5000');
 
   const logout = async () => {
     setIsLoading(true);
@@ -114,23 +116,27 @@ function SidebarLayout() {
     setIsLoading(false);
   };
 
+  const unreadNotifications = notifications.filter((notification) => notification.isRead === false);
   const fetchNotifications = async () => {
     try {
       const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
       setNotifications(fetchedNotifications.data);
-      console.log((fetchedNotifications.data));
     } catch (error) {
       console.error("Error fetching notifications:", error);
-      // Handle errors appropriately
     }
   };
 
+
   useEffect(() => {
     fetchNotifications();
-  }, []);
 
+    socket.on('notification-created', (data) => {
+      setNotifications((item) => [...item, data]);
+    });
 
-  const unreadNotifications = notifications.filter((notification) => notification.isRead === false);
+    return () => socket.off('notification-created');
+  }, [user,]);
+
 
   return (
     <Container>
@@ -166,7 +172,7 @@ function SidebarLayout() {
           activeClassName="active"
         >
           <div style={{position:'relative'}}>
-            <span className="notificationNumber">{unreadNotifications.length}</span>
+            {unreadNotifications.length> 0 && <span className="notificationNumber"> <IoMdNotifications /></span>}
              <IoMdNotifications />
           </div>
           <p>Notifications</p>

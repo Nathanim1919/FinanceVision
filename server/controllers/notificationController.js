@@ -12,7 +12,6 @@ export const getNotifications = async (req, res) => {
   const { userId } = req.query;
   try {
     const notifications = await Notification.find({ user: userId });
-    console.log(notifications);
     res.status(200).json(notifications);
   } catch (error) {
     res.status(500).json({ message: error.message });

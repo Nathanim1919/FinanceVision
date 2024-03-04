@@ -20,10 +20,6 @@ function Notification() {
   const user = useSelector(state => state.auth.user);
   const socket = io('http://localhost:5000');
 
-  socket.on('connect', () => {
-    console.log('Connected to server');
-  });
-
   function calculateTimeDifference(notificationCreatedAt) {
     const now = Date.now();
     const notificationDate = new Date(notificationCreatedAt);
@@ -48,31 +44,29 @@ function Notification() {
 
   const setRead = async (id) => {
     const readNotification = await axios.patch(`http://localhost:3000/api/v1/notifications/${id}`);
-    console.log(readNotification);
+    fetchNotifications();
     setNotificationId(id)
   }
   
+  const fetchNotifications = async () => {
+    try {
+      const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
+      setNotifications(fetchedNotifications.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
 
   useEffect(() => {
-      const fetchNotifications = async () => {
-        try {
-          const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
-          setNotifications(fetchedNotifications.data);
-          console.log((fetchedNotifications.data));
-        } catch (error) {
-          console.error("Error fetching notifications:", error);
-          // Handle errors appropriately
-        }
-      };
 
       fetchNotifications();
-
       socket.on('notification-created', (data) => {
         setNotifications((item) => [...item, data]);
       });
 
       return () => socket.off('notification-created');
   }, []);
+
 
   return (
     <Container>
@@ -118,7 +112,6 @@ function Notification() {
 }
 
 export default Notification;
-
 
 
 
