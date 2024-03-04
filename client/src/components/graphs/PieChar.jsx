@@ -1,14 +1,10 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { useDispatch, useSelector } from "react-redux";
 
-const data = [
-  { name: "Savings", value: 5000 },
-  { name: "Budget", value: 3000 },
-  { name: "Goals Achieved", value: 2000 },
-  { name: "Remaining Goals", value: 1000 },
-];
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -30,6 +26,19 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 };
 
 export default function UserFinancePieChart() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const incomes = useSelector((state) => state.income.incomes);
+  const expenses = useSelector((state) => state.expense.expenses);
+
+
+  const data = [
+    { name: "Incomes", value: incomes.reduce((acc, income) => acc + income.amount, 0) },
+    { name: "Expenses", value: expenses.reduce((acc, expense) => acc + expense.amount, 0)},
+    { name: "Net", value: incomes.reduce((acc, income) => acc + income.amount, 0) - expenses.reduce((acc, expense) => acc + expense.amount, 0) },
+  ];
+
+
   return (
     <PieChart width={200} height={200}>
       <Pie
