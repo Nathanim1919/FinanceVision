@@ -15,6 +15,10 @@ const notificationSchema = new Schema({
     enum: ['info', 'success', 'warning', 'error'],
     default: 'info',
   },
+  isRead: {
+    type: Boolean,
+    default: false,
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',

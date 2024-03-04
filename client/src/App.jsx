@@ -16,7 +16,7 @@ import { EmailVerified } from './components/modals/emailVarified.jsx';
 import Layout from './layouts/MainLayout.jsx';
 import PageNotFound  from './pages/PageNotFound.jsx';
 import BlogDetailPage from './pages/BlogDetailPage.jsx';
-import Notification from './pages/Notification.jsx';
+import Notification from './pages/Notification/Notification.jsx';
 import Income from './pages/Income/Income.jsx';
 import Expense from './pages/Expense/Expense.jsx';
 

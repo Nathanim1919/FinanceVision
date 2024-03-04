@@ -25,9 +25,6 @@ export const io = new Server(5000, {
   },
 });
 
-io.on('connection', (socket) => {
-  console.log('A user connected');
-});
 
 
 const startServer = async () => {

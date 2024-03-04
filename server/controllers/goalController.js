@@ -78,7 +78,6 @@ export const updateGoal = asyncHandler(async (req, res) => {
 
   try {
     let updatedGoal = await Goal.findById(id);
-    console.log(updatedGoal);  // Fix the console.log
 
     if (!updatedGoal) {
       // Handle goal not found
@@ -102,7 +101,6 @@ export const updateGoal = asyncHandler(async (req, res) => {
     await updatedGoal.save();
 
     if (!updatedGoal) {
-      // Handle goal not found
       return res.status(404).json({ message: "Goal not found" });
     }
 

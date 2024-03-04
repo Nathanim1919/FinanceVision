@@ -58,7 +58,6 @@ export const registerUser = asyncHandler(async (req, res) => {
     text: `Please verify your email by clicking on the link below: ${verificationURL}`,
   });
 
-  console.log("first - 11111111111111111111111111  ", hashedToken);
 
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken -emailVerificationToken -emailVerificationTokenExpiry"

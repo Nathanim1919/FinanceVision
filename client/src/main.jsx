@@ -9,7 +9,7 @@ import incomeReducer from './features/incomes/incomeSlice.js';
 import expenseReducer from './features/expenses/expenseSlice.js';
 import goalReducer from './features/goals/goalSlice.js'
 import transactionReducer from './features/transactions/transactionSlice.js'
-
+import notificationReducer from './features/notification/notificationSlice.js'
 
 const store = configureStore({
   reducer: {
@@ -18,7 +18,7 @@ const store = configureStore({
     expense:expenseReducer,
     goal:goalReducer,
     transaction:transactionReducer,
-    // Add other reducers if needed
+    notification:notificationReducer,
   },
 });
 

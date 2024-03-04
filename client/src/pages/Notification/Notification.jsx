@@ -8,17 +8,17 @@ import { MdCalendarToday } from "react-icons/md";
 import io from 'socket.io-client';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
+import { IoIosWarning,IoMdNotifications } from "react-icons/io";
+import { NotificationDetail } from './NotificationDetail';
 
 
 
 function Notification() {
   const [notifications, setNotifications] = useState([]);
+  const [notificationId, setNotificationId] = useState(null);
   const user = useSelector(state => state.auth.user);
   const socket = io('http://localhost:5000');
-
-  socket.on('connect', () => {
-    console.log('Connected to server');
-  });
 
   function calculateTimeDifference(notificationCreatedAt) {
     const now = Date.now();
@@ -41,22 +41,25 @@ function Notification() {
   
     return "just now";
   }
+
+  const setRead = async (id) => {
+    const readNotification = await axios.patch(`http://localhost:3000/api/v1/notifications/${id}`);
+    fetchNotifications();
+    setNotificationId(id)
+  }
   
+  const fetchNotifications = async () => {
+    try {
+      const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
+      setNotifications(fetchedNotifications.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
 
   useEffect(() => {
-      const fetchNotifications = async () => {
-        try {
-          const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
-          setNotifications(fetchedNotifications.data);
-          console.log((fetchedNotifications.data));
-        } catch (error) {
-          console.error("Error fetching notifications:", error);
-          // Handle errors appropriately
-        }
-      };
 
       fetchNotifications();
-
       socket.on('notification-created', (data) => {
         setNotifications((item) => [...item, data]);
       });
@@ -64,31 +67,42 @@ function Notification() {
       return () => socket.off('notification-created');
   }, []);
 
+
   return (
     <Container>
       <Content>
       <Header>
           <h2>Nathan's Notifications</h2>
-          <div className='icon' onClick={()=>setCreateIncome(true)}>
-              <IoMdAdd/>
-          </div>
       </Header>
       <NotificationContainer>
         {(notifications?.slice(0,).reverse()).map(notification => (
-          <NotificationBox key={notification.createdAt}>
+          <>
+         
+          {notification._id === notificationId && notificationId !== null && <NotificationDetail notification={notification} setNotificationId={setNotificationId} notificationId={notificationId}/>}
+          <NotificationBox key={notification.createdAt} onClick={()=>setRead(notification._id)}>
               <div className='notification'>
                     <div>
                         <IoIosNotifications/>
                     </div>
                     <div className='data'>
                         <h4>{notification.title}</h4>
-                        <p style={{backgroundColor:notification.type === "success"?"green":notification.type === "warning"?"red":"blue"}}>{notification.type}</p>
+                        {notification.type === 'success' && <p style={{backgroundColor:"green"}}>
+                          <FaCheckCircle/>{notification.type}
+                        </p>}
+                        {notification.type === 'info' && <p style={{backgroundColor:"blue"}}>
+                          <FaInfoCircle/>{notification.type}
+                        </p>}
+                        {notification.type === 'warning' && <p style={{backgroundColor:"red"}}>
+                          <IoIosWarning/>{notification.type}
+                        </p>}
                     </div>
               </div>
               <div className='timestamp'>
+                {notification.isRead === false && <p className='new'><IoMdNotifications/>New</p>}
                  <p className='date'><MdCalendarToday/>{calculateTimeDifference(notification.createdAt)}</p>
               </div>
           </NotificationBox>
+          </>
         ))}
       </NotificationContainer>
         
@@ -171,7 +185,8 @@ const NotificationBox = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f3e09c75;
+    background-color: #eee;
+    border-bottom: 1px solid #eee;
     border-radius: 10px;
     padding:.3rem .5rem;
     cursor: pointer;
@@ -203,6 +218,7 @@ const NotificationBox = styled.div`
         .data{
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
 
             h4{
                 font-size: .8rem;
@@ -211,10 +227,12 @@ const NotificationBox = styled.div`
 
             p{
                 color: #fff;
+                display: flex;
+                align-items: center;
+                gap: .3rem;
                 border-radius: 10px;
                 font-size: .7rem;
-                display: grid;
-                place-items: center;
+                padding: 0.1rem .3rem;
             }
 
 
@@ -230,11 +248,30 @@ const NotificationBox = styled.div`
 
     .timestamp{
         font-size: 0.7rem;
+        display: flex;
+        align-items: flex-end;
+        gap: .4rem;
+        flex-direction: column;
+
+        P{
+            margin: 0;
+            padding: 0;
+        }
 
         p{
           display: flex;
           align-items: center;
           gap: .4rem;
+        }
+
+        .new{
+          color: #fff;
+          background-color: red;
+          padding: 0.1rem .3rem;
+          display: flex;
+          align-items: center;
+          gap: .2rem;
+          border-radius: 30px;
         }
     }
 `
