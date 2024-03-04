@@ -166,6 +166,7 @@ const Header = styled.div`
         display: grid;
         place-items: center;
     }
+  }
 `
 const NotificationContainer = styled.div`
   display: grid;
