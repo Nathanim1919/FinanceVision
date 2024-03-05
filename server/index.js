@@ -12,6 +12,8 @@ import expenseRouter from "./routes/expenseRoute.js";
 import goalRouter from './routes/goalRoute.js';
 import transactionRouter from './routes/transactionRoute.js'; 
 import notificationRouter from './routes/notificationRoute.js';
+import settingRoute from './routes/settingRoute.js';
+import { verifyJWT } from "./middlewares/auth.middlewares.js";
 
 
 dotenv.config();
@@ -40,10 +42,12 @@ const startServer = async () => {
 
     app.use(cookieParser());
     app.use(Express.json());
-    app.use(cors({ 
-      origin: 'http://localhost:5173', 
-      credentials: true 
+    // configure cors 
+    app.use(cors({
+      origin: 'http://localhost:5173',
+      credentials: true,
     }));
+    
 
     const port = process.env.PORT || 3000;
     
@@ -54,6 +58,8 @@ const startServer = async () => {
     app.use("/api/v1/goals", goalRouter);
     app.use("/api/v1/transactions", transactionRouter);
     app.use("/api/v1/notifications", notificationRouter);
+    app.use("/api/v1/settings", settingRoute);
+
 
     // Start Server
     app.listen(port, () => {

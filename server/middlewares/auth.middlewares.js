@@ -4,6 +4,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
     const accessToken = req.cookies?.accessToken;
+    console.log(accessToken);
     
     if (!accessToken) {
         res.status(401).json({
@@ -14,7 +15,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     
     try {
         const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-        req.user = await User.findById(decoded._id).populate("incomes");
+        req.user = await User.findById(decoded._id);
         next();
     } catch (error) {
         res.status(401).json({

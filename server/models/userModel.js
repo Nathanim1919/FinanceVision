@@ -55,6 +55,10 @@ const userSchema = new Schema(
       trim: true,
       minlength: 3,
     },
+    minimumAmount: {
+      type: Number,
+      default: 1000,
+    },
     isEmailVerified: {
       type: Boolean,
       default: false,

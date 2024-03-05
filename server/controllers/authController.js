@@ -269,8 +269,6 @@ export const forgotPasswordRequest = asyncHandler(async (req, res)=>{
       )
 });
 
-
-
 export const resetForgottenPassword = asyncHandler(async (req, res)=>{
     const {resetToken} = req.params;
     const {newPassword} = req.body;
