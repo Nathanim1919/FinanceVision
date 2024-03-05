@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { GrCurrency } from "react-icons/gr";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+
 
 
 
@@ -12,9 +14,11 @@ export const Settings = () => {
   const [showCurrency, setShowCurrency] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('USD'); 
   const supportedCurrencies = ['USD', 'ETB']; 
+  const user = useSelector(state => state.auth.user);
 
   // Optional: Fetch currency rates based on your implementation
   const [currencyRates, setCurrencyRates] = useState({}); // State for currency rates
+  const [minimumAmount, setMinimumAmount] = useState(user.minimumAmount); // State for minimum amount
   
   useEffect(() => {
     const fetchRates = async () => {
@@ -29,6 +33,14 @@ export const Settings = () => {
   const handleCurrencyChange = (event) => {
     setSelectedCurrency(event.target.value);
   };
+
+  const updateMinimumAmount = async (event) => {
+    event.preventDefault();
+    // Update the user's minimum amount
+    const response =await axios.patch(`http://localhost:3000/api/v1/settings`, { userId:user._id,minimumAmount });
+    console.log(response);
+
+  }
 
   return (
     <Container className="settings-container">
@@ -46,21 +58,20 @@ export const Settings = () => {
                 </div>
             </div>
             <div className="userSettings">
-                
                     <h3>Low Balance Range</h3>
                     <div>
-                        <input type="number" placeholder='Maximum Value' id="darkMode" name="darkMode"/>
+                        <form onSubmit={updateMinimumAmount}>
+                            <input type="number" placeholder='Minimum Value' id="darkMode" name="darkMode" value={minimumAmount} onChange={(e)=>setMinimumAmount(e.target.value)}/>
+                            <button type='submit'>Update</button>
+                        </form>
                     </div>
-            </div>
-
-
+            </div>  
          </Content>
     </Container>
   );
 };
 
 const Container = styled.div`
-    /* background-color: red; */
 
     h3{
         display: flex;
@@ -72,6 +83,35 @@ const Container = styled.div`
         cursor: pointer;
         background-color: #bedffd;
         padding: 0.4rem .7rem;
+    }
+
+    .userSettings{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    
+        form{
+            display: flex;
+            align-items: center;
+
+            *{
+                margin: 0;
+                padding: 0.3rem 1rem;
+                border:1px solid #eee;
+                outline: none;
+            }
+
+            button{
+                background-color: blue;
+                color: #fff;
+                box-shadow: 0 5px 23px #54535347;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: #1e90ff;
+                }
+            }
+        }
     }
 `
 
