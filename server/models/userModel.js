@@ -56,21 +56,21 @@ const userSchema = new Schema(
       minlength: 3,
     },
     lastMonthlyIncomeMonth: {
-      type: String,
+      type: Number,
       required: true,
     },
     lastMonthlyIncomeYear: {
-      type: String,
+      type: Number,
       required: true,
     },
     lastMonthlyDeductionMonth: {
-      type: String,
+      type: Number,
       required: true,
     },
     lastMonthlyDeductionYear: {
-      type: String,
+      type: Number,
       required: true,
-    },
+    },    
     minimumAmount: {
       type: Number,
       default: 1000,
