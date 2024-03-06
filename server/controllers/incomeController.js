@@ -34,6 +34,7 @@ export const createIncome = asyncHandler(async (req, res) => {
 
       // Create new income and transaction
       const newIncome = new Income(incomeData);
+            newIncome.user = userId;
       const transaction = new Transaction({
           user: userId,
           title: incomeData.category,

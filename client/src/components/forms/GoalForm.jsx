@@ -39,6 +39,7 @@ const GoalForm = ({setCreateGoal}) => {
 
 
   const handleSubmit = async (e) => {
+    console.log(goalData)
     e.preventDefault();
     try {
       dispatch(createGoal({goalData,userId:user._id}));

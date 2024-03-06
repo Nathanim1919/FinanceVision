@@ -1,14 +1,34 @@
 import { Router } from "express";
-import {registerUser,loginUser, verifyEmail,getCurrentUser, forgotPasswordRequest, logoutUser} from "../controllers/authController.js";
-import {verifyJWT} from "../middlewares/auth.middlewares.js";
+import {
+  registerUser,
+  loginUser,
+  verifyEmail,
+  getCurrentUser,
+  forgotPasswordRequest,
+  logoutUser,
+} from "../controllers/authController.js";
+import { verifyJWT } from "../middlewares/auth.middlewares.js";
 import { checkMinimumBalance } from "../middlewares/checkMinimumBalance.js";
+import { monthlyIncomeMiddleware } from "../middlewares/monthlyIncomeMiddleware.js";
+import { monthlyExpenseDeductionMiddleware } from "../middlewares/monthlyExpenseMiddleware.js";
+import { checkGoalDeadlinesMiddleware } from "../middlewares/checkGoalDeadline.js";
 
 const router = Router();
-router.post("/register", registerUser);
-router.post("/login",loginUser);
-router.post("/logout",verifyJWT, logoutUser);
-router.post("/forgotPasswordRequest", forgotPasswordRequest);
-router.get("/verify-email/:unHashedToken", verifyEmail);
-router.get("/getUser",verifyJWT, checkMinimumBalance, getCurrentUser);
+
+router
+    .post("/register", registerUser)
+    .post("/login", loginUser)
+    .post("/logout", verifyJWT, logoutUser)
+    .post("/forgotPasswordRequest", forgotPasswordRequest)
+    .get("/verify-email/:unHashedToken", verifyEmail)
+    .get(
+        "/getUser",
+        verifyJWT,
+        checkMinimumBalance,
+        monthlyIncomeMiddleware,
+        checkGoalDeadlinesMiddleware,
+        monthlyExpenseDeductionMiddleware,
+        getCurrentUser,
+    );
 
 export default router;

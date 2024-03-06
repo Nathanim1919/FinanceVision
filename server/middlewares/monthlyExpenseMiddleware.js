@@ -1,65 +1,50 @@
 import Expense from "../models/expense.js";
-import User from "../models/userModel.js";
+import Notification from "../models/notification.js";
+import {io} from "../index.js";
 
 export const monthlyExpenseDeductionMiddleware = async (req, res, next) => {
-    try {
-      const { userId } = req.body;
-  
-      // Find the user
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // Get the current month and year
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth();
-      const currentYear = currentDate.getFullYear();
-  
-      // Check if deduction has already been performed for this month
-      if (
-        user.lastMonthlyDeductionMonth === currentMonth &&
-        user.lastMonthlyDeductionYear === currentYear
-      ) {
-        return next(); // Skip deduction if already performed for this month
-      }
-  
-      // Find all recurring expenses
-      const recurringExpenses = await Expense.find({
-        userId,
-        frequency: 'monthly',
-      });
-  
-      // Deduct the expenses from the user's balance
-      recurringExpenses.forEach(async (expense) => {
-        const expenseMonth = expense.date.getMonth();
-        const expenseYear = expense.date.getFullYear();
-  
-        // Check if the expense is for the current month and year
-        if (expenseMonth === currentMonth && expenseYear === currentYear) {
-          if (expense.amount > user.balance) {
-            // Handle insufficient funds
-            console.log(`Insufficient funds for user ${userId} and expense ${expense._id}`);
-            return;
-          }
-  
-          // Deduct the expense amount from the user's balance
-          user.balance -= expense.amount;
-        }
-      });
-  
-      // Update the last deduction month and year
-      user.lastMonthlyDeductionMonth = currentMonth;
-      user.lastMonthlyDeductionYear = currentYear;
-  
-      // Save the updated user
-      await user.save();
-  
-      console.log(`Monthly deduction completed for user ${userId}`);
-  
-      next();
-    } catch (error) {
-      console.error('Error in monthlyExpenseDeductionMiddleware:', error);
-      return res.status(500).json({ message: 'Error processing monthly expenses' });
+  const { user, user: { _id: userId } } = req;
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  if (user.lastMonthlyDeductionMonth === currentMonth && user.lastMonthlyDeductionYear === currentYear) {
+    return next();
+  }
+
+  const recurringExpenses = await Expense.find({ userId, frequency: 'monthly' });
+
+  for (let expense of recurringExpenses) {
+    const { date: { getMonth, getFullYear }, amount, _id } = expense;
+    const expenseMonth = getMonth.call(expense.date);
+    const expenseYear = getFullYear.call(expense.date);
+
+    if (expenseMonth === currentMonth && expenseYear === currentYear && amount <= user.balance) {
+      user.balance -= amount;
+
+    // notify the user about the expense deduction
+    const notification = new Notification({
+      title: 'Monthly Expense Deduction',
+      message: `Your monthly expense of ${amount} BIRR has been deducted for ${expense.category}. your new balance is ${user.deposit} BIRR.`,
+      type: 'info',
+      user: userId,
+    });
+
+    // Emit notification to the connected users
+    io.emit('notification-created', notification);
+    await notification.save();
+    } else if (amount > user.balance) {
+      console.log(`Insufficient funds for user ${userId} and expense ${_id}`);
     }
-  };
+  }
+
+  user.lastMonthlyDeductionMonth = currentMonth;
+  user.lastMonthlyDeductionYear = currentYear;
+
+  await user.save();
+
+  console.log(`Monthly deduction completed for user ${userId}`);
+  next();
+};

@@ -35,6 +35,8 @@ const createExpense = asyncHandler(async (req, res) => {
 
       // Create new expense and transaction
       const newExpense = new Expense(expenseData);
+            newExpense.user = userId;
+            console.log(newExpense)
       const transaction = new Transaction({
           user: userId,
           title: expenseData.category,

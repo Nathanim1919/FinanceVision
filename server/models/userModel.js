@@ -58,23 +58,32 @@ const userSchema = new Schema(
     lastMonthlyIncomeMonth: {
       type: Number,
       required: true,
+      default: new Date().getMonth(), 
     },
+    
     lastMonthlyIncomeYear: {
       type: Number,
       required: true,
+      default: new Date().getFullYear(), 
     },
+    
     lastMonthlyDeductionMonth: {
       type: Number,
       required: true,
+      default: new Date().getMonth(), 
     },
+    
     lastMonthlyDeductionYear: {
       type: Number,
       required: true,
-    },    
+      default: new Date().getFullYear(), 
+    },
+
     minimumAmount: {
       type: Number,
       default: 1000,
     },
+    
     isEmailVerified: {
       type: Boolean,
       default: false,

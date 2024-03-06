@@ -1,59 +1,49 @@
 import Income from "../models/income.js";
-import User from "../models/userModel.js";
+import {io} from "../index.js";
 
 export const monthlyIncomeMiddleware = async (req, res, next) => {
-  try {
-    const { userId } = req.body;
+  const { user, user: { _id: userId } } = req;
+  if (!user) return res.status(404).json({ message: 'User not found' });
 
-    // Find the user
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
 
-    // Get the current month and year
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
+  if (user.lastMonthlyIncomeMonth === currentMonth && user.lastMonthlyIncomeYear === currentYear) {
+    return next();
+  }
 
-    // Check if income has already been added for this month
-    if (
-      user.lastMonthlyIncomeMonth === currentMonth &&
-      user.lastMonthlyIncomeYear === currentYear
-    ) {
-      return next(); // Skip processing if income already added for this month
-    }
+  const monthlyIncome = await Income.findOne({
+    user: userId,
+    frequency: 'monthly',
+    $expr: {
+      $and: [
+        { $eq: [{ $month: '$date' }, currentMonth + 1] },
+        { $eq: [{ $year: '$date' }, currentYear] },
+      ],
+    },
+  });
 
-    // Find the user's monthly income
-    const monthlyIncome = await Income.findOne({
-      userId,
-      frequency: 'monthly',
-      $expr: {
-        $and: [
-          { $eq: [{ $month: '$date' }, currentMonth + 1] }, // MongoDB months are 0-indexed
-          { $eq: [{ $year: '$date' }, currentYear] },
-        ],
-      },
+  if (monthlyIncome) {
+    user.deposit += monthlyIncome.amount;
+    user.lastMonthlyIncomeMonth = currentMonth;
+    user.lastMonthlyIncomeYear = currentYear;
+
+    // notify the user about the monthly income
+    const notification = new Notification({
+      title: 'Monthly Income Added',
+      message: `Your monthly income of ${monthlyIncome.amount} BIRR from ${monthlyIncome.source} has been added to your 
+                account. Your new balance is ${user.deposit + monthlyIncome.amount} BIRR.`,
+      type: 'info',
+      user: userId,
     });
 
-    // Process the monthly income
-    if (monthlyIncome) {
-      // Update the user's balance or perform other actions based on the income
-      user.balance += monthlyIncome.amount;
+    // Emit notification to the connected users
+    io.emit('notification-created', notification);
 
-      // Update the last income month and year
-      user.lastMonthlyIncomeMonth = currentMonth;
-      user.lastMonthlyIncomeYear = currentYear;
-
-      // Save the updated user
-      await user.save();
-
-      console.log(`Monthly income processed for user ${userId}`);
-    }
-
-    next();
-  } catch (error) {
-    console.error('Error in monthlyIncomeMiddleware:', error);
-    return res.status(500).json({ message: 'Error processing monthly income' });
+    await notification.save();
+    await user.save();
+    console.log(`Monthly income processed for user ${userId}`);
   }
+  next();
 };

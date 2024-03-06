@@ -9,6 +9,7 @@ const initialState = {
 };
 
 
+
 export const fetchGoals = createAsyncThunk(
   'goal/fetchGoals',
   async (userId) => {

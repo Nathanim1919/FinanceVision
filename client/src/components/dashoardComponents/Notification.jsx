@@ -83,7 +83,7 @@ const Notification = () => {
                         <IoIosNotifications/>
                     </div>
                     <div className='data'>
-                        <h4>{notification.title}</h4>
+                        <h4>{(notification.title).slice(0,20)}...</h4>
                         {notification.type === 'success' && <p style={{backgroundColor:"green"}}>
                           <FaCheckCircle/>{notification.type}
                         </p>}
