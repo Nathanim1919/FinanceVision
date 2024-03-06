@@ -4,7 +4,90 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import Notification from "../models/notification.js";
 import { io } from "../index.js";
-// import io from '../index.js'
+
+
+// custome error messages
+const errorMessages = {
+  goalNotFound: "Goal not found",
+  userNotFound: "User not found",
+  negativeDeposit: "Deposit amount cannot be negative",
+  insufficientFunds: "Insufficient funds",
+  goalAlreadyCompleted: "Goal has already been completed"
+};
+
+
+// calculate the progress by using the target and current value
+function calculateProgress(current, target) {
+  return Math.floor((current / target) * 100);
+}
+
+export const updateGoal = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const depositAmount = req.body.depositAmount;
+    const updatedGoal = await Goal.findById(req.params.id);
+  
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: errorMessages.userNotFound });
+    }
+
+    if (depositAmount < 0) {
+      return res.status(400).json({ message: errorMessages.negativeDeposit });
+    }
+
+    if (depositAmount > user.deposit) {
+      return res.status(400).json({ message: errorMessages.insufficientFunds });
+    }
+
+    if (updatedGoal.current + depositAmount > updatedGoal.target || updatedGoal.progress === 100) {
+      updatedGoal.current = updatedGoal.target;
+    }
+
+    // Check if the goal has already been completed
+    if (updatedGoal.progress === 100) {
+      return res.status(400).json({ message: errorMessages.goalAlreadyCompleted });
+    }
+
+    // Update the user's deposit and the goal's current value
+    user.deposit -= depositAmount;
+    updatedGoal.current += depositAmount;
+
+    // save the updated goal and user
+    await updatedGoal.save();
+    await user.save();
+
+    // Calculate updated progress
+    updatedGoal.progress = calculateProgress(updatedGoal.current, updatedGoal.target);
+
+    // Ensure progress stays within valid bounds (0-100%)
+    updatedGoal.progress = Math.max(0, Math.min(100, updatedGoal.progress));
+
+    // Check if the goal progress is 100% and a notification has not been created
+    if (updatedGoal.progress === 100 && !notificationCreated) {
+      // Create and save the notification to the database
+      const notification = new Notification({
+        title: "Saving Goal Reached!",
+        message: `Congratulations! You've reached your saving goal of ${updatedGoal.title}`,
+        type: "success",
+        user: updatedGoal.user_id,
+      });
+
+      await notification.save();
+      notificationCreated = true;
+
+      // Emit notification to the connected users
+      io.emit("notification-created", notification);
+    }
+    await updatedGoal.save();
+    // Send successful update response
+    res.json({ message: "Goal updated successfully", data: updatedGoal });
+  } catch (error) {
+    // Handle errors
+    console.error("Error updating goal:", error);
+    res.status(500).json({ message: "Error updating goal" });
+  }
+});
 
 // Get all goals
 export const getGoals = asyncHandler(async (req, res) => {
@@ -72,76 +155,4 @@ export const createGoal = asyncHandler(async (req, res) => {
   }
 });
 
-export const updateGoal = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const { depositAmount } = req.body;
-
-  try {
-    let updatedGoal = await Goal.findById(id);
-
-    if (!updatedGoal) {
-      // Handle goal not found
-      return res.status(404).json({ message: "Goal not found" });
-    }
-
-    if (
-      depositAmount < 0 ||
-      updatedGoal.current + depositAmount > updatedGoal.target ||
-      depositAmount > updatedGoal.target ||
-      updatedGoal.progress === 100
-    ) {
-      return res
-        .status(400)
-        .json({ message: "Deposit amount exceeds goal target" });
-    }
-
-    let notificationCreated = false;  // Move outside the try block
-
-    updatedGoal.current += depositAmount;
-    await updatedGoal.save();
-
-    if (!updatedGoal) {
-      return res.status(404).json({ message: "Goal not found" });
-    }
-
-    const oldProgress = updatedGoal.progress;
-
-    // Calculate updated progress
-    updatedGoal.progress = Math.floor(
-      (updatedGoal.current / updatedGoal.target) * 100
-    );
-
-    // Ensure progress stays within valid bounds (0-100%)
-    updatedGoal.progress = Math.max(0, Math.min(100, updatedGoal.progress));
-
-    // Check if the goal progress is 100% and a notification has not been created
-    if (updatedGoal.progress === 100 && !notificationCreated) {
-      // Create and save the notification to the database
-      const notification = new Notification({
-        title: "Saving Goal Reached!",
-        message: `Congratulations! You've reached your saving goal of ${updatedGoal.title}`,
-        type: "success",
-        user: updatedGoal.user_id,
-      });
-
-      await notification.save();
-      notificationCreated = true; // Set the flag to true
-
-      // Emit notification to the connected users
-      io.emit("notification-created", notification);
-    }
-
-    if (updatedGoal.progress !== oldProgress) {
-      // Check for changes
-      await updatedGoal.save();
-    }
-
-    // Send successful update response
-    res.json({ message: "Goal updated successfully", data: updatedGoal });
-  } catch (error) {
-    // Handle errors
-    console.error("Error updating goal:", error);
-    res.status(500).json({ message: "Error updating goal" });
-  }
-});
 

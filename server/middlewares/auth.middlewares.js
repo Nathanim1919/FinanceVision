@@ -4,11 +4,10 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
     const accessToken = req.cookies?.accessToken;
-    console.log(accessToken);
     
     if (!accessToken) {
-        res.status(401).json({
-        message: "Unauthorized",
+            res.status(401).json({
+            message: "Unauthorized",
         });
         return;
     }

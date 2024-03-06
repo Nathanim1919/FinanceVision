@@ -72,7 +72,7 @@ function Notification() {
     <Container>
       <Content>
       <Header>
-          <h2>Nathan's Notifications</h2>
+          <h2>{user.username}'s Notifications</h2>
       </Header>
       <NotificationContainer>
         {(notifications?.slice(0,).reverse()).map(notification => (

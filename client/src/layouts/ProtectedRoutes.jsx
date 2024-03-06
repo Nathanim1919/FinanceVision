@@ -10,15 +10,15 @@ export function ProtectedRoutes({ children }) {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
+  const [isLoading, setIsLoading] = useState(true); 
   const user = useSelector(selectUser);
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      setIsLoading(true); // Show loading indicator
+      setIsLoading(true); 
 
       if (user) {
-        setIsLoading(false); // Hide loading indicator
+        setIsLoading(false); 
         return;
       }
 
@@ -35,7 +35,7 @@ export function ProtectedRoutes({ children }) {
         dispatch(clearUser());
         navigate('/login', { replace: true });
       } finally {
-        setIsLoading(false); // Hide loading indicator
+        setIsLoading(false); 
       }
     };
 
@@ -49,7 +49,7 @@ export function ProtectedRoutes({ children }) {
       ) : isLoggedIn ? (
         <Outlet/>
       ) : (
-       navigate('/login', {replace: true}) // Redirect to login if not authenticated
+       navigate('/login', {replace: true})
       )}
     </Container>
   );

@@ -51,9 +51,9 @@ export const deleteGoal = createAsyncThunk(
 
 export const updateGoal = createAsyncThunk(
   'goal/updateGoal',
-  async ({id, depositAmount}) => {
+  async ({id, depositAmount, userId}) => {
     try{
-      const response = await axios.post(`http://localhost:3000/api/v1/goals/${id}`,{depositAmount});
+      const response = await axios.post(`http://localhost:3000/api/v1/goals/${id}`,{depositAmount, userId});
     } catch (error){
       console.log(error)
     }

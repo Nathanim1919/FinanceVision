@@ -26,7 +26,7 @@ export const Goals = () => {
 
   useEffect(() => {
     dispatch(fetchGoals(user._id));
-  }, [dispatch, user]);
+  }, [user]);
 
   const handleGoalSelect = (goal) => {
     setSelectGoal(goal);
@@ -40,7 +40,7 @@ export const Goals = () => {
       {createGoal && <GoalForm setCreateGoal={setCreateGoal}/>}
           <Container>
               <Header>
-                  <h2><GoGoal/>Nathan's Goals</h2>
+                  <h2><GoGoal/>{user.username}'s Goals</h2>
                   <div className='icon' onClick={()=>setCreateGoal(true)}>
                       <IoMdAdd/>
                   </div>

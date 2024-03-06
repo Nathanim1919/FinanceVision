@@ -34,10 +34,7 @@ export const Transactions = () => {
     
     <Container>
       <Header>
-          <h2>Nathan's Transactions</h2>
-          <div className='icon' onClick={()=>setCreateIncome(true)}>
-              <IoMdAdd/>
-          </div>
+          <h2>{user.username}'s Transactions</h2>
       </Header>
       <TransactionsContainer className="transactions">
         {transactions?.map(transaction => (

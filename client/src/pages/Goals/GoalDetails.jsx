@@ -19,6 +19,7 @@ import { updateGoal } from '../../features/goals/goalSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const GoalDetails = ({ goal, setShowDetails }) => {
+  const user = useSelector(state => state.auth.user)
   const navigate = useNavigate()
 
   const [depositAmount, setDepositAmount] = useState(0);
@@ -42,10 +43,10 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
 
   const handleDeposit = async (id) => {
     try {
-      dispatch(updateGoal({id, depositAmount}))
+      dispatch(updateGoal({id, depositAmount, userId: user._id}))
       setDepositAmount(0);
-      setShowDetails(false); 
-      navigate('/dashboard')
+      // setShowDetails(false); 
+      // navigate('/dashboard')
     } catch (error) {
       console.error('Error updating goal progress:', error);
       setErrorMessage('An error occurred while depositing funds. Please try again later.');

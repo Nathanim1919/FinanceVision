@@ -13,58 +13,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const financialData = [
-  {
-    month: "January",
-    income: 5000,
-    expenses: 3000
-  },
-  {
-    month: "February",
-    income: 5500,
-    expenses: 3200
-  },
-  {
-    month: "March",
-    income: 6000,
-    expenses: 2800
-  },
-  {
-    month: "April",
-    income: 6200,
-    expenses: 3500
-  },
-  {
-    month: "May",
-    income: 7000,
-    expenses: 4000
-  },
-  {
-    month: "June",
-    income: 7500,
-    expenses: 4200
-  },
-  {
-    month: "July",
-    income: 8000,
-    expenses: 3800
-  },
-  {
-    month: "August",
-    income: 8200,
-    expenses: 4300
-  },
-  {
-    month: "September",
-    income: 8500,
-    expenses: 4500
-  },
-  {
-    month: "October",
-    income: 9000,
-    expenses: 4800
-  }
-];
+
 
 
 export default function BardGraph() {
@@ -111,7 +60,7 @@ export default function BardGraph() {
         if (transaction.type === 'deposit') {
           monthlyData.income += transaction.amount;
         } else if (transaction.type === 'withdraw') {
-          monthlyData.expenses += transaction.amount;
+          monthlyData.expenses += (-1 * transaction.amount);
         }
       });
   
