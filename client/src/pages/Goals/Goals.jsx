@@ -46,7 +46,7 @@ export const Goals = () => {
                   </div>
               </Header>
               <GoalContainer>
-                {goals?.map(item => (
+                {goals && goals.map(item => (
                   <Card key={item.title} onClick={()=>handleGoalSelect(item)}>
                     <div className='titles'>
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>

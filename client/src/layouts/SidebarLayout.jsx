@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import styled from "styled-components";
 import { MdDashboard, MdAutoGraph } from "react-icons/md";
 import { FaGetPocket } from "react-icons/fa";
@@ -14,6 +14,114 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../components/Loader";
 import { GoGoal } from "react-icons/go";
 import io from 'socket.io-client';
+
+
+function SidebarLayout() {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const user = useSelector((state) => state.auth.user);
+  const [notifications, setNotifications] = useState([]);
+  const socket = io('http://localhost:5000');
+
+  const logout = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await axios.post("http://localhost:3000/api/v1/auth/logout", null, {
+        withCredentials: true
+      });
+      dispatch(clearUser());
+      navigate('/login', { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  }, [dispatch, navigate]);
+
+  const unreadNotifications = notifications.filter((notification) => notification.isRead === false);
+
+  const fetchNotifications = useCallback(async () => {
+    try {
+      const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
+      setNotifications(fetchedNotifications.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  }, [user._id]);
+
+
+  useEffect(() =>  {
+    fetchNotifications();
+    socket.on('notification-created', (data) => {
+      setNotifications((item) => [...item, data]);
+    });
+    return () => socket.off('notification-created');
+  }, [fetchNotifications]);
+
+
+  return (
+    <Container>
+      {isLoading && <Loader />}
+      <div className="sidebar">
+        <NavLink to="/dashboard" className="sidebarItem" activeClassName="active">
+          <MdDashboard />
+          <p>Dashboard</p>
+        </NavLink>
+        <NavLink to="/incomes" className="sidebarItem" activeClassName="active">
+          <FaGetPocket />
+          <p>Incomes</p>
+        </NavLink>
+        <NavLink to="/expenses" className="sidebarItem" activeClassName="active">
+          <TiExport />
+          <p>Expenses</p>
+        </NavLink>
+        <NavLink to="/goals" className="sidebarItem" activeClassName="active">
+          <GoGoal />
+          <p>Goals</p>
+        </NavLink>
+        <NavLink
+          to="/transactions"
+          className="sidebarItem"
+          activeClassName="active"
+        >
+          <GrTransaction />
+          <p>Transactions</p>
+        </NavLink>
+        <NavLink
+          to="/notifications"
+          className="sidebarItem"
+          activeClassName="active"
+        >
+          <div style={{position:'relative'}}>
+            {unreadNotifications.length> 0 && <span className="notificationNumber"> <IoMdNotifications /></span>}
+             <IoMdNotifications />
+          </div>
+          <p>Notifications</p>
+        </NavLink>
+      </div>
+
+      <div className="sidebarFooter">
+        <NavLink to="/settings" className="sidebarItem" activeClassName="active">
+          <IoMdSettings />
+          <p>Settings</p>
+        </NavLink>
+
+        <Link onClick={logout} className="sidebarItem" activeClassName="active">
+          <IoMdLogOut />
+          <p>Logout</p>
+        </Link>
+      </div>
+    </Container>
+  );
+}
+
+export default SidebarLayout;
+
+
+
+
+
 
 
 const Container = styled.div`
@@ -90,108 +198,3 @@ const Container = styled.div`
       background-color: #fff;
     }
 `;
-
-function SidebarLayout() {
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false); // Track loading state
-  const user = useSelector((state) => state.auth.user);
-  const [notifications, setNotifications] = useState([]);
-  const socket = io('http://localhost:5000');
-
-  const logout = async () => {
-    setIsLoading(true);
-    try {
-      const res = await axios.post("http://localhost:3000/api/v1/auth/logout", null, {
-        withCredentials: true
-      });
-     
-        dispatch(clearUser());
-        navigate('/login', { replace: true });
-  
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
-
-  const unreadNotifications = notifications.filter((notification) => notification.isRead === false);
-  const fetchNotifications = async () => {
-    try {
-      const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
-      setNotifications(fetchedNotifications.data);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
-
-
-  useEffect(() => {
-    fetchNotifications();
-
-    socket.on('notification-created', (data) => {
-      setNotifications((item) => [...item, data]);
-    });
-
-    return () => socket.off('notification-created');
-  }, [user,]);
-
-
-  return (
-    <Container>
-      {isLoading && <Loader />}
-      <div className="sidebar">
-        <NavLink to="/dashboard" className="sidebarItem" activeClassName="active">
-          <MdDashboard />
-          <p>Dashboard</p>
-        </NavLink>
-        <NavLink to="/incomes" className="sidebarItem" activeClassName="active">
-          <FaGetPocket />
-          <p>Incomes</p>
-        </NavLink>
-        <NavLink to="/expenses" className="sidebarItem" activeClassName="active">
-          <TiExport />
-          <p>Expenses</p>
-        </NavLink>
-        <NavLink to="/goals" className="sidebarItem" activeClassName="active">
-          <GoGoal />
-          <p>Goals</p>
-        </NavLink>
-        <NavLink
-          to="/transactions"
-          className="sidebarItem"
-          activeClassName="active"
-        >
-          <GrTransaction />
-          <p>Transactions</p>
-        </NavLink>
-        <NavLink
-          to="/notifications"
-          className="sidebarItem"
-          activeClassName="active"
-        >
-          <div style={{position:'relative'}}>
-            {unreadNotifications.length> 0 && <span className="notificationNumber"> <IoMdNotifications /></span>}
-             <IoMdNotifications />
-          </div>
-          <p>Notifications</p>
-        </NavLink>
-      </div>
-
-      <div className="sidebarFooter">
-        <NavLink to="/settings" className="sidebarItem" activeClassName="active">
-          <IoMdSettings />
-          <p>Settings</p>
-        </NavLink>
-
-        <Link onClick={logout} className="sidebarItem" activeClassName="active">
-          <IoMdLogOut />
-          <p>Logout</p>
-        </Link>
-      </div>
-    </Container>
-  );
-}
-
-export default SidebarLayout;

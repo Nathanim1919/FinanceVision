@@ -55,6 +55,7 @@ export const updateGoal = createAsyncThunk(
   async ({id, depositAmount, userId}) => {
     try{
       const response = await axios.post(`http://localhost:3000/api/v1/goals/${id}`,{depositAmount, userId});
+      return response.data.data;
     } catch (error){
       console.log(error)
     }
@@ -116,9 +117,12 @@ const goalSlice = createSlice({
         state.error = null
       })
       .addCase(updateGoal.fulfilled, (state, action) => {
-        state.loading = false;
-        state.goals.push(action.payload);
-      })
+          state.loading = false;
+          const index = state.goals.findIndex((goal) => goal._id === action.payload._id);
+          if (index !== -1) {
+            state.goals[index] = action.payload;
+          }
+        })
       .addCase(updateGoal.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message

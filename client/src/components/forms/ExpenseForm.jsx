@@ -7,6 +7,7 @@ import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { createExpense } from '../../features/expenses/expenseSlice';
+import { fetchUser } from '../../features/auth/authSlice';
 
 const ExpenseForm = ({setCreateExpense}) => {
   const isLoading = useSelector((state) => state.expense.loading);
@@ -36,6 +37,7 @@ const ExpenseForm = ({setCreateExpense}) => {
 
     // create new income 
     dispatch(createExpense(incomeData, user._id));
+    dispatch(fetchUser())
 
     // Reset form after successful submission
     setIncomeData({

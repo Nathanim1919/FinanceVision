@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { selectUser } from '../features/auth/authSlice';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ExpensePieChart from '../components/graphs/PieChar';
 import { Goals } from '../components/dashoardComponents/goals';
 import welcomeImage from '/images/coin.png';
@@ -9,9 +9,76 @@ import BardGraph from '../components/graphs/barGrapgh';
 import Notification from '../components/dashoardComponents/Notification';
 import { Transactions } from '../components/dashoardComponents/Transactions';
 import FinancialBarChart from '../components/graphs/BarChart';
-import IncomeForm from '../components/forms/IncomeForm';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import {fetchUser} from "../features/auth/authSlice";
+import {useNavigate} from "react-router-dom";
+
+
+
+
+export const Dashboard = () => {
+
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [show, setShow] = useState(false);
+
+  // useEffect(() => {
+  //     dispatch(fetchUser())
+  // }, []);
+
+  return (
+    <Container>
+       <div className="welocmepage">
+          <div className='welcomeText'>
+            <div>
+              <img src={welcomeImage} alt=''/>
+            </div>
+              <div>
+                  <h3>Hi, {user && (user.username)[0].toUpperCase() + (user.username).slice(1)}</h3>
+                  <p>Save, Track, Invest and Grow Exponentially</p>
+              </div>
+          </div>
+
+           <div className="amount">
+               <h2>{!show ? "*******" : user && user.deposit} ETB</h2>
+               <div onClick={() => setShow(!show)}>
+                   {show ? <FaEye/> : <FaEyeSlash/>}
+               </div>
+           </div>
+       </div>
+        <div className="datas">
+        <div className='firstData'>
+            <div>
+              <Goals/>
+            </div>
+            <div style={{
+                display:"grid",
+                placeItems:"center"
+              }}>
+           <FinancialBarChart/>
+            </div>
+          </div>
+          <div>
+              <BardGraph/>
+          </div>
+          <div>
+              <Notification/>
+          </div>
+          <div className='bottomGrid'>
+             <div>
+                <Transactions/>
+             </div>
+             <div style={{
+              display:"grid",
+              placeItems:"center"
+            }}><ExpensePieChart/></div>
+          </div>
+       </div>
+    </Container>
+  )
+}
 
 
 const Container = styled.div`
@@ -139,61 +206,3 @@ const Container = styled.div`
       width: 100%;
    }
 `
-
-export const Dashboard = () => {
-  
-  const user = useSelector(selectUser);
-  const [show, setShow] = useState(false);
-
-  return (
-    <Container>
-       <div className="welocmepage">
-          <div className='welcomeText'>
-            <div>
-              <img src={welcomeImage} alt=''/>
-            </div>
-            <div>
-              <h3>Hi, {(user.username)[0].toUpperCase() + (user.username).slice(1)}</h3>
-              <p>Save, Track, Invest and Grow Exponentially</p>
-            </div>
-          </div>
-
-          <div className="amount">
-            <h2>{!show?"*******":user.deposit} ETB</h2>
-            <div onClick={()=>setShow(!show)}>
-              {show?<FaEye/>:<FaEyeSlash/>}
-            </div>
-          </div>
-       </div>
-       <div className="datas">
-          <div className='firstData'>
-            <div>
-              <Goals/>
-            </div>
-            <div style={{
-                display:"grid",
-                placeItems:"center"
-              }}>
-           <FinancialBarChart/>
-            </div>
-          </div>
-          <div>
-              <BardGraph/>
-          </div>
-          <div>
-              <Notification/>
-          </div>
-          <div className='bottomGrid'>
-             <div>
-                <Transactions/>
-             </div>
-             <div style={{
-              display:"grid",
-              placeItems:"center"
-            }}><ExpensePieChart/></div>
-          </div>
-       </div>
-    </Container>
-  )
-}
-

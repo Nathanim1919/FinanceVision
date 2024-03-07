@@ -1,8 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import { useDispatch, useSelector } from "react-redux";
-
-
+import {useSelector } from "react-redux";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
@@ -26,8 +24,6 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 };
 
 export default function UserFinancePieChart() {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
   const incomes = useSelector((state) => state.income.incomes);
   const expenses = useSelector((state) => state.expense.expenses);
 

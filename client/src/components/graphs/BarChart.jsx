@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTransactions } from "../../features/transactions/transactionSlice";
@@ -9,25 +9,21 @@ export default function FinancialBarChart() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const transactions = useSelector(state => state.transaction.transactions);
-  let data = [];
+
 
   useEffect(() => {
     dispatch(fetchTransactions(user._id));
   }, [dispatch, user]);
 
-  
-  const populateData = () => {
-    for (let i = 0; i < transactions.length; i++) {
-      data.push({
-        category: transactions[i].title,
-        incomes: transactions[i].type === 'deposit' ? transactions[i].amount : 0,
-        expenses: transactions[i].type === 'withdraw' ? (transactions[i].amount)*-1 : 0,
-      })
-    }
-  }
 
-  populateData();
-  console.log(data)
+  const data = useMemo(() => {
+      return transactions.map(transaction => ({
+          category: transaction.title,
+          incomes: transaction.type === 'deposit' ? transaction.amount : 0,
+          expenses: transaction.type === 'withdraw' ? (transaction.amount)*-1 : 0,
+      }));
+    }, [transactions]);
+
 
   if (data.length < 1){
     return(

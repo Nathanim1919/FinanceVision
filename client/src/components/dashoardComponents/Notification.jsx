@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
 import { GrLinkNext } from "react-icons/gr";
@@ -40,15 +40,14 @@ const Notification = () => {
     }
   
   
-    const fetchNotifications = async (userId, setNotifications) => {
+    const fetchNotifications = useCallback(async (userId, setNotifications) => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${userId}`);
         setNotifications(response.data.reverse());
-        console.log(response.data);
       } catch (error) {
         console.error('Error fetching notifications:', error);
       }
-    };
+    }, []);
   
     useEffect(() => {
       const fetchAndSetNotifications = async () => {

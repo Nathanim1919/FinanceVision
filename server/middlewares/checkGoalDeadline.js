@@ -2,6 +2,8 @@ import Goal from "../models/goal.js";
 import Notification from "../models/notification.js";
 import { io } from "../index.js";
 
+
+let notificationsSent = false;
 export const checkGoalDeadlinesMiddleware = async (req, res, next) => {
   try {
     const { user, user: { _id: userId } } = req;
@@ -11,6 +13,11 @@ export const checkGoalDeadlinesMiddleware = async (req, res, next) => {
 
     // Calculate remaining days until the deadline for each goal
     const currentDate = new Date();
+
+    // Check if the notifications have already been sent
+    if (notificationsSent) {
+      return next();
+    }
 
     goals.forEach(async (goal) => {
       const remainingDays = Math.ceil((new Date(goal.deadline) - currentDate) / (1000 * 60 * 60 * 24));
@@ -31,6 +38,8 @@ export const checkGoalDeadlinesMiddleware = async (req, res, next) => {
       }
     });
 
+    // Set the flag to true to indicate that the notifications have been sent
+    notificationsSent = true;
     next();
   } catch (error) {
     console.error('Error in checkGoalDeadlinesMiddleware:', error);

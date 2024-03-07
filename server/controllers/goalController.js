@@ -21,8 +21,11 @@ function calculateProgress(current, target) {
   return Math.floor((current / target) * 100);
 }
 
+
+let notificationCreated = false;
 export const updateGoal = asyncHandler(async (req, res) => {
   try {
+
     const userId = req.body.userId;
     const depositAmount = req.body.depositAmount;
     const updatedGoal = await Goal.findById(req.params.id);

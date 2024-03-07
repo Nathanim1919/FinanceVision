@@ -19,8 +19,6 @@ export const checkMinimumBalance = async (req, res, next) => {
                 type: "warning",
                 user: user._id,
               });
-
-              console.log(notification)
         
               await notification.save();
     

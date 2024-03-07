@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { IoMdClose } from "react-icons/io";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
-import { selectUser } from '../../features/auth/authSlice';
+import { fetchUser, selectUser } from '../../features/auth/authSlice';
 import { FaArrowRotateLeft } from "react-icons/fa6";
 import { createIncomes, fetchIncomes } from '../../features/incomes/incomeSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,9 +34,9 @@ const IncomeForm = ({setCreateIncome}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // create new income
     dispatch(createIncomes(incomeData, user._id));
-
+    dispatch(fetchUser())
+    
     // Reset form after successful submission
     setIncomeData({
       date: '',

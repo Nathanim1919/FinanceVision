@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { GrLinkNext } from "react-icons/gr";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';

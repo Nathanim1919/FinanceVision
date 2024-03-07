@@ -17,11 +17,9 @@ export const Goals = () => {
   const goals = (useSelector(selectGoals)).slice(0,3);
   const loading = useSelector(selectLoading);
 
-
   useEffect(() => {
     dispatch(fetchGoals(user._id));
   }, [dispatch, user]);
-
 
   return (
     loading?<Loader/>:

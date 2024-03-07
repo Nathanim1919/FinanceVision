@@ -17,6 +17,7 @@ import axios from 'axios';
 import {useSelector, useDispatch} from 'react-redux';
 import { updateGoal } from '../../features/goals/goalSlice';
 import { useNavigate } from 'react-router-dom';
+import { fetchUser } from '../../features/auth/authSlice';
 
 export const GoalDetails = ({ goal, setShowDetails }) => {
   const user = useSelector(state => state.auth.user)
@@ -43,10 +44,10 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
 
   const handleDeposit = async (id) => {
     try {
-      dispatch(updateGoal({id, depositAmount, userId: user._id}))
+      dispatch(updateGoal({id, depositAmount, userId: user._id}));
+      dispatch(fetchUser());
       setDepositAmount(0);
-      // setShowDetails(false); 
-      // navigate('/dashboard')
+      setShowDetails(false); 
     } catch (error) {
       console.error('Error updating goal progress:', error);
       setErrorMessage('An error occurred while depositing funds. Please try again later.');
