@@ -8,14 +8,26 @@ import { FAQs } from "./FAQs";
 import BlogPost from "../layouts/BlogPost";
 import FooterLayout from "../layouts/FooterLayout";
 import AboutUs from "../layouts/About";
+import { CiMenuFries } from "react-icons/ci";
+
 
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    .icon{
+        display: none;
+    }
+
     @media screen and (max-width: 768px){
           justify-content: space-around;
+          .icon{
+            display: grid;
+            font-size: 2rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
         }
 
     .logo{
@@ -44,26 +56,6 @@ const Container = styled.div`
     @media screen and (max-width: 768px){
         width: 100vw;
     }
-
-    /* &::after{
-        content: '';
-        position: absolute;
-        top: 0%;
-        right: 0%;
-        width: 40vw;
-        background-color: #498fdf;
-        height: 11vh;
-        border-bottom-left-radius:170px;
-        border-bottom-right-radius:170px;
-
-        @media screen and (max-width: 768px){
-            width: 100vw;
-            height: 12vh;
-            border-bottom-left-radius:0px;
-            border-bottom-right-radius:0px;
-        }
-    } */
-
 
     .hero{
         display: grid;
@@ -143,6 +135,19 @@ const Navbar = styled.nav`
         z-index: 10;
         right: 4%;
 
+        @media screen and (max-width:700px){
+            position: absolute;
+            top: -100%;
+            width: 100%;
+            right: 0;
+            padding: 1rem 0;
+            border-radius: 0;
+            flex-direction: column;
+            gap: 2rem;
+            box-shadow: 0 5px 23px rgba(0,0,0,.3);
+            
+        }
+
         ul{
             position: relative;
             z-index: 5;
@@ -154,6 +159,11 @@ const Navbar = styled.nav`
             font-weight: 500;
             text-transform: capitalize;
             margin-right: 2rem;
+
+
+            @media screen and (max-width:700px){
+                flex-direction: column;
+            }
 
             li{
                 cursor: pointer;
@@ -173,6 +183,7 @@ const Button = styled.div`
     gap: 1rem;
     position: relative;
     z-index: 3;
+    
     a{
         color: #ffffff;
         text-decoration: none;
@@ -209,6 +220,9 @@ export const Home = () => {
             <Header className="header">
                 <div className="logo">
                     <h1>F<span>Vision</span></h1>
+                </div>
+                <div className="icon">
+                    <CiMenuFries/>
                 </div>
 
             <Navbar>
