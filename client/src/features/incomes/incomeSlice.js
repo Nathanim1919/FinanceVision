@@ -1,6 +1,7 @@
 // incomeSlice.js
 import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
+import { BASE_URL } from '../../utils/Api';
 
 const initialState = {
   incomes: [],
@@ -35,7 +36,7 @@ const incomeSlice = createSlice({
 export const createIncomes  = (incomeData, userId) => async (dispatch) => {
   dispatch(incomeSlice.actions.setLoading(true));
   try {
-    const response = await axios.post('http://localhost:3000/api/v1/incomes/',{incomeData, userId});
+    const response = await axios.post(`${BASE_URL}/api/v1/incomes/`,{incomeData, userId});
     dispatch(incomeSlice.actions.addIncome(response.data.data));
   } catch (error) {
     dispatch(incomeSlice.actions.setError(error.message));
@@ -49,7 +50,7 @@ export const createIncomes  = (incomeData, userId) => async (dispatch) => {
 export const fetchIncomes = (userId) => async (dispatch) => {
   dispatch(incomeSlice.actions.setLoading(true));
   try {
-    const response = await axios.get(`http://localhost:3000/api/v1/incomes?userId=${userId}`);
+    const response = await axios.get(`${BASE_URL}/api/v1/incomes?userId=${userId}`);
     dispatch(incomeSlice.actions.setIncomes(response.data.data.incomes));
   } catch (error) {
     dispatch(incomeSlice.actions.setError(error.message));
@@ -63,7 +64,7 @@ export const fetchIncomes = (userId) => async (dispatch) => {
 export const deleteIncomeAsync = (id, userId) => async (dispatch) => {
   dispatch(incomeSlice.actions.setLoading(true));
   try {
-    await axios.post(`http://localhost:3000/api/v1/incomes/${id}`, { userId });
+    await axios.post(`${BASE_URL}/api/v1/incomes/${id}`, { userId });
     dispatch(incomeSlice.actions.deleteIncome(id));
     console.log('Income deleted successfully!');
   } catch (error) {

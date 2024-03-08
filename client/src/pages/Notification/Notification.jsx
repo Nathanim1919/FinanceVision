@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
 import { IoIosWarning,IoMdNotifications } from "react-icons/io";
 import { NotificationDetail } from './NotificationDetail';
+import { SOCKET_URL, BASE_URL } from '../../utils/Api';
 
 
 
@@ -18,7 +19,7 @@ function Notification() {
   const [notifications, setNotifications] = useState([]);
   const [notificationId, setNotificationId] = useState(null);
   const user = useSelector(state => state.auth.user);
-  const socket = io('http://localhost:5000');
+  const socket = io(SOCKET_URL);
 
   function calculateTimeDifference(notificationCreatedAt) {
     const now = Date.now();
@@ -43,14 +44,14 @@ function Notification() {
   }
 
   const setRead = async (id) => {
-    const readNotification = await axios.patch(`http://localhost:3000/api/v1/notifications/${id}`);
+    const readNotification = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);
     fetchNotifications();
     setNotificationId(id)
   }
   
   const fetchNotifications = async () => {
     try {
-      const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
+      const fetchedNotifications = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${user._id}`)
       setNotifications(fetchedNotifications.data);
     } catch (error) {
       console.error("Error fetching notifications:", error);

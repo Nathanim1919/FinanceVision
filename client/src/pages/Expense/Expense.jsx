@@ -12,6 +12,7 @@ import { Loader } from '../../components/Loader';
 import { selectUser } from '../../features/auth/authSlice';
 import { formatDate } from '../../utils/Formatting';
 
+
 const Container = styled.div`
     /* background-color: blue; */
     color: #333;
@@ -144,7 +145,6 @@ function Expense() {
 
     useEffect(()=>{
         dispatch(fetchExpenses(user._id));
-        console.log(expenses)
     },[dispatch, user]);
 
 

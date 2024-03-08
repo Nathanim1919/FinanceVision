@@ -8,6 +8,7 @@ import { Loader } from '../components/Loader'
 import { useNavigate } from 'react-router-dom'
 import ForgotPasswordRequest from '../components/modals/ForgotPasswordRequest'
 import ResetPasswordBox from '../components/modals/ResetPasswordBox';
+import { BASE_URL } from '../utils/Api'
 
 export const Login = () => {
   const [userData, setUserData] = useState({
@@ -28,7 +29,7 @@ export const Login = () => {
     setIsLoading(true)
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/auth/login',{userData});
+      const response = await axios.post(`${BASE_URL}/api/v1/auth/login`,{userData});
       const { accessToken } = response.data.data;
 
       if (accessToken && response.statusText === 'OK' && response.data.data !== null) {

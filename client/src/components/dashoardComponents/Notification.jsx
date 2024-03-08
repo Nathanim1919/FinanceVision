@@ -9,10 +9,11 @@ import axios from 'axios';
 import { IoIosWarning,IoMdNotifications } from "react-icons/io";
 import { MdCalendarToday } from "react-icons/md";
 import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
+import { BASE_URL, SOCKET_URL } from '../../utils/Api';
 
 
 const Notification = () => {
-    const socket = io('http://localhost:5000');
+    const socket = io(SOCKET_URL);
     const user = useSelector((state) => state.auth.user);
     const [notifications, setNotifications] = useState([]);
 
@@ -42,7 +43,7 @@ const Notification = () => {
   
     const fetchNotifications = useCallback(async (userId, setNotifications) => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${userId}`);
+        const response = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${userId}`);
         setNotifications(response.data.reverse());
       } catch (error) {
         console.error('Error fetching notifications:', error);

@@ -10,6 +10,7 @@ import axios from 'axios'
 import { Success } from '../components/modals/success'
 import { IoArrowBack } from "react-icons/io5";
 import { Loader } from '../components/Loader';
+import { BASE_URL } from '../utils/Api';
 
 
 /**
@@ -88,7 +89,7 @@ export const Register = () => {
       
       try{
       // send a post request to the server to register the user
-      const response = await axios.post('http://localhost:3000/api/v1/auth/register', userData)
+      const response = await axios.post(`${BASE_URL}/api/v1/auth/register`, userData)
       console.log(response);
       if (response.statusText === 'Created'){
           setError('')

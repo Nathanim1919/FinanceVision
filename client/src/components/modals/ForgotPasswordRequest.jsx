@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { IoMdClose } from "react-icons/io";
+import { BASE_URL } from '../../utils/Api';
 
 
 const Conatiner = styled.div`
@@ -58,7 +59,7 @@ function ForgotPasswordRequest({setRequestForgotPassword}) {
     async function forgotPasswordRequest(e){
         e.preventDefault();
         try {
-          const response = await axios.post('http://localhost:3000/api/v1/auth/forgotPasswordRequest',{email})
+          const response = await axios.post(`${BASE_URL}/api/v1/auth/forgotPasswordRequest`,{email})
           console.log(response);
         } catch (error) {
            console.log(error)

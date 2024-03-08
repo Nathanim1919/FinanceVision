@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../components/Loader";
 import { GoGoal } from "react-icons/go";
 import io from 'socket.io-client';
+import { BASE_URL, SOCKET_URL } from "../utils/Api";
 
 
 function SidebarLayout() {
@@ -23,7 +24,7 @@ function SidebarLayout() {
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const user = useSelector((state) => state.auth.user);
   const [notifications, setNotifications] = useState([]);
-  const socket = io('http://localhost:5000');
+  const socket = io(SOCKET_URL);
 
   const logout = useCallback(async () => {
     setIsLoading(true);
@@ -43,7 +44,7 @@ function SidebarLayout() {
 
   const fetchNotifications = useCallback(async () => {
     try {
-      const fetchedNotifications = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${user._id}`)
+      const fetchedNotifications = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${user._id}`)
       setNotifications(fetchedNotifications.data);
     } catch (error) {
       console.error("Error fetching notifications:", error);

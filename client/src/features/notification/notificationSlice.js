@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import io from 'socket.io-client';
+import { BASE_URL } from "../../utils/Api";
 
 
 const initialState = {
@@ -14,7 +15,7 @@ export const fetchNotifications = createAsyncThunk(
     'notification/fetchNotifications',
     async (userId) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/notifications?userId=${userId}`);
+            const response = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${userId}`);
             console.log('response.data.data.notifications');
             console.log(response.data);
             return (response.data).reverse();
@@ -31,7 +32,7 @@ export const setRead = createAsyncThunk(
     'notification/setRead',
     async (id) => {
         try {
-            const response = await axios.patch(`http://localhost:3000/api/v1/notifications/${id}`);
+            const response = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);
             return response.data.data;
         } catch (error) {
             throw error;

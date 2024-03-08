@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../../utils/Api';
 
 export const EmailVerified = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export const EmailVerified = () => {
   useEffect(() => {
     const verify = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/v1/auth/verify-email/${unHashedToken}`);
+        const response = await axios.get(`${BASE_URL}/api/v1/auth/verify-email/${unHashedToken}`);
         // Handle successful verification, e.g., update context state
         console.log(response.data.message);
       } catch (error) {

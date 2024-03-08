@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import incomeSlice from "../incomes/incomeSlice";
+import { BASE_URL } from "../../utils/Api";
 
 
 const initialState = {
@@ -37,7 +38,7 @@ const expenseSlice = createSlice({
 export const fetchExpenses = (usersId) => async (dispatch) => {
     dispatch(expenseSlice.actions.setLoading(true));
     try{
-        const response = await axios.get(`http://localhost:3000/api/v1/expenses?userId=${usersId}`);
+        const response = await axios.get(`${BASE_URL}/api/v1/expenses?userId=${usersId}`);
         dispatch(expenseSlice.actions.setExpense(response.data.data.expense));
     } catch (error) {
         dispatch(expenseSlice.actions.setError(error.message));
@@ -50,7 +51,7 @@ export const fetchExpenses = (usersId) => async (dispatch) => {
 export const createExpense = (expenseData, userId) => async (dispatch) => {
     dispatch(expenseSlice.actions.setLoading(true));
     try {
-        const response = await axios.post('http://localhost:3000/api/v1/expenses/',{expenseData, userId});
+        const response = await axios.post(`${BASE_URL}/api/v1/expenses/`,{expenseData, userId});
         console.log(response.data);
         dispatch(expenseSlice.actions.addExpense(response.data.data));
     } catch (error) {
@@ -64,7 +65,7 @@ export const createExpense = (expenseData, userId) => async (dispatch) => {
 export const deleteExpense = (id, userId) => async (dispatch) => {
     dispatch(expenseSlice.actions.setLoading(true));
     try {
-        const response = await axios.post(`http://localhost:3000/api/v1/expenses/${id}`,{userId});
+        const response = await axios.post(`${BASE_URL}/api/v1/expenses/${id}`,{userId});
         console.log(response)
         dispatch(expenseSlice.actions.deleteExpense(id));
     } catch (error) {

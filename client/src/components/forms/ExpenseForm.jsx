@@ -51,8 +51,6 @@ const ExpenseForm = ({setCreateExpense}) => {
   };
 
 
-  
-
   return (
     <Container>
         <form onSubmit={handleSubmit}>

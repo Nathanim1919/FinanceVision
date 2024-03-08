@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import {BASE_URL} from "../../utils/Api";
 
 
 const initialState = {
@@ -20,7 +21,7 @@ export const fetchTransactions = createAsyncThunk(
     'transaction/fetchTransactions',
     async (userId) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/transactions?userId=${userId}`);
+            const response = await axios.get(`${BASE_URL}/api/v1/transactions?userId=${userId}`);
             return (response.data.data.transactions).reverse();
         } catch (error) {
             throw error;
@@ -40,7 +41,7 @@ export const deleteTransaction = createAsyncThunk(
     'transaction/deleteTransaction',
     async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/v1/transactions/${id}`);
+            await axios.delete(`${BASE_URL}/api/v1/transactions/${id}`);
             return id;
         } catch (error) {
             throw error;
@@ -58,7 +59,7 @@ export const detailTransaction = createAsyncThunk(
     'transaction/detailTransaction',
     async (id) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/transactions/${id}`);
+            const response = await axios.get(`${BASE_URL}/api/v1/transactions/${id}`);
             return response.data.data.transaction;
         } catch (error) {
             throw error;

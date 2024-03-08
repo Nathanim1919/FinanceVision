@@ -1,27 +1,7 @@
 import React from "react";
-import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import styled from "styled-components";
 import {useSelector } from "react-redux";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
-
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="white"
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
 
 export default function UserFinancePieChart() {
   const incomes = useSelector((state) => state.income.incomes);
@@ -36,22 +16,72 @@ export default function UserFinancePieChart() {
 
 
   return (
-    <PieChart width={200} height={200}>
-      <Pie
-        data={data}
-        cx={100}
-        cy={100}
-        labelLine={false}
-        label={renderCustomizedLabel}
-        outerRadius={80}
-        fill="#8884d8"
-        dataKey="value"
-      >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-      <Tooltip />
-    </PieChart>
+    <Container>
+       <Upper>
+          <div>
+            <h1>{data[0].value} <span>ETB</span></h1>
+            <p>Total Income</p>
+            </div>
+          <div>
+            <h1>{data[1].value} <span>ETB</span></h1>
+            <p>Total Expense</p>
+            </div>
+       </Upper>
+       <Net>
+            <h1>{data[2].value} <span>ETB</span></h1>
+            <p>Net Amount</p>
+       </Net>
+
+    </Container>
   );
 }
+
+
+
+const Container = styled.div`
+width: 100%;
+display: grid;
+gap: .5rem;
+
+span{
+  font-size: .7rem;
+}
+
+p{
+  color: #696666;
+}
+
+`
+
+const Upper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    color: #333;
+    gap: .5rem;
+
+    div {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #eee;
+        padding: 0.5rem;
+
+        > *{
+          margin: 0;
+        }
+    }
+`
+
+const Net = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: #eee;
+    color: #333;
+    align-items: center;
+    padding: 0.5rem;
+
+    > *{
+      margin: 0;
+    }
+`

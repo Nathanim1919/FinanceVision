@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { BASE_URL } from "../../utils/Api";
 
 
 const initialState = {
@@ -14,7 +15,7 @@ export const fetchGoals = createAsyncThunk(
   'goal/fetchGoals',
   async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/goals?userId=${userId}`);
+      const response = await axios.get(`${BASE_URL}/api/v1/goals?userId=${userId}`);
       return (response.data.data.goal).reverse();
     } catch (error) {
       throw error;
@@ -27,7 +28,7 @@ export const createGoal = createAsyncThunk(
   'goal/createGoal',
   async ({goalData, userId}) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/goals/', { goalData, userId });
+      const response = await axios.post(`${BASE_URL}/api/v1/goals/`, { goalData, userId });
       console.log("response is here:  ",response);
       return response.data.data; // Assuming the response structure
     } catch (error) {
@@ -41,7 +42,7 @@ export const deleteGoal = createAsyncThunk(
   'goal/deleteGoal',
   async (id, userId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/goals/${id}`);
+      await axios.delete(`${BASE_URL}/api/v1/goals/${id}`);
       return id; // Return the deleted goal ID for successful deletion handling
     } catch (error) {
       throw error; // Re-throw for error handling in reducers
@@ -54,7 +55,7 @@ export const updateGoal = createAsyncThunk(
   'goal/updateGoal',
   async ({id, depositAmount, userId}) => {
     try{
-      const response = await axios.post(`http://localhost:3000/api/v1/goals/${id}`,{depositAmount, userId});
+      const response = await axios.post(`${BASE_URL}/api/v1/goals/${id}`,{depositAmount, userId});
       return response.data.data;
     } catch (error){
       console.log(error)

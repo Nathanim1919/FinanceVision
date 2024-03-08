@@ -1,6 +1,7 @@
 // authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BASE_URL } from '../../utils/Api';
 
 const initialState = {
   isLoggedIn: false,
@@ -11,7 +12,7 @@ const initialState = {
 export const fetchUser = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get('http://localhost:3000/api/v1/auth/getUser', { withCredentials: true });
+      const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, { withCredentials: true });
       dispatch(setUser(response.data.data));
     } catch (error) {
       console.error(error);

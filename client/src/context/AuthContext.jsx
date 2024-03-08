@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setUser, clearUser } from '../features/auth/authSlice';
+import { BASE_URL } from '../utils/Api';
 
 export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/auth/getUser', { withCredentials: true });
+        const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, { withCredentials: true });
         dispatch(setUser(response.data.data));
       } catch (error) {
         console.error('Error checking authentication:', error);

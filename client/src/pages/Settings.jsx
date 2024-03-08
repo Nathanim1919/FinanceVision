@@ -2,42 +2,23 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { IoSettings } from "react-icons/io5";
 import styled from 'styled-components';
-import { GrCurrency } from "react-icons/gr";
-import { MdKeyboardArrowUp } from "react-icons/md";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
+import { BASE_URL } from '../utils/Api';
 
 
 
 
 export const Settings = () => {
-  const [showCurrency, setShowCurrency] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState('USD'); 
-  const supportedCurrencies = ['USD', 'ETB']; 
   const user = useSelector(state => state.auth.user);
 
   // Optional: Fetch currency rates based on your implementation
-  const [currencyRates, setCurrencyRates] = useState({}); // State for currency rates
   const [minimumAmount, setMinimumAmount] = useState(user.minimumAmount); // State for minimum amount
   
-  useEffect(() => {
-    const fetchRates = async () => {
-      const response = await axios.get('https://api.exchangerate.host/latest?base=USD');
-    //   const data = await response.json();
-      console.log(response);
-    //   setCurrencyRates(data.rates);
-    };
-    fetchRates();
-  }, []);
-
-  const handleCurrencyChange = (event) => {
-    setSelectedCurrency(event.target.value);
-  };
 
   const updateMinimumAmount = async (event) => {
     event.preventDefault();
     // Update the user's minimum amount
-    const response =await axios.patch(`http://localhost:3000/api/v1/settings`, { userId:user._id,minimumAmount });
+    const response =await axios.patch(`${BASE_URL}/api/v1/settings`, { userId:user._id,minimumAmount });
     console.log(response);
 
   }
@@ -46,19 +27,8 @@ export const Settings = () => {
     <Container className="settings-container">
         <Content>
             <h2><IoSettings/>Settings</h2>
-            <div className="currency-settings">
-                <h3><GrCurrency/>Currency</h3>
-                <div>
-                    <h3 className='dropDown' onClick={()=>setShowCurrency(!showCurrency)}>{selectedCurrency}{showCurrency?<MdKeyboardArrowUp/>:<MdKeyboardArrowDown/>}</h3>
-                    {showCurrency && <div className='currencyPage'>
-                        {supportedCurrencies.map((currency) => (
-                            <li onClick={(e)=>{setSelectedCurrency(e.target.innerText); setShowCurrency(false)}}>{currency}</li>
-                        ))}
-                    </div>}
-                </div>
-            </div>
             <div className="userSettings">
-                    <h3>Low Balance Range</h3>
+                    <h3>Minmum Balance Alert </h3>
                     <div>
                         <form onSubmit={updateMinimumAmount}>
                             <input type="number" placeholder='Minimum Value' id="darkMode" name="darkMode" value={minimumAmount} onChange={(e)=>setMinimumAmount(e.target.value)}/>

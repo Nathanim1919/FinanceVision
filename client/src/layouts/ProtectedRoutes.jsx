@@ -5,6 +5,7 @@ import axios from 'axios';
 import { selectIsLoggedIn, selectUser, setUser, clearUser } from '../features/auth/authSlice';
 import { Loader } from '../components/Loader';
 import styled from 'styled-components';
+import { BASE_URL } from '../utils/Api';
 
 export function ProtectedRoutes({ children }) {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export function ProtectedRoutes({ children }) {
       }
 
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/auth/getUser', { withCredentials: true });
+        const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, { withCredentials: true });
 
         if (response.statusText === 'OK' && response.data.data !== null) {
           dispatch(setUser(response.data.data));
