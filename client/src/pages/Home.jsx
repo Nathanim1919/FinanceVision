@@ -9,6 +9,9 @@ import BlogPost from "../layouts/BlogPost";
 import FooterLayout from "../layouts/FooterLayout";
 import AboutUs from "../layouts/About";
 import { CiMenuFries } from "react-icons/ci";
+import { IoMdClose } from "react-icons/io";
+import { useState } from "react";
+
 
 
 const Header = styled.div`
@@ -21,7 +24,9 @@ const Header = styled.div`
     }
 
     @media screen and (max-width: 768px){
-          justify-content: space-around;
+          justify-content: space-between;
+          padding: 0 1rem;
+          border-bottom: 1px solid #262525;
           .icon{
             display: grid;
             font-size: 2rem;
@@ -127,24 +132,41 @@ const Navbar = styled.nav`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #007bff;
+        background-color: #000000d6;
         align-self: end;
         padding: 0 2rem;
         border-radius: 4rem;
         position: fixed;
         z-index: 10;
         right: 4%;
+        top:${props => props.isOpen ? '0%' : '-100%'};
+        transition: all .4s ease-in-out;
+        backdrop-filter: blur(10px);
+
+        .closeIcon{
+            display: none;
+            cursor: pointer;
+        }
 
         @media screen and (max-width:700px){
-            position: absolute;
-            top: -100%;
+            position: fixed;
             width: 100%;
-            right: 0;
-            padding: 1rem 0;
+            right: 0%;
+            padding: 2rem 0;
             border-radius: 0;
             flex-direction: column;
             gap: 2rem;
             box-shadow: 0 5px 23px rgba(0,0,0,.3);
+
+            .closeIcon{
+                display: block;
+                position: absolute;
+                right: 2rem;
+                top: 1rem;
+                font-size: 2rem;
+                cursor: pointer;
+                color: #fff;
+            }
             
         }
 
@@ -163,6 +185,23 @@ const Navbar = styled.nav`
 
             @media screen and (max-width:700px){
                 flex-direction: column;
+                width: 100%;
+                gap: 0;
+
+                li{
+                    font-size: 1.2rem;
+                    border-bottom: 1px solid #535151;
+                    width: 100%;
+                    display: grid;
+                    place-items: center;
+                    padding: 1rem 0;
+                    cursor: pointer;
+
+                    &:hover{
+                        color: #151514;
+                        background-color: #1463bed4;
+                    }
+                }
             }
 
             li{
@@ -215,17 +254,21 @@ const Button = styled.div`
 
 
 export const Home = () => {
+    const [isOpen, setIsOpen] = useState(false);
     return (
        <Container>
             <Header className="header">
                 <div className="logo">
                     <h1>F<span>Vision</span></h1>
                 </div>
-                <div className="icon">
+                <div className="icon" onClick={()=>setIsOpen(true)}>
                     <CiMenuFries/>
                 </div>
 
-            <Navbar>
+            <Navbar isOpen={isOpen}>
+                <div className="closeIcon" onClick={()=>setIsOpen(false)}>
+                    <IoMdClose/>
+                </div>
                 <ul>
                     <li>Home</li>
                     <li>Service</li>
