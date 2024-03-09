@@ -5,7 +5,7 @@ import { FaCheckCircle } from "react-icons/fa";
 
 const AboutUs = () => {
   return (
-    <Container>
+    <Container id='about'>
         
         <div>
             <img src={AboutImage} alt="About us" />

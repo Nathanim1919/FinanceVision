@@ -106,7 +106,7 @@ export const FAQs = () => {
       const [id, setId] = useState(null)
       
     return (
-        <Container>
+        <Container id='faqs'>
             <h1>Frequently Asked Questions</h1>
             <SubContainer>
                 <div>

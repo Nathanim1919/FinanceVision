@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import HeroImage from "/images/hero.jpg";
 import { FaBitcoin } from "react-icons/fa";
@@ -11,6 +10,8 @@ import AboutUs from "../layouts/About";
 import { CiMenuFries } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
+import {Link} from 'react-scroll';
+import { NavLink } from "react-router-dom";
 
 
 
@@ -23,7 +24,7 @@ const Header = styled.div`
         display: none;
     }
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 700px){
           justify-content: space-between;
           padding: 0 1rem;
           border-bottom: 1px solid #262525;
@@ -132,7 +133,7 @@ const Navbar = styled.nav`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #000000d6;
+        background-color: #1d42ffd5;
         align-self: end;
         padding: 0 2rem;
         border-radius: 4rem;
@@ -182,6 +183,16 @@ const Navbar = styled.nav`
             text-transform: capitalize;
             margin-right: 2rem;
 
+            li{
+                a.active{
+                   background-color: orange;
+                   padding:.2rem 1rem;
+                   border-radius: 40px;
+             }
+            }
+
+            
+
 
             @media screen and (max-width:700px){
                 flex-direction: column;
@@ -195,7 +206,7 @@ const Navbar = styled.nav`
                     display: grid;
                     place-items: center;
                     padding: 1rem 0;
-                    cursor: pointer;
+                    cursor: pointer;                    
 
                     &:hover{
                         color: #151514;
@@ -254,9 +265,9 @@ const Button = styled.div`
 
 
 export const Home = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     return (
-       <Container>
+       <Container id="hero">
             <Header className="header">
                 <div className="logo">
                     <h1>F<span>Vision</span></h1>
@@ -270,15 +281,65 @@ export const Home = () => {
                     <IoMdClose/>
                 </div>
                 <ul>
-                    <li>Home</li>
-                    <li>Service</li>
-                    <li>Blog</li>
-                    <li>About</li>
-                    <li>Contact</li>
+                    <li>
+                        <Link 
+                            activeClass="active"
+                            to="hero"
+                            spy={true}
+                            smooth={true}
+                            offset={0}
+                            duration={500}>
+                                Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link 
+                            activeClass="active"
+                            to="services"
+                            spy={true}
+                            smooth={true}
+                            offset={0}
+                            duration={500}>
+                                Services
+                        </Link>
+                    </li>
+                    <li>
+                        <Link 
+                            activeClass="active"
+                            to="blog"
+                            spy={true}
+                            smooth={true}
+                            offset={-100}
+                            duration={500}>
+                                Blog
+                        </Link>
+                    </li>
+                    <li>
+                        <Link 
+                            activeClass="active"
+                            to="about"
+                            spy={true}
+                            smooth={true}
+                            offset={-0}
+                            duration={500}>
+                                About
+                        </Link>
+                    </li>
+                    <li>
+                        <Link 
+                            activeClass="active"
+                            to="faqs"
+                            spy={true}
+                            smooth={true}
+                            offset={0}
+                            duration={500}>
+                                FAQs
+                        </Link>
+                    </li>
                 </ul>
                 <Button className="btns">
-                    <Link to="/login">Login</Link>
-                    <Link to="/register">Register</Link>
+                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/register">Register</NavLink>
                 </Button>
             </Navbar>
             </Header>

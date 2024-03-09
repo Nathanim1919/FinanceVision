@@ -63,7 +63,7 @@ export default function BlogPost() {
   return (
     <>
     <h1>Our Latest Blogs</h1>
-    <Container>
+    <Container id='blog'>
         {BlogPosts.map((blog, index) => (
             <BlogCard blog={blog}/>
         ))}
