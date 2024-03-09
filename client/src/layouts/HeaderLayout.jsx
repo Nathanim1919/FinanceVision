@@ -2,17 +2,25 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import ProfileImage from '/images/profile.png'
+import { Link } from "react-router-dom";
 
 
 const Header = styled.div`
-    background-color: #4791ff;
+    background-color: #106bf4;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #fff;
     padding: 0 2rem;
 
-    .logo h3 span{
+    a{
+        text-decoration: none;
+        color: #fff;
+
+        
+    }
+
+    .logo  a h3 sub{
         color: gold;
     }
 `
@@ -42,7 +50,9 @@ function HeaderLayout() {
   return (
     <Header>
         <div className="logo">
-            <h3>F<span>vision</span></h3>
+            <Link to={'/'}>
+                <h3>F<sub>vision</sub></h3>
+            </Link>
         </div>
 
         <Profile className="profile">

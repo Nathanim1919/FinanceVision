@@ -7,13 +7,53 @@ import b4 from '/blog/b4.jpg';
 import b5 from '/blog/b5.jpg';
 import b6 from '/blog/b6.jpg';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+const Header = styled.div`
+
+@media screen and (max-width:768px){
+       padding:1rem 2rem;
+      }
+   .header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      @media screen and (max-width:768px){
+         h1{
+          font-size: 1rem;
+         }
+      }
+    }
+    .roles{
+      display: flex;
+      align-items: center;
+      gap: 1rem;
 
 
+      a{
+        background-color: #eee;
+        padding: 0.1rem .5rem;
+        border-radius: 10px;
+        font-size: .8rem;
+        cursor: pointer;
+        text-decoration: none;
+        color: #000;
+
+        &:hover{
+          background-color: #d4d2d2;
+        }
+      }
+    }
+`
 
 const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
+
+   
 
     @media screen and (max-width:768px){
         padding: 2rem;
@@ -21,6 +61,7 @@ const Container = styled.div`
 `
 
 export default function BlogPost() {
+    const user = useSelector(state => state.auth.user);
     const BlogPosts = [
         {
           title: "Navigating the Financial Seas: Unraveling Today's Market Trends",
@@ -62,7 +103,20 @@ export default function BlogPost() {
       
   return (
     <>
-    <h1>Our Latest Blogs</h1>
+    <Header>
+      <div className='header'>
+       <h1>Our Latest Blogs</h1>
+        <div className='roles'>
+          <Link>Read All</Link>
+          <Link>Post</Link>
+        </div>
+      </div>
+        <div>
+            <p>Explore our collection of insightful blog posts covering a wide range of financial topics. From market trends and investment strategies to credit management and budgeting tips, our blogs offer valuable information to help you make informed financial decisions.</p>
+        </div>
+
+    </Header>
+
     <Container id='blog'>
         {BlogPosts.map((blog, index) => (
             <BlogCard blog={blog}/>

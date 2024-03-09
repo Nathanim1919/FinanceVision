@@ -12,6 +12,7 @@ import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
 import {Link} from 'react-scroll';
 import { NavLink } from "react-router-dom";
+import {useSelector, useDispatch} from 'react-redux';
 
 
 
@@ -81,6 +82,26 @@ const Container = styled.div`
         .hero-text{
             position: relative;
             z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            >*{
+                margin: 0;
+            }
+
+            h1{
+                margin-bottom: 1rem;
+            }
+
+            h3{
+                color: #656060;
+                font-size: 1.5rem;
+            }
+
+            p{
+                margin-bottom: 1rem;
+            }
             @media screen and (max-width: 768px){
                 margin-top: 4rem;
                
@@ -263,9 +284,21 @@ const Button = styled.div`
     gap: 1rem;
     position: relative;
     z-index: 3;
+
+    .dashboardLink{
+        background-color: #fff;
+        border-radius: 50px;
+        padding: 0.4rem .4rem;
+        font-size: .8rem;z
+
+        .gotoDashboard{
+            color: #333;
+        }
+
+    }
     
     a{
-        color: #ffffff;
+        /* color: #ffffff; */
         text-decoration: none;
         padding: .2rem 1rem;
         border-radius: 5px;
@@ -295,7 +328,10 @@ const Button = styled.div`
 
 
 export const Home = () => {
+
     const [isOpen, setIsOpen] = useState(false);
+    const user = useSelector(state => state.auth.user);
+
     return (
        <Container id="heroContainer">
             <Header className="header">
@@ -379,8 +415,15 @@ export const Home = () => {
                     </li>
                 </ul>
                 <Button className="btns">
-                    <NavLink to="/login">Login</NavLink>
-                    <NavLink to="/register">Register</NavLink>
+                    {!user?
+                    <>
+                        <NavLink to="/login">Login</NavLink>
+                        <NavLink to="/register">Register</NavLink>
+                    </>
+                    :<div className="dashboardLink">
+                        <NavLink className='gotoDashboard' to="/dashboard">Go to Dashboard</NavLink>
+                    </div>
+                }
                 </Button>
             </Navbar>
             </Header>
@@ -394,6 +437,7 @@ export const Home = () => {
                         <FaMoneyCheckAlt/>
                     </div>
                     <div className="hero-text">
+                       {user && <h3>Welcome, {user.username}</h3>}
                         <h1>Know where your <span>money</span> goes.</h1>
                         <p>Track income, expenses, and transactions effortlessly. Gain insights and achieve financial goals.</p>
                         <Link to="/register">Get Started</Link>
