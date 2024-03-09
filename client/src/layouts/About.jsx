@@ -75,6 +75,10 @@ const Title = styled.h1`
     span{
         color: #12a1fa;
     }
+    @media screen and (max-width:768px){
+        font-size: 1.5rem;
+        align-self: center;
+    }
 `
 
 const Section = styled.div`

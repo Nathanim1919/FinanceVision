@@ -36,7 +36,7 @@ const Header = styled.div`
         right: 0;
         .icon {
             display: grid;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
             cursor: pointer;
         }
@@ -50,7 +50,7 @@ const Header = styled.div`
         }
 
         h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
 
             span {
                 color: #12a1fa;
@@ -65,9 +65,6 @@ const Container = styled.div`
     margin:0 auto;
     padding: 0;
     
-
-   
-
     @media screen and (max-width: 768px){
         width: 100vw;
     }
@@ -107,8 +104,7 @@ const Container = styled.div`
                
             }
         }
-
-        
+ 
 
         @media screen and (max-width: 768px){
             grid-template-columns: 1fr;
