@@ -30,7 +30,9 @@ export const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL}/api/v1/auth/login`,{userData});
+      console.log(response)
       const { accessToken } = response.data.data;
+      console.log(accessToken)
 
       if (accessToken && response.statusText === 'OK' && response.data.data !== null) {
         document.cookie = `accessToken=${accessToken}`;
