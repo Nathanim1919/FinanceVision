@@ -27,7 +27,12 @@ const Header = styled.div`
     @media screen and (max-width: 700px){
           justify-content: space-between;
           padding: 0 1rem;
-          border-bottom: 1px solid #262525;
+          background-color: #5a5afc;
+          color: #fff;
+          position: fixed;
+          z-index: 10;
+          left: 0;
+          right: 0;
           .icon{
             display: grid;
             font-size: 2rem;
@@ -70,9 +75,21 @@ const Container = styled.div`
         align-items: center;
         position: relative;
 
+        .hero-text{
+            position: relative;
+            z-index: 3;
+            @media screen and (max-width: 768px){
+                margin-top: 4rem;
+               
+            }
+        }
+
+        
+
         @media screen and (max-width: 768px){
             grid-template-columns: 1fr;
             padding: 2rem;
+           
         }
 
         .icon{
@@ -82,8 +99,10 @@ const Container = styled.div`
             position: absolute;
 
             @media screen and (max-width: 768px){
-                right: -8%;
-                top: 18%;
+                right: -45%;
+                top: 0%;
+                font-size: 26rem;
+                opacity: .5;
     
             }
         }
@@ -365,9 +384,11 @@ export const Home = () => {
                     <div className="icon2">
                         <FaMoneyCheckAlt/>
                     </div>
-                    <h1>Know where your <span>money</span> goes.</h1>
-                    <p>Track income, expenses, and transactions effortlessly. Gain insights and achieve financial goals.</p>
-                    <Link to="/register">Get Started</Link>
+                    <div className="hero-text">
+                        <h1>Know where your <span>money</span> goes.</h1>
+                        <p>Track income, expenses, and transactions effortlessly. Gain insights and achieve financial goals.</p>
+                        <Link to="/register">Get Started</Link>
+                    </div>
                 </div>
                 <div>
                     <img src={HeroImage} alt="hero"/>
