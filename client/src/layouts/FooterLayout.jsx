@@ -164,7 +164,7 @@ const Footer = styled.div`
 `
 const Subscribe = styled.div`
     color: #fff;
-    padding: 3rem;
+    padding: 3rem .5rem;
 
     h2{
         font-size: 2rem;
