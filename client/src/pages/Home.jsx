@@ -159,6 +159,7 @@ const Navbar = styled.nav`
             gap: 2rem;
             box-shadow: 0 5px 23px rgba(0,0,0,.3);
             top:${props => props.isOpen ? '0%' : '-100%'};
+            background-color: #000000d4;
 
             .closeIcon{
                 display: block;

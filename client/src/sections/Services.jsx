@@ -17,6 +17,10 @@ const Container = styled.div`
     margin-top: 5rem;
     padding: 2rem 0;
 
+    @media screen and (max-width:768px){
+        padding: 0 1rem;
+    }
+
 
     .header{
         display: flex;
@@ -26,6 +30,15 @@ const Container = styled.div`
 
         >*{
             margin: 0;
+        }
+
+        @media screen and (max-width:768px){
+            margin: 0;
+            
+
+            h1{
+                font-size: 1.5rem;
+            }
         }
     }
 
@@ -84,6 +97,9 @@ const Container = styled.div`
 
         @media screen and (max-width:768px){
             grid-template-columns: 1fr;
+            border-radius: 0;
+            margin-top: 0rem;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
         }
 
         .BackDropimage{
@@ -94,8 +110,8 @@ const Container = styled.div`
 
             
         @media screen and (max-width:768px){
-            top: -40%;
-            right: -50%;
+            top: -30%;
+            right: -70%;
         }
 
             img{
