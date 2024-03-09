@@ -114,6 +114,10 @@ const Container = styled.div`
             span{
                 color: #12a1fa;
             }
+
+            @media screen and (max-width:768px){
+                font-size:2rem;
+            }
         }
 
         p{

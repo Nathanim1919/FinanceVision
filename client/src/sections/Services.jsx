@@ -78,7 +78,11 @@ const Container = styled.div`
             }
             div:nth-child(2),div:nth-child(4){
             flex-direction: column;
-         }
+            }
+
+            h2{
+                font-size: 1.2rem;
+            }
         }
 
         
@@ -133,11 +137,12 @@ const Container = styled.div`
             padding: 2rem; 
             box-shadow: 0 20px 54px rgba(0,0,0,.3);
             color: #fff;
+            border-radius: 10px;
 
             @media screen and (max-width:768px){
                 padding:1rem;
                 bottom: 10%;
-                margin: 3rem;
+                margin: 1rem;
             }
 
 
