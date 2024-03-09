@@ -18,7 +18,6 @@ import { FaLocationDot } from "react-icons/fa6";
 
 
 const Container = styled.div`
-
 @media screen and (max-width:768px){
         padding: 2rem;
     }
