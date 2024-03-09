@@ -22,7 +22,7 @@ dotenv.config();
 
 export const io = new Server(5000, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: 'https://financevision-2.onrender.com',
     credentials: true,
   },
 });
