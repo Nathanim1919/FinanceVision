@@ -34,7 +34,7 @@ export const Login = () => {
       const { accessToken } = response.data.data;
       console.log(accessToken)
 
-      if (accessToken && response.statusText === 'OK' && response.data.data !== null) {
+      if (accessToken  && response.data.data !== null) {
         document.cookie = `accessToken=${accessToken}`;
         navigate('/dashboard', { replace: true });
 
