@@ -297,10 +297,16 @@ const Button = styled.div`
 export const Home = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
-       <Container>
+       <Container id="heroContainer">
             <Header className="header">
                 <div className="logo"  id="hero">
-                    <h1>F<span>Vision</span></h1>
+                    <Link   to="heroContainer"
+                            spy={true}
+                            smooth={true}
+                            offset={0}
+                            duration={500}>
+                        <h1>F<span>Vision</span></h1>
+                    </Link>
                 </div>
                 <div className="icon" onClick={()=>setIsOpen(true)}>
                     <CiMenuFries/>

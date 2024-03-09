@@ -29,6 +29,10 @@ const SubContainer = styled.div`
         gap: 1rem;
         cursor: pointer;
 
+        @media screen and (max-width:768px){
+            font-size: 1rem;
+        } 
+
         &:hover{
             color: #8f9293;
         }
@@ -61,10 +65,6 @@ const SubContainer = styled.div`
 export const FAQs = () => {
     const faqArray = [
         {
-          question: "What is the purpose of your service?",
-          answer: "To help individuals and businesses manage their finances effectively through AI-powered insights and automation.",
-        },
-        {
           question: "What data does your service collect?",
           answer: "We collect financial data you provide voluntarily (income, expenses, transactions) and anonymize it for analysis. We may also collect usage data to improve our service.",
         },
@@ -72,10 +72,7 @@ export const FAQs = () => {
           question: "Is my data secure?",
           answer: "Yes, we employ bank-grade security measures to protect your data, including encryption, multi-factor authentication, and regular security audits. We adhere to strict data privacy regulations to ensure your information is safe and secure.",
         },
-        {
-          question: "What are the different pricing plans?",
-          answer: "We offer a free plan with basic features and several paid plans with varying functionalities and data storage limits. Explore our pricing page to find the plan that best suits your needs.",
-        },
+        
         {
           question: "Where can I learn more about your features?",
           answer: "Visit our website for detailed feature descriptions, explore our help center for tutorials, or contact our support team for personalized assistance.",
@@ -88,22 +85,16 @@ export const FAQs = () => {
           question: "How do I set financial goals?",
           answer: "Our goal-setting tool allows you to create specific, measurable, achievable, relevant, and time-bound financial goals. Track progress visually, receive reminders, and adjust your goals as needed.",
         },
-        {
-          question: "Can I connect my bank account?",
-          answer: "Yes, certain plans allow secure bank account connections for automatic transaction syncing. This simplifies data entry and provides a real-time overview of your finances.",
-        },
+       
         {
           question: "What kind of reports do you offer?",
           answer: "Generate customizable reports to analyze income, expenses, net worth, cash flow, and spending trends. Identify areas for improvement and make informed financial decisions based on clear data insights.",
         },
-        {
-          question: "How does your AI help me manage finances?",
-          answer: "Our AI analyzes your data, identifies spending patterns, suggests personalized budgeting strategies, predicts future expenses, and automates tasks like categorization and transaction reconciliation.",
-        },
+       
       ];
 
-      const [showAnswer, setShowAnswer] = React.useState(false);
-      const [id, setId] = useState(null)
+    const [showAnswer, setShowAnswer] = React.useState(false);
+    const [id, setId] = useState(null)
       
     return (
         <Container id='faqs'>

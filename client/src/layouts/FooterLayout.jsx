@@ -177,6 +177,11 @@ const Subscribe = styled.div`
 const INputBox = styled.div`
     display: flex;
 
+    @media screen and (max-width: 768px){
+        flex-direction: column;
+        gap: .2rem;
+    }
+
     input{
         flex: 1;
         //border: 1px solid #4a96ff;
