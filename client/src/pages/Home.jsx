@@ -13,6 +13,8 @@ import { useState } from "react";
 import {Link} from 'react-scroll';
 import { NavLink } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux';
+import { MdDashboard } from "react-icons/md";
+
 
 
 
@@ -285,9 +287,12 @@ const Button = styled.div`
         background-color: #fff;
         border-radius: 50px;
         padding: 0.4rem .4rem;
-        font-size: .8rem;z
-
+        font-size: .8rem;
+        
         .gotoDashboard{
+            display: flex;
+            align-items: center;
+            gap: .5rem;
             color: #333;
         }
 
@@ -417,7 +422,7 @@ export const Home = () => {
                         <NavLink to="/register">Register</NavLink>
                     </>
                     :<div className="dashboardLink">
-                        <NavLink className='gotoDashboard' to="/dashboard">Go to Dashboard</NavLink>
+                        <NavLink className='gotoDashboard' to="/dashboard"><MdDashboard/>Dashboard</NavLink>
                     </div>
                 }
                 </Button>

@@ -14,6 +14,7 @@ import { MdContacts } from "react-icons/md";
 import { MdMarkEmailRead } from "react-icons/md";
 import { FaPhoneSquareAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { Link } from 'react-scroll';
 
 
 
@@ -67,10 +68,11 @@ const Information = styled.div`
     justify-content: space-between;
     
     
-    p{
+    a, p{
         display: flex;
         align-items: center;
         gap: 1rem;
+        margin-bottom: .4rem;
         
         >*:nth-child(1){
             width: 13px;
@@ -216,11 +218,35 @@ function FooterLayout() {
                 <Information>
                     <div>
                         <h3>Quick Links</h3>
-                        <p><FaHome/>Home</p>
-                        <p><FaServicestack/>Services</p>
-                        <p><BsMicrosoftTeams/>About</p>
-                        <p><FaBook/>Blog</p>
-                        <p><MdContacts/>Contact</p>
+                        <Link
+                            to="hero"
+                            spy={true}
+                            smooth={true}
+                            offset={0}
+                            duration={500}
+                        ><FaHome/>Home</Link>
+                        <Link
+                            to="services"
+                            spy={true}
+                            smooth={true}
+                            offset={0}
+                            duration={500}
+                        ><FaServicestack/>Services</Link>
+                        <Link><BsMicrosoftTeams/>About</Link>
+                        <Link
+                            to="blog"
+                            spy={true}
+                            smooth={true}
+                            offset={-100}
+                            duration={500}
+                        ><FaBook/>Blog</Link>
+                        <Link
+                             to="about"
+                             spy={true}
+                             smooth={true}
+                             offset={-0}
+                             duration={500}
+                        ><MdContacts/>About Us</Link>
                     </div>
                     <div>
                         <h3>Contact US</h3>

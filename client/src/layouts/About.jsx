@@ -51,7 +51,7 @@ const Container = styled.div`
     
     @media screen and (max-width:768px){
         grid-template-columns: 1fr;
-        padding: 2rem;
+        padding: 0rem 2rem;
     }
 
     img{

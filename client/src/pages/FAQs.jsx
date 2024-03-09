@@ -59,11 +59,29 @@ const SubContainer = styled.div`
         }
     }
 
+    .image{
+      background-color: #eee;
+      padding: 1rem 2rem;
+      display: grid;
+      place-items: center;
+      margin-bottom: 2rem;
+      
+
+      @media screen and (max-width:768px ){
+        padding: 1rem 0rem;
+      }
+    }
 
     img{
         width: 100%;
         height: auto;
         object-fit: cover;
+
+        @media screen and (max-width:768px ){
+          width: 60%;
+          display: grid;
+          place-items: center;
+        }
     }
 
 `
@@ -115,7 +133,7 @@ export const FAQs = () => {
                     ))}
                 </div>
 
-                <div>
+                <div className='image'>
                     <img src={FAQImage} alt="FAQs" />
                 </div>
 
