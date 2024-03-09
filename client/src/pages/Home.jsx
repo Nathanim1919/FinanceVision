@@ -20,41 +20,42 @@ const Header = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    .icon{
+    .icon {
         display: none;
     }
 
-    @media screen and (max-width: 700px){
-          justify-content: space-between;
-          padding: 0 1rem;
-          background-color: #5a5afc;
-          color: #fff;
-          position: fixed;
-          z-index: 10;
-          left: 0;
-          right: 0;
-          .icon{
+    @media screen and (max-width: 768px) {
+        justify-content: space-between;
+        padding: 0 1rem;
+        background-color: #1515f8;
+        color: #fff;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        right: 0;
+        .icon {
             display: grid;
             font-size: 2rem;
             font-weight: 800;
             cursor: pointer;
         }
-        }
+    }
 
-    .logo{
+    .logo {
 
-        @media screen and (max-width: 768px){
+        @media screen and (max-width: 768px) {
             position: relative;
             z-index: 3;
         }
-        
-        h1{
+
+        h1 {
             font-size: 1.6rem;
-            span{
+
+            span {
                 color: #12a1fa;
             }
         }
-    
+
     }
 `
 

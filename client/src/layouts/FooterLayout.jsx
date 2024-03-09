@@ -6,6 +6,15 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
+import { FaServicestack } from "react-icons/fa";
+import { BsMicrosoftTeams } from "react-icons/bs";
+import { FaBook } from "react-icons/fa";
+import { MdContacts } from "react-icons/md";
+import { MdMarkEmailRead } from "react-icons/md";
+import { FaPhoneSquareAlt } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+
 
 
 const Container = styled.div`
@@ -57,15 +66,47 @@ const SubContainer = styled.div`
 const Information = styled.div`
     display: flex;
     justify-content: space-between;
+    
+    
+    p{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        
+        >*:nth-child(1){
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: white;
+            color: #333;
+            padding: .3rem;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        padding: 1rem;
+        flex-direction: column;
+        
+        h3{
+            background: #fff;
+            color:#333;
+            padding:.3rem 1rem;
+        }
+    }
 `
 
 const FooterContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem 0;
     color: white;
-    `
+    background: #252424;
+    width: 100%;
+    padding: 2rem 0;
+    margin: 2rem auto;
+    border-radius: 20px;
+`
 
 
 const Upper = styled.div`
@@ -75,14 +116,20 @@ const Upper = styled.div`
 
     @media screen and (max-width:768px){
         flex-direction: column;
-     
+        
     }
 
 
     img{
-        width: 40%;
+        width: 50%;
         height: auto;
         object-fit: cover;
+
+        @media screen and (max-width:768px){
+            width: 70%;
+
+        }
+        
     }
 `
 
@@ -93,6 +140,13 @@ const Footer = styled.div`
     width: 100%;
     padding: 1rem 0;
     background-color: #222323;
+    
+    @media screen and (max-width: 768px){
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
 
     div div{
         display: flex;
@@ -109,12 +163,15 @@ const Footer = styled.div`
     }
 `
 const Subscribe = styled.div`
-    color: #333;
+    color: #fff;
     padding: 3rem;
-    background-color: #efead8;
 
     h2{
         font-size: 2rem;
+        
+        @media  screen and (max-width: 768px) {
+            font-size: 1.3rem;
+        }
     }
 `
 
@@ -123,7 +180,7 @@ const INputBox = styled.div`
 
     input{
         flex: 1;
-        border: 1px solid #4a96ff;
+        //border: 1px solid #4a96ff;
         outline: none;
     }
 
@@ -155,17 +212,17 @@ function FooterLayout() {
                 <Information>
                     <div>
                         <h3>Quick Links</h3>
-                        <p>Home</p>
-                        <p>Services</p>
-                        <p>About</p>
-                        <p>Blog</p>
-                        <p>Contact</p>
+                        <p><FaHome/>Home</p>
+                        <p><FaServicestack/>Services</p>
+                        <p><BsMicrosoftTeams/>About</p>
+                        <p><FaBook/>Blog</p>
+                        <p><MdContacts/>Contact</p>
                     </div>
                     <div>
                         <h3>Contact US</h3>
-                        <p>nathanim2tadele@gmail.com</p>
-                        <p>0942581962</p>
-                        <p>Addis Ababa, Ethiopia</p>
+                        <p><MdMarkEmailRead/>nathanim2tadele@gmail.com</p>
+                        <p><FaPhoneSquareAlt/>0942581962</p>
+                        <p><FaLocationDot/>Addis Ababa, Ethiopia</p>
                     </div>
                 </Information>
             </div>
