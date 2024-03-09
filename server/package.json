@@ -9,6 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm install"
   },
+  "engines": {
+    "node": "20.11.0"
+  },
   "author": "Nathanim tadele",
   "license": "ISC",
   "dependencies": {
