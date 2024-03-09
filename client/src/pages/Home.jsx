@@ -184,9 +184,11 @@ const Navbar = styled.nav`
             margin-right: 2rem;
 
             li{
+                a{
+                    padding:.1rem .7rem;
+                }
                 a.active{
                    background-color: orange;
-                   padding:.2rem 1rem;
                    border-radius: 40px;
              }
             }
@@ -267,9 +269,9 @@ const Button = styled.div`
 export const Home = () => {
     const [isOpen, setIsOpen] = useState(true);
     return (
-       <Container id="hero">
+       <Container>
             <Header className="header">
-                <div className="logo">
+                <div className="logo"  id="hero">
                     <h1>F<span>Vision</span></h1>
                 </div>
                 <div className="icon" onClick={()=>setIsOpen(true)}>
