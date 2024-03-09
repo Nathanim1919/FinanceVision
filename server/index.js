@@ -22,7 +22,7 @@ dotenv.config();
 
 export const io = new Server(5000, {
   cors: {
-    origin: 'https://financevision-2.onrender.com',
+    origin: 'https://finance-vision.vercel.app/',
     credentials: true,
   },
 });
