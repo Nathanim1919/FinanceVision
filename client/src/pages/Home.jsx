@@ -140,7 +140,7 @@ const Navbar = styled.nav`
         position: fixed;
         z-index: 10;
         right: 4%;
-        top:${props => props.isOpen ? '0%' : '-100%'};
+       
         transition: all .4s ease-in-out;
         backdrop-filter: blur(10px);
 
@@ -158,6 +158,7 @@ const Navbar = styled.nav`
             flex-direction: column;
             gap: 2rem;
             box-shadow: 0 5px 23px rgba(0,0,0,.3);
+            top:${props => props.isOpen ? '0%' : '-100%'};
 
             .closeIcon{
                 display: block;
@@ -267,7 +268,7 @@ const Button = styled.div`
 
 
 export const Home = () => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     return (
        <Container>
             <Header className="header">
@@ -284,7 +285,8 @@ export const Home = () => {
                 </div>
                 <ul>
                     <li>
-                        <Link 
+                        <Link
+                            onClick={()=>setIsOpen(false)} 
                             activeClass="active"
                             to="hero"
                             spy={true}
@@ -295,7 +297,8 @@ export const Home = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link 
+                        <Link
+                            onClick={()=>setIsOpen(false)} 
                             activeClass="active"
                             to="services"
                             spy={true}
@@ -306,7 +309,8 @@ export const Home = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link 
+                        <Link
+                            onClick={()=>setIsOpen(false)} 
                             activeClass="active"
                             to="blog"
                             spy={true}
@@ -317,7 +321,8 @@ export const Home = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link 
+                        <Link
+                            onClick={()=>setIsOpen(false)} 
                             activeClass="active"
                             to="about"
                             spy={true}
@@ -328,7 +333,8 @@ export const Home = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link 
+                        <Link
+                            onClick={()=>setIsOpen(false)} 
                             activeClass="active"
                             to="faqs"
                             spy={true}
