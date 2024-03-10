@@ -35,9 +35,8 @@ export const Login = () => {
       console.log(accessToken)
 
       if (accessToken  && response.data.data !== null) {
-        // document.cookie = `accessToken=${accessToken}`;
-        document.cookie = `accessToken=${accessToken}; path=/api/v1; domain=${VERCEL_DOMAIN}; Secure; HttpOnly`;
-        navigate('/dashboard', { replace: true });
+        document.cookie = `accessToken=${accessToken}`;
+        navigate('/', { replace: true });
 
       } else {
         console.error('No token found');
