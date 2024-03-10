@@ -51,23 +51,23 @@ export const Dashboard = () => {
        </div>
         <div className="datas">
         <div className='firstData'>
-            <div>
-              <Goals/>
-            </div>
-            <div style={{
-                display:"grid",
-                placeItems:"center"
-              }}>
-           <FinancialBarChart/>
-            </div>
-          </div>
-          <div>
+              <div>
+                <Goals/>
+              </div>
+               <div>
               <BardGraph/>
-          </div>
-          <div>
-              <Notification/>
-          </div>
-          <div className='bottomGrid'>
+               </div>
+        </div>
+        <div>
+            <Notification/>
+        </div>
+        <div style={{
+                  display:"grid",
+                  placeItems:"center"
+                }}>
+                  <FinancialBarChart/>
+              </div>
+        <div className='bottomGrid'>
              <div>
                 <Transactions/>
              </div>
@@ -98,10 +98,13 @@ const Container = styled.div`
    .firstData{
       display: flex;
       flex-direction: column;
+      max-height: 100vh;
+      overflow: hidden;
 
     >*{
       flex: 1;
       gap: .5rem;
+      
     }
    }
    .welocmepage{

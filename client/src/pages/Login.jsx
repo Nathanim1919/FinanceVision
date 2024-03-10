@@ -34,7 +34,7 @@ export const Login = () => {
 
       if (accessToken  && response.data.data !== null) {
         document.cookie = `accessToken=${accessToken}`;
-        // document.cookie = `accessToken=${accessToken};path=/; domain=.finance-vision.vercel.app;`;
+        //   document.cookie = `accessToken=${accessToken}; SameSite=None; Secure; path=/; domain=.finance-vision.vercel.app;`;
 
         navigate('/dashboard', { replace: true });
 
@@ -61,7 +61,7 @@ export const Login = () => {
             <Input name="password" type='password' placeholder='Enter your password' value={userData.password} onChange={onChange}/>
             <p className='navigate'>Don't you have an account? <Link to="/register">Signup</Link></p>
             <Input type='submit' value='Login'/>
-            <Input type='submit' value='Login with Google'/>
+            {/* <Input type='submit' value='Login with Google'/> */}
             <Link className='navigate' onClick={()=>setRequestForgotPassword(true)}>Forgot your password?</Link>
         </form>
     </Container>

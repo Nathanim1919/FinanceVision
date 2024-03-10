@@ -22,7 +22,6 @@ function formatNumber(num) {
 }
 
 
-
 const calculateTimeLeft = (startDate, deadline) => {
     const now = moment(startDate);
     const end = moment(deadline);

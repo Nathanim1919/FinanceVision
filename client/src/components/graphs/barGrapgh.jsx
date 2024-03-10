@@ -71,7 +71,7 @@ export default function BardGraph() {
   };
   structureTransactions(transactions);
   return (
-    <div style={{ width: "400px", height: "100%" }}>
+    <div style={{ width: "350px", height: "210px" }}>
       <ResponsiveContainer>
         <AreaChart
           data={structureTransactions(transactions)}
