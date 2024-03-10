@@ -38,7 +38,6 @@ export const Login = () => {
         // document.cookie = `accessToken=${accessToken}`;
         document.cookie = `accessToken=${accessToken}; domain=.finance-vision.vercel.app; path=/; secure; httpOnly; sameSite=None`;
 
-
         navigate('/dashboard', { replace: true });
 
       } else {
