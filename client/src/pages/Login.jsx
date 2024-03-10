@@ -30,13 +30,11 @@ export const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL}/api/v1/auth/login`,{userData});
-      console.log(response)
       const { accessToken } = response.data.data;
-      console.log(accessToken)
 
       if (accessToken  && response.data.data !== null) {
-        // document.cookie = `accessToken=${accessToken}`;
-        document.cookie = `accessToken=${accessToken};path=/; domain=.finance-vision.vercel.app;`;
+        document.cookie = `accessToken=${accessToken}`;
+        // document.cookie = `accessToken=${accessToken};path=/; domain=.finance-vision.vercel.app;`;
 
         navigate('/dashboard', { replace: true });
 

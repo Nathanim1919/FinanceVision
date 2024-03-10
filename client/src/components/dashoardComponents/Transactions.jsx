@@ -10,6 +10,8 @@ import { Loader } from '../../components/Loader';
 import { CiMoneyCheck1 } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { formatDate } from '../../utils/Formatting';
+import { fetchIncomes } from '../../features/incomes/incomeSlice';
+import { fetchExpenses } from '../../features/expenses/expenseSlice';
 
 
 
@@ -22,6 +24,8 @@ export const Transactions = () => {
 
   useEffect(() => {
     dispatch(fetchTransactions(user._id));
+    dispatch(fetchIncomes(user._id))
+    dispatch(fetchExpenses(user._id))
   }, [dispatch, user]);
 
   return (
@@ -34,7 +38,15 @@ export const Transactions = () => {
         </Link>
       </div>
       <TransactionsContainer className="transactions">
-        {transactions.map(transaction => (
+        {transactions.length === 0 ? (
+            <div className='emptyOne'>
+              <p>No transactions recorded yet. creating your first transaction now.</p>
+              <div>
+                <Link to="/goals">Income</Link>
+                <Link to="/expenses">Expense</Link>
+              </div>
+            </div>
+        ): transactions.map(transaction => (
           <TransactionBox key={transaction.date}>
               <div className='transaction upperData'>
                   <h4>{transaction.title}</h4>
@@ -110,6 +122,32 @@ const TransactionBox = styled.div`
 const TransactionsContainer = styled.div`
    display: grid;
    gap: .5rem;
+
+   .emptyOne{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding:1rem 0rem;
+    width: 100%;
+
+    div{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+
+
+    a{
+      background-color: #eee;
+      padding: 0.1rem .5rem;
+      color: #333;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: .8rem;
+    }
+  }
 `
 
 

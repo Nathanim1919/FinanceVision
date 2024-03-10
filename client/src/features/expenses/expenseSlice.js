@@ -43,7 +43,6 @@ export const fetchExpenses = (usersId) => async (dispatch) => {
     } catch (error) {
         dispatch(expenseSlice.actions.setError(error.message));
     }
-
     dispatch(expenseSlice.actions.setLoading(false));
 }
 

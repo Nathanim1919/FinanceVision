@@ -31,7 +31,12 @@ export const Goals = () => {
       </Link>
     </div>
     <GoalContainer>
-      {goals?.map(goal => (
+      {goals.length === 0 ? (
+            <div className='emptyOne'>
+              <p>No goals created yet.</p>
+               <Link to="/goals">create</Link>
+            </div>
+        ): goals?.map(goal => (
         <div key={goal.title}>
           <div className='titles'>
             <h4>{(goal.title).slice(0,10)}<span>{goal.category}</span></h4>
@@ -92,6 +97,24 @@ const GoalContainer = styled.div`
   position: relative;
   gap: .5rem;
 
+
+  .emptyOne{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding:4rem 0rem;
+    width: 100%;
+
+
+    a{
+      background-color: #eee;
+      padding: 0.1rem .5rem;
+      color: #333;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: .8rem;
+    }
+  }
 
   .titles{
     h4{

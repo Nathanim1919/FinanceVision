@@ -62,9 +62,6 @@ const notificationSlice = createSlice({
         .addCase(fetchNotifications.fulfilled, (state, action) => {
             state.notifications = action.payload;
             state.loading = false;
-            // socket.on('notification-created', (data) => {
-            //     state.notifications.push(data);
-            // });
         })
         .addCase(fetchNotifications.rejected, (state, action) => {
             state.error = action.error.message;

@@ -12,6 +12,7 @@ import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
 import { IoIosWarning,IoMdNotifications } from "react-icons/io";
 import { NotificationDetail } from './NotificationDetail';
 import { SOCKET_URL, BASE_URL } from '../../utils/Api';
+import { Loader } from '../../components/Loader';
 
 
 
@@ -19,6 +20,7 @@ function Notification() {
   const [notifications, setNotifications] = useState([]);
   const [notificationId, setNotificationId] = useState(null);
   const user = useSelector(state => state.auth.user);
+  const loading = useSelector(state => state.notification.loading);
   const socket = io(SOCKET_URL);
 
   function calculateTimeDifference(notificationCreatedAt) {
@@ -68,8 +70,10 @@ function Notification() {
       return () => socket.off('notification-created');
   }, []);
 
+  
 
   return (
+    loading?<Loader/>:
     <Container>
       <Content>
       <Header>

@@ -13,6 +13,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import {fetchUser} from "../features/auth/authSlice";
 import {useNavigate} from "react-router-dom";
+import { formatNumber } from '../utils/Formatting';
 
 
 
@@ -26,7 +27,7 @@ export const Dashboard = () => {
 
   // useEffect(() => {
   //     dispatch(fetchUser())
-  // }, []);
+  // }, [dispatch]);
 
   return (
     <Container>
@@ -42,7 +43,7 @@ export const Dashboard = () => {
           </div>
 
            <div className="amount">
-               <h2>{!show ? "*******" : user && user.deposit} ETB</h2>
+               <h2>{!show ? "*******" : user && formatNumber(user.deposit)} ETB</h2>
                <div onClick={() => setShow(!show)}>
                    {show ? <FaEye/> : <FaEyeSlash/>}
                </div>
