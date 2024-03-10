@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '../Loader';
 import { CiCalendarDate } from "react-icons/ci";
 import { PiTargetThin } from "react-icons/pi";
+import { calculateTimeLeft } from '../../utils/Formatting';
 
 
 
@@ -46,7 +47,7 @@ export const Goals = () => {
             <div className='outter'>
               <div progress={goal.progress} style={{backgroundColor:goal.progress === 100?"#41cc87":"#1b76ff",width: `${goal.progress}%`}} className='inner'></div>
             </div>
-            <p><CiCalendarDate/>{goal.progress === 100?"completed":"7 days left"}</p>
+            <p><CiCalendarDate/>{goal.progress === 100?"completed":calculateTimeLeft(goal.startDate, goal.deadline)}</p>
           </div>
         </div>
       ))}

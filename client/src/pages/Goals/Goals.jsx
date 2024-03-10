@@ -14,6 +14,7 @@ import { selectGoals, selectLoading } from '../../features/goals/goalSlice';
 import { Loader } from '../../components/Loader';
 import { fetchGoals } from '../../features/goals/goalSlice';
 import { GoalDetails } from './GoalDetails';
+import { calculateTimeLeft } from '../../utils/Formatting';
 
 export const Goals = () => {
   const [createGoal, setCreateGoal] = React.useState(false);
@@ -33,6 +34,8 @@ export const Goals = () => {
     setShowDetails(true);
   }
 
+
+
   return (
     isLoading ? <Loader/> :
     <Content>
@@ -51,7 +54,7 @@ export const Goals = () => {
                     <div className='titles'>
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
                       <div className='current-progress'>
-                        <p className='daysleft'>{item.progress === 100?'Completed':'7 days left'}</p>
+                        <p className='daysleft'>{item.progress === 100?'Completed':calculateTimeLeft(item.startDate, item.deadline)}</p>
                         <h2><GoGoal/>{item.target} ETB</h2>
                       </div>
                     </div>
