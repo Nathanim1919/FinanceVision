@@ -4,8 +4,8 @@ import { ProtectedRoutes } from './layouts/ProtectedRoutes.jsx';
 
 // Import components from respective folders
 import {Home} from './pages/Home.jsx'
-import {Login} from './pages/Login';
-import {Register} from './pages/Register';
+import {Login} from './pages/Login.jsx';
+import {Register} from './pages/Register.jsx';
 import {Goals} from './pages/Goals/Goals.jsx';
 import {GoalDetails} from './pages/Goals/GoalDetails.jsx';
 import {Settings} from './pages/Settings.jsx';
