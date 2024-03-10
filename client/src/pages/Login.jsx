@@ -38,7 +38,7 @@ export const Login = () => {
         document.cookie = `accessToken=${accessToken}`;
         res.cookie('accessToken', token, { domain:'https://finance-vision.vercel.app', path: '/', secure: true, httpOnly: true, sameSite: 'None' });
 
-        navigate('/', { replace: true });
+        navigate('/dashboard', { replace: true });
 
       } else {
         console.error('No token found');
