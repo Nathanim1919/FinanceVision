@@ -14,16 +14,15 @@ import transactionRouter from './routes/transactionRoute.js';
 import notificationRouter from './routes/notificationRoute.js';
 import settingRoute from './routes/settingRoute.js';
 import { verifyJWT } from "./middlewares/auth.middlewares.js";
-import { VERCEL_DOMAIN } from "../client/src/utils/Api.jsx";
 
 
 dotenv.config();
 
 
 
-export const io = new Server(process.env.SOCKET_PORT, {
+export const io = new Server(5000, {
   cors: {
-    origin: VERCEL_DOMAIN,
+    origin: 'http://localhost:5173',
     credentials: true,
   },
 });
@@ -45,7 +44,7 @@ const startServer = async () => {
     app.use(Express.json());
     // configure cors 
     app.use(cors({
-      origin: VERCEL_DOMAIN,
+      origin: 'https://finance-vision.vercel.app',
       credentials: true,
     }));
     
