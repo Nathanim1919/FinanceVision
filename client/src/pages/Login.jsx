@@ -35,7 +35,6 @@ export const Login = () => {
       console.log(accessToken)
 
       if (accessToken && response.data.data !== null) {
-        // Set the access token cookie using document.cookie
         document.cookie = `accessToken=${accessToken}; domain=.finance-vision.vercel.app; path=/; secure; httpOnly; sameSite=None`;
         navigate('/dashboard', { replace: true });
 
