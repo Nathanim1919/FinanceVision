@@ -8,7 +8,7 @@ import { Loader } from '../components/Loader'
 import { useNavigate } from 'react-router-dom'
 import ForgotPasswordRequest from '../components/modals/ForgotPasswordRequest'
 import ResetPasswordBox from '../components/modals/ResetPasswordBox';
-import { BASE_URL } from '../utils/Api'
+import { BASE_URL, VERCEL_DOMAIN } from '../utils/Api'
 
 export const Login = () => {
   const [userData, setUserData] = useState({
@@ -36,6 +36,7 @@ export const Login = () => {
 
       if (accessToken  && response.data.data !== null) {
         document.cookie = `accessToken=${accessToken}`;
+        document.cookie = `accessToken=${accessToken}; path=/; domain=${VERCEL_DOMAIN}; Secure; HttpOnly`;
         navigate('/dashboard', { replace: true });
 
       } else {
