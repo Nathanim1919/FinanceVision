@@ -29,13 +29,15 @@ export const Login = () => {
     setIsLoading(true)
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL}/api/v1/auth/login`, { userData });
+      const response = await axios.post(`${BASE_URL}/api/v1/auth/login`,{userData});
       console.log(response)
       const { accessToken } = response.data.data;
       console.log(accessToken)
 
-      if (accessToken && response.data.data !== null) {
-        document.cookie = `accessToken=${accessToken}; domain=.finance-vision.vercel.app; path=/; secure; httpOnly; sameSite=None`;
+      if (accessToken  && response.data.data !== null) {
+        // document.cookie = `accessToken=${accessToken}`;
+        document.cookie('accessToken', token, { domain:'https://finance-vision.vercel.app', path: '/', secure: true, httpOnly: true, sameSite: 'None' });
+
         navigate('/dashboard', { replace: true });
 
       } else {
@@ -45,8 +47,7 @@ export const Login = () => {
       console.error(error);
     }
     setIsLoading(false);
-}
-
+  }
 
   return (
     <Container className="conatiner">
