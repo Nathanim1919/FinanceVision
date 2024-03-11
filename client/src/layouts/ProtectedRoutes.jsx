@@ -22,9 +22,15 @@ export function ProtectedRoutes({ children }) {
         setIsLoading(false); 
         return;
       }
-
+      
       try {
-        const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, { withCredentials: true });
+        const token = localStorage.getItem('accessToken');
+        console.log('token:', token);
+        const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in Authorization header
+          },
+        });
         console.log('.................................................')
         console.log(response.data)
         if (response.data.data !== null) {

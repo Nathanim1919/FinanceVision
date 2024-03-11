@@ -33,10 +33,8 @@ export const Login = () => {
       const { accessToken } = response.data.data;
 
       if (accessToken  && response.data.data !== null) {
-          // document.cookie = `accessToken=${accessToken}`;
-          document.cookie = `accessToken=${accessToken}; SameSite=None; Secure; path=/; domain=.finance-vision.vercel.app;`;
-          
-
+        localStorage.setItem('accessToken', accessToken);
+          // document.cookie = `accessToken=${accessToken}; SameSite=None; Secure; path=/; domain=.finance-vision.vercel.app;`;
           navigate('/dashboard', { replace: true });
 
       } else {

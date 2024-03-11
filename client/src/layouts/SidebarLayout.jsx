@@ -28,10 +28,11 @@ function SidebarLayout() {
 
   const logout = useCallback(async () => {
     setIsLoading(true);
+    localStorage.removeItem('accessToken');
     try {
-      await axios.post("http://localhost:3000/api/v1/auth/logout", null, {
-        withCredentials: true
-      });
+      // await axios.post("http://localhost:3000/api/v1/auth/logout", null, {
+      //   withCredentials: true
+      // });
       dispatch(clearUser());
       navigate('/login', { replace: true });
     } catch (error) {

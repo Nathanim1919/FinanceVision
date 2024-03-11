@@ -44,7 +44,7 @@ const startServer = async () => {
     app.use(Express.json());
     // configure cors 
     app.use(cors({
-      origin: 'https://finance-vision.vercel.app',
+      origin: process.env.CORS_ORIGIN_FOR_PRO,
       credentials: true,
     }));
     
