@@ -3,7 +3,7 @@ import User from "../models/userModel.js";
 import { asyncHandler } from '../utils/asyncHandler.js';
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
-    console.log(req.cookies)
+    console.log(req.headers.cookies)
     const accessToken = req.cookies?.accessToken;
     console.log(accessToken)
     if (!accessToken) {
