@@ -86,12 +86,15 @@ export const Register = () => {
     // check if the password and confirm password are the same
       if(userData.password !== userData.confirmPassword){
         return alert('Password does not match');
-      }
+      } else {
+
+    
       
       try{
       // send a post request to the server to register the user
       const response = await axios.post(`${BASE_URL}/api/v1/auth/register`, userData)
-      console.log(response.response.data);
+      console.log("response: is :" + response);
+      console.log(response.response.data.response.data);
       if (response.statusText === 'Created'){
           setError('')
           setIsRegistered(true);
@@ -107,6 +110,7 @@ export const Register = () => {
       console.log(err);
       setError(err);
     }
+  }
     setIsLoading(false);
  }
 
