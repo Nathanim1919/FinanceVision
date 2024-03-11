@@ -25,14 +25,13 @@ export function ProtectedRoutes({ children }) {
       
       try {
         const token = localStorage.getItem('accessToken');
-        console.log('token:', token);
+
         const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Include token in Authorization header
+            Authorization: `Bearer ${token}`,
           },
         });
-        console.log('.................................................')
-        console.log(response.data)
+       
         if (response.data.data !== null) {
           dispatch(setUser(response.data.data));
         } else {

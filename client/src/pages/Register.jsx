@@ -5,7 +5,7 @@ import {styled} from 'styled-components'
 import { FaCheckCircle } from "react-icons/fa";
 import { IoIosCloseCircle } from "react-icons/io";
 import {passswordValidation, emailValidation, usernameValidation} from '../utils/Validation' 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Success } from '../components/modals/success'
 import { IoArrowBack } from "react-icons/io5";
@@ -29,6 +29,7 @@ export const Register = () => {
   const [isRegistered, setIsRegistered] = useState(false);
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   // state to handle password validation
   const [passwordData, setPasswordData] = useState({
@@ -83,9 +84,9 @@ export const Register = () => {
     setIsLoading(true);
     
     // check if the password and confirm password are the same
-    // if(userData.password !== userData.confirmPassword){
-      //   return alert('Password does not match');
-      // }
+      if(userData.password !== userData.confirmPassword){
+        return alert('Password does not match');
+      }
       
       try{
       // send a post request to the server to register the user
@@ -94,10 +95,10 @@ export const Register = () => {
       if (response.statusText === 'Created'){
           setError('')
           setIsRegistered(true);
+          navigate('/login');
       } else {
         if (response.status >= 400 && response.status < 500){
               setError(response.data.message);
-
         } else {
             setError("Internal server error, Please try again!");
         }
