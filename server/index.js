@@ -44,7 +44,7 @@ const startServer = async () => {
     app.use(Express.json());
     // configure cors 
     app.use(cors({
-      origin: process.env.CORS_ORIGIN_FOR_DEV,
+      origin: process.env.CORS_ORIGIN_FOR_PRO,
       credentials: true,
     }));
     
