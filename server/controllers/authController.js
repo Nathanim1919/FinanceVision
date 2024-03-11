@@ -21,9 +21,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   // If the user exists, throw an error
   if (userExists) {
-    res.status(400).json({
-      message: "The Email or Username is already registered!",
-    });
+    res.status(400).json(new ApiResponse(400, {}, "User already exists"));
   }
 
   // Create a new user

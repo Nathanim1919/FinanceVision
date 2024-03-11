@@ -13,6 +13,7 @@ import { Loader } from '../components/Loader';
 import { BASE_URL } from '../utils/Api';
 
 
+
 /**
  * Register component for user registration.
  * @component
@@ -79,40 +80,34 @@ export const Register = () => {
 
 
   // function to register user
-  const registerUser = async (e) =>{
+  const registerUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // check if the password and confirm password are the same
+  
+    try {
+      // check if the password and confirm password are the same
       if(userData.password !== userData.confirmPassword){
-        return alert('Password does not match');
-      } else {
-
-    
-      
-      try{
-      // send a post request to the server to register the user
-      const response = await axios.post(`${BASE_URL}/api/v1/auth/register`, userData)
-      console.log("response: is :" + response);
-      console.log(response.response.data.response.data);
-      if (response.statusText === 'Created'){
-          setError('')
-          setIsRegistered(true);
-          navigate('/login');
-      } else {
-        if (response.status >= 400 && response.status < 500){
-              setError(response.data.message);
-        } else {
-            setError("Internal server error, Please try again!");
-        }
+        throw new Error('Password does not match');
       }
-    }catch(err){
-      console.log(err);
-      setError(err);
+  
+      // send a post request to the server to register the user
+      const response = await axios.post(`${BASE_URL}/api/v1/auth/register`, userData);
+      console.log(response);
+      if (response.status === 201){
+        setError('');
+        setIsRegistered(true);
+        navigate('/login');
+      } else {
+        console.log(response.data);
+        setError(response.data.message);
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    } finally {
+      setIsLoading(false);
     }
   }
-    setIsLoading(false);
- }
 
   return (
     <Container className="conatiner">
@@ -132,7 +127,7 @@ export const Register = () => {
               <Input name="confirmPassword" type='password' placeholder='confirm password' value={userData.confirmPassword} onChange={onChange} error = {null}/>
             </div>
             <Input type='submit' value='Register'/>
-            <Input type='submit' value='Singup with Google'/>
+            {/*<Input type='submit' value='Singup with Google'/>*/}
             <p className='navigate'>Already have an account? <Link to="/Login">Login</Link></p>
             <div className="validation">
                 <div className='requirement'>

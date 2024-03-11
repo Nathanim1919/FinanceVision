@@ -49,7 +49,12 @@ export const Goals = () => {
                   </div>
               </Header>
               <GoalContainer>
-                {goals && goals.map(item => (
+                {goals.length === 0 ? (
+                    <div className='emptyOne'>
+                      <p>No goals created yet.</p>
+                      <Link onClick={()=>setCreateGoal(true)}>create</Link>
+                    </div>
+                     ):goals && goals.map(item => (
                   <Card key={item.title} onClick={()=>handleGoalSelect(item)}>
                     <div className='titles'>
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
@@ -156,6 +161,24 @@ const Header = styled.div`
 const GoalContainer = styled.div`
     display: grid;
     gap: 2rem;
+
+    .emptyOne{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding:4rem 0rem;
+    width: 100%;
+
+
+    a{
+      background-color: #5d8b62;
+      padding: 0.1rem .5rem;
+      color: #f2f2f2;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: .8rem;
+    }
+  }
 
     .progress{
       display: flex;
