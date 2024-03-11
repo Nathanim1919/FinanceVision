@@ -36,8 +36,14 @@ const calculateTimeLeft = (startDate, deadline) => {
         return `${duration.months()} months left`;
     } else if (duration.weeks() > 0) {
         return `${duration.weeks()} weeks left`;
-    } else {
+    } else if (duration.days() > 0){
         return `${duration.days()} days left`;
+    } else if (duration.hours() > 0){
+        return `${duration.hours()} hours left`;
+    } else if (duration.minutes() > 0){
+        return `${duration.minutes()} minutes left`;
+    } else {
+        return `${(duration.days())*-1} days passed.`;
     }
 };
 
