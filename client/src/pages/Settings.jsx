@@ -4,31 +4,35 @@ import { IoSettings } from "react-icons/io5";
 import styled from 'styled-components';
 import {useSelector } from "react-redux";
 import { BASE_URL } from '../utils/Api';
+import { Loader } from '../components/Loader';
 
 
 
 
 export const Settings = () => {
   const user = useSelector(state => state.auth.user);
+    const [loading, setLoading] = useState(false); 
 
   // Optional: Fetch currency rates based on your implementation
   const [minimumAmount, setMinimumAmount] = useState(user.minimumAmount); // State for minimum amount
   
 
   const updateMinimumAmount = async (event) => {
+    setLoading(true);
     event.preventDefault();
     // Update the user's minimum amount
     const response =await axios.patch(`${BASE_URL}/api/v1/settings`, { userId:user._id,minimumAmount });
-    console.log(response);
-
+    console.log(response.data);
+    setLoading(false);
   }
 
   return (
+    loading?<Loader/>:
     <Container className="settings-container">
         <Content>
             <h2><IoSettings/>Settings</h2>
             <div className="userSettings">
-                    <h3>Minmum Balance Alert </h3>
+                    <h3>Minimum Balance Alert </h3>
                     <div>
                         <form onSubmit={updateMinimumAmount}>
                             <input type="number" placeholder='Minimum Value' id="darkMode" name="darkMode" value={minimumAmount} onChange={(e)=>setMinimumAmount(e.target.value)}/>

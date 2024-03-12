@@ -48,6 +48,32 @@ const Header = styled.div`
 const IncomeBox = styled.div`
         display: grid;
         gap: .5rem;
+    div.emptyListBox{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        >*{
+            margin: 0;
+            font-size: .8rem;
+        }
+
+        button{
+            background-color: blue;
+            color: #fff;
+            padding: .3rem .7rem;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 23px #54535347;
+            margin-top: 1rem;
+            border: none;
+
+            &:hover{
+                background-color: #1e90ff;
+            }
+        
+        }
+    }
     >div{
         display: flex;
         justify-content: space-between;
@@ -166,7 +192,13 @@ function Expense() {
                 </div>
             </Header>
         <IncomeBox>
-            {expenses && expenses.slice().reverse().map(income => (
+            {expenses.length === 0? 
+            <div className='emptyListBox'>
+                <p>Your expense list is currently empty.</p>
+                <p>Start tracking your expenses by creating a new entry.</p>
+                <button onClick={()=>setCreateExpense(true)}>Create Expense</button>
+            </div>
+            :expenses && expenses.slice().reverse().map(income => (
                 <div key={income.id}>
                     <div>
                         <h3><TbCategoryFilled/>{income.category}</h3>

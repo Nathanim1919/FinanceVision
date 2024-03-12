@@ -37,7 +37,20 @@ export const Transactions = () => {
           <h2>{user.username}'s Transactions</h2>
       </Header>
       <TransactionsContainer className="transactions">
-        {transactions?.map(transaction => (
+        {transactions.length === 0?
+          <div className='emptyTransaction'>
+            <p>You don't have any transactions yet.</p>
+            <p>Start managing your finances by adding expenses and incomes.</p>
+            <div className="buttons">
+              <Link to="/expenses">
+                <button>Create Expense</button>
+              </Link>
+              <Link to="/incomes">
+                <button>Create Income</button>
+              </Link>
+            </div>
+        </div>
+         :transactions?.map(transaction => (
           <TransactionBox key={transaction.date}>
               <div className='transaction upperData'>
                   <h4><BiSolidCategoryAlt/>{transaction.title}<span>{transaction.type}</span></h4>
@@ -164,6 +177,40 @@ const TransactionBox = styled.div`
 const TransactionsContainer = styled.div`
    display: grid;
    gap: .5rem;
+
+   .emptyTransaction{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: .8rem;
+
+    >*{
+      margin: 0;
+      padding: 0;
+    }
+
+    .buttons{
+      display: flex;
+      gap: .5rem;
+      margin-top: 1rem;
+      
+      button{
+        background-color: blue;
+        color: #fff;
+        padding: .3rem .7rem;
+        border-radius: 20px;
+        cursor: pointer;
+        box-shadow: 0 5px 23px #54535347;
+        margin-top: 1rem;
+        border: none;
+
+        &:hover{
+          background-color: #1e90ff;
+        }
+      
+      }
+    }
+   }
 `
 
 

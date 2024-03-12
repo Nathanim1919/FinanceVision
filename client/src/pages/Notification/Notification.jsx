@@ -80,9 +80,13 @@ function Notification() {
           <h2>{user.username}'s Notifications</h2>
       </Header>
       <NotificationContainer>
-        {(notifications?.slice(0,).reverse()).map(notification => (
+        {notifications.length === 0?
+        <div className='emptyNotification'>
+            <p>You currently have no notifications.</p>
+            <p>Check back later for updates!</p>
+        </div>
+        :(notifications?.slice(0,).reverse()).map(notification => (
           <>
-         
           {notification._id === notificationId && notificationId !== null && <NotificationDetail notification={notification} setNotificationId={setNotificationId} notificationId={notificationId}/>}
           <NotificationBox key={notification.createdAt} onClick={()=>setRead(notification._id)}>
               <div className='notification'>
@@ -179,6 +183,19 @@ const Container = styled.div`
 const NotificationContainer = styled.div`
   display: grid;
   gap: .5rem;
+
+  .emptyNotification{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: .8rem;
+
+
+    >*{
+      margin: 0;
+      padding: 0;
+    }
+  }
 `
 
 const Content = styled.div`

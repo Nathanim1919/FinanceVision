@@ -10,8 +10,9 @@ export const checkMinimumBalance = async (req, res, next) => {
         // Check if the user's balance is below the minimum amount
         const minimumAmount = user.minimumAmount;
         const balance = user.deposit;
+        const incomes = user.incomes.reduce((acc, income) => acc + income.amount, 0);
 
-        if (balance < minimumAmount && !notificationCreated) {
+        if (balance < minimumAmount && !notificationCreated && incomes !== 0) {
             // Send a notification
             const notification = new Notification({
                 title: "Account Balance Warning",

@@ -9,7 +9,7 @@ import { GiProgression } from "react-icons/gi";
 import { BsFillTicketDetailedFill } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 import { TbProgress } from "react-icons/tb";
-import { formatDate } from '../../utils/Formatting';
+import { formatDate, formatNumber } from '../../utils/Formatting';
 import { CiCalendarDate } from "react-icons/ci";
 import { MdCalendarToday } from "react-icons/md";
 import { RiLuggageDepositLine } from "react-icons/ri";
@@ -18,6 +18,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { updateGoal } from '../../features/goals/goalSlice';
 import { useNavigate } from 'react-router-dom';
 import { fetchUser } from '../../features/auth/authSlice';
+import { calculateTimeLeft } from '../../utils/Formatting';
 
 export const GoalDetails = ({ goal, setShowDetails }) => {
   const user = useSelector(state => state.auth.user)
@@ -79,11 +80,11 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
           <div className='targetValues'>
             <div>
               <h4><GoGoal />Target</h4>
-              <p><FaMoneyBillWave />{goal.target} ETB</p>
+              <p><FaMoneyBillWave />{formatNumber(goal.target)} ETB</p>
             </div>
             <div>
               <h4><GiProgression />Current</h4>
-              <p><FaMoneyBillWave />{goal.current} ETB</p>
+              <p><FaMoneyBillWave />{formatNumber(goal.current)} ETB</p>
             </div>
           </div>
 
@@ -106,7 +107,7 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
                 %
               </div>
             </div>
-            <p><MdCalendarToday />{goal.progress === 100?'Completed':'7 days left'}</p>
+            <p><MdCalendarToday />{goal.progress === 100?'Completed':calculateTimeLeft(goal.startDate, goal.deadline)}</p>
           </div>
 
           <div className='statusAndCategory'>

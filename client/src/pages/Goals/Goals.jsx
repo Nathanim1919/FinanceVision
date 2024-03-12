@@ -50,10 +50,11 @@ export const Goals = () => {
               </Header>
               <GoalContainer>
                 {goals.length === 0 ? (
-                    <div className='emptyOne'>
-                      <p>No goals created yet.</p>
-                      <Link onClick={()=>setCreateGoal(true)}>create</Link>
-                    </div>
+                    <div className='emptyListBox'>
+                      <p>Your goals list is currently empty.</p>
+                      <p>Set financial goals to work towards a brighter future.</p>
+                      <button onClick={()=>setCreateGoal(true)}>Create Goal</button>
+                  </div>
                      ):goals && goals.map(item => (
                   <Card key={item.title} onClick={()=>handleGoalSelect(item)}>
                     <div className='titles'>
@@ -162,23 +163,33 @@ const GoalContainer = styled.div`
     display: grid;
     gap: 2rem;
 
-    .emptyOne{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding:4rem 0rem;
-    width: 100%;
+    div.emptyListBox{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
+        >*{
+            margin: 0;
+            font-size: .8rem;
+        }
 
-    a{
-      background-color: #5d8b62;
-      padding: 0.1rem .5rem;
-      color: #f2f2f2;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: .8rem;
+        button{
+            background-color: blue;
+            color: #fff;
+            padding: .3rem .7rem;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 23px #54535347;
+            margin-top: 1rem;
+            border: none;
+
+            &:hover{
+                background-color: #1e90ff;
+            }
+        
+        }
     }
-  }
+
 
     .progress{
       display: flex;

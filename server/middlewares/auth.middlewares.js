@@ -12,22 +12,12 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
 
     // Extract the token from the Authorization header
     const accessToken = authHeader.split(' ')[1];
-    console.log('accessToken:', accessToken);
-
-    // if (!accessToken) {
-    //     res.status(401).json({
-    //         message: "Unauthorized",
-    //     });
-    //     return;
-    // }
-
+  
     try {
         const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-        console.log('decoded user:', decoded);
         req.user = await User.findById(decoded._id);
         next();
     } catch (error) {
-        console.error('Error verifying token:', error);
         res.status(401).json({
             message: "Unauthorized",
         });
