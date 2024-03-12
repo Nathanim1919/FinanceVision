@@ -54,11 +54,12 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
 
 
       if (resultAction.payload){
-        const { data, message } = resultAction.payload;
+        const { data, message,error } = resultAction.payload;
         if (resultAction.status >= 400) {
           setErrorMessage(message);
           console.log('Data:', data);
           console.log('Message:', message);
+          console.log('error:', error);
           return;
         }
       } else {
