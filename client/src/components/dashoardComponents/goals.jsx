@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '../Loader';
 import { CiCalendarDate } from "react-icons/ci";
 import { PiTargetThin } from "react-icons/pi";
-import { calculateTimeLeft } from '../../utils/Formatting';
+import { calculateTimeLeft, formatNumber } from '../../utils/Formatting';
 
 
 
@@ -41,7 +41,7 @@ export const Goals = () => {
         <div key={goal.title}>
           <div className='titles'>
             <h4>{(goal.title).slice(0,10)}<span>{goal.category}</span></h4>
-            <h4><PiTargetThin/>{goal.target}</h4>
+            <h4><PiTargetThin/>{formatNumber(goal.target)}</h4>
           </div>
           <div className='progress'>
             <div className='outter'>

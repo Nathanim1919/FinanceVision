@@ -45,15 +45,31 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
 
   const handleDeposit = async (id) => {
     try {
-      dispatch(updateGoal({id, depositAmount, userId: user._id}));
+      const resultAction = await dispatch(updateGoal({
+        id,
+        depositAmount,
+        userId: user._id
+      }));
+      
+      const { data, message } = resultAction.payload;
+  
+      
+      if (resultAction.status >= 400) {
+        setErrorMessage(message);
+        console.log('Data:', data);
+        console.log('Message:', message);
+        return;
+      }
+  
       dispatch(fetchUser());
       setDepositAmount(0);
-      setShowDetails(false); 
+      setShowDetails(false);
     } catch (error) {
       console.error('Error updating goal progress:', error);
       setErrorMessage('An error occurred while depositing funds. Please try again later.');
     }
   };
+  
 
   return (
     <Overlay>

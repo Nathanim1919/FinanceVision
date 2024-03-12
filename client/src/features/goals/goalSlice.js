@@ -53,15 +53,21 @@ export const deleteGoal = createAsyncThunk(
 
 export const updateGoal = createAsyncThunk(
   'goal/updateGoal',
-  async ({id, depositAmount, userId}) => {
-    try{
-      const response = await axios.post(`${BASE_URL}/api/v1/goals/${id}`,{depositAmount, userId});
-      return response.data.data;
-    } catch (error){
-      console.log(error)
+  async ({ id, depositAmount, userId }) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/api/v1/goals/${id}`, {
+        depositAmount,
+        userId,
+      });
+      console.log("response is here: ", response);
+      return { data: response.data.data, message: response.data.message };
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
-)
+);
+
 
 
 const goalSlice = createSlice({
