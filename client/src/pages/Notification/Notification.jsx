@@ -23,6 +23,10 @@ function Notification() {
   const loading = useSelector(state => state.notification.loading);
   const socket = io('https://finance-vision.vercel.app');
 
+  socket.on('connect', () => {
+    console.log('Connected to the server');
+  });
+
 
 
   const setRead = async (id) => {
