@@ -50,11 +50,11 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
         depositAmount,
         userId: user._id
       }));
+      console.log(resultAction)
       dispatch(fetchUser());
   
       if (resultAction.payload){
         const { data, message,error } = resultAction.payload;
-        console.log(resultAction())
         if (resultAction.status >= 400) {
           setErrorMessage(message);
           console.log('Data:', data);
