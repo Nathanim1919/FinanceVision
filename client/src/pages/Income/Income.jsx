@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { IoMdAdd } from "react-icons/io";
 import styled from 'styled-components';
 import { CiCalendarDate, CiEdit, CiViewTimeline } from "react-icons/ci";
@@ -174,9 +174,14 @@ function Income() {
     const isLoading = useSelector((state) => state.income.loading);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(fetchIncomes(user._id));
-    },[user, incomes])
+    const prevIncomes = useRef();
+
+    useEffect(() => {
+        if (prevIncomes.current !== incomes) {
+            dispatch(fetchIncomes(user._id));
+        }
+        prevIncomes.current = incomes;
+    }, [dispatch, user, incomes]);
 
 
     const handleDelete = (id) => {
