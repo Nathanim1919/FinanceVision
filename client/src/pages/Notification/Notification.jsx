@@ -13,7 +13,7 @@ import { IoIosWarning,IoMdNotifications } from "react-icons/io";
 import { NotificationDetail } from './NotificationDetail';
 import { SOCKET_URL, BASE_URL } from '../../utils/Api';
 import { Loader } from '../../components/Loader';
-
+import { calculateTimeDifference } from '../../utils/Formatting';
 
 
 function Notification() {
@@ -24,27 +24,6 @@ function Notification() {
   const socket = io('https://finance-vision.vercel.app');
 
 
-  function calculateTimeDifference(notificationCreatedAt) {
-    const now = Date.now();
-    const notificationDate = new Date(notificationCreatedAt);
-    const timeDifference = Math.floor((now - notificationDate.getTime()) / 1000); // Convert to seconds
-  
-    const units = [
-      { name: "day", value: 24 * 60 * 60 },
-      { name: "hour", value: 60 * 60 },
-      { name: "minute", value: 60 },
-      { name: "second", value: 1 },
-    ];
-  
-    for (const unit of units) {
-      const elapsed = Math.floor(timeDifference / unit.value);
-      if (elapsed >= 1) {
-        return `${elapsed} ${unit.name}${elapsed > 1 ? 's' : ''} ago`;
-      }
-    }
-  
-    return "just now";
-  }
 
   const setRead = async (id) => {
     const readNotification = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);

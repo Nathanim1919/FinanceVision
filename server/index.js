@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
-import Notification from "./models/notification.js";
+
 // Routes
 import userRouter  from "./routes/authRoute.js";
 import incomeRouter from "./routes/incomeRoute.js";
@@ -14,7 +14,6 @@ import goalRouter from './routes/goalRoute.js';
 import transactionRouter from './routes/transactionRoute.js'; 
 import notificationRouter from './routes/notificationRoute.js';
 import settingRoute from './routes/settingRoute.js';
-import { verifyJWT } from "./middlewares/auth.middlewares.js";
 
 
 dotenv.config();
@@ -63,9 +62,9 @@ const startServer = async () => {
 
 
     // Start Server
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`Server is running on port ${port}`);
-    });
+    });    
 
   } catch (error) {
     console.log(error);
