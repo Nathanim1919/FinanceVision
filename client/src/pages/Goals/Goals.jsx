@@ -12,9 +12,10 @@ import GoalForm from '../../components/forms/GoalForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectGoals, selectLoading } from '../../features/goals/goalSlice';
 import { Loader } from '../../components/Loader';
-import { fetchGoals } from '../../features/goals/goalSlice';
 import { GoalDetails } from './GoalDetails';
 import { calculateTimeLeft, formatNumber } from '../../utils/Formatting';
+import { FaCheckCircle } from "react-icons/fa";
+
 
 export const Goals = () => {
   const [createGoal, setCreateGoal] = React.useState(false);
@@ -25,9 +26,6 @@ export const Goals = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
 
-  // useEffect(() => {
-  //   dispatch(fetchGoals(user._id));
-  // }, [user]);
 
   const handleGoalSelect = (goal) => {
     setSelectGoal(goal);
@@ -70,7 +68,7 @@ export const Goals = () => {
                        
                       </div>
                       <div className='target-goal'>
-                        <h4><GiProgression/>{formatNumber(item.current)} ETB</h4>
+                        <h4>{item.progress === 100?<FaCheckCircle/>:<GiProgression/>}{formatNumber(item.current)} ETB</h4>
                         <div className='percent'>
                              <p>{item.progress}</p>
                              %
