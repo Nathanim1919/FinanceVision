@@ -120,12 +120,12 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
                 %
               </div>
             </div>
-            <p><MdCalendarToday />{goal.progress === 100?'Completed':calculateTimeLeft(goal.startDate, goal.deadline)}</p>
           </div>
 
           <div className='statusAndCategory'>
             <p><BiCategory />{goal.category}</p>
-            <p><TbProgress />{goal.status}</p>
+            <p style={{backgroundColor:"green", color:"white"}}><MdCalendarToday />{goal.progress === 100?'Completed':calculateTimeLeft(goal.startDate, goal.deadline)}</p>
+            {/* <p><TbProgress />{goal.status}</p> */}
           </div>
 
           <div className="date">
