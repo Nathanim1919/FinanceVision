@@ -13,20 +13,17 @@ import { formatDate, formatNumber } from '../../utils/Formatting';
 import { CiCalendarDate } from "react-icons/ci";
 import { MdCalendarToday } from "react-icons/md";
 import { RiLuggageDepositLine } from "react-icons/ri";
-import axios from 'axios';
 import {useSelector, useDispatch} from 'react-redux';
-import { updateGoal } from '../../features/goals/goalSlice';
+import { fetchGoals, updateGoal } from '../../features/goals/goalSlice';
 import { useNavigate } from 'react-router-dom';
-import { fetchUser } from '../../features/auth/authSlice';
 import { calculateTimeLeft } from '../../utils/Formatting';
 
 export const GoalDetails = ({ goal, setShowDetails }) => {
   const user = useSelector(state => state.auth.user)
-  const navigate = useNavigate()
 
   const [depositAmount, setDepositAmount] = useState(0);
 
-  const [errorMessage, setErrorMessage] = useState(''); // State for error message
+  const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -34,11 +31,11 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
 
     if (isNaN(newDepositAmount) || newDepositAmount < 0) {
       setErrorMessage('Please enter a valid non-negative number for deposit amount.');
-      return; // Prevent state update if input is invalid
+      return;
     }
 
     setDepositAmount(newDepositAmount);
-    setErrorMessage(''); // Clear any previous error message
+    setErrorMessage('');
   };
 
 
@@ -50,22 +47,18 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
         depositAmount,
         userId: user._id
       }));
-      console.log(resultAction)
-      dispatch(fetchUser());
+    
+      dispatch(fetchGoals(user._id));
   
       if (resultAction.payload){
-        const { data, message,error } = resultAction.payload;
+        const {message} = resultAction.payload;
         if (resultAction.status >= 400) {
           setErrorMessage(message);
-          console.log('Data:', data);
-          console.log('Message:', message);
-          console.log('error:', error);
           return;
         }
       } else {
         throw new Error('No payload returned from updateGoal action');
       }
-  
       setDepositAmount(0);
       setShowDetails(false);
     } catch (error) {

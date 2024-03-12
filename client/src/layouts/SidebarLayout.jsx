@@ -30,9 +30,6 @@ function SidebarLayout() {
     setIsLoading(true);
     localStorage.removeItem('accessToken');
     try {
-      // await axios.post("http://localhost:3000/api/v1/auth/logout", null, {
-      //   withCredentials: true
-      // });
       dispatch(clearUser());
       navigate('/login', { replace: true });
     } catch (error) {

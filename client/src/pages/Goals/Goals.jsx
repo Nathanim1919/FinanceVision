@@ -34,8 +34,6 @@ export const Goals = () => {
     setShowDetails(true);
   }
 
-
-
   return (
     isLoading ? <Loader/> :
     <Content>

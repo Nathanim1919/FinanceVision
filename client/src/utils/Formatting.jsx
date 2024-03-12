@@ -1,8 +1,3 @@
-/**
- * Formats a date into a string representation.
- * @param {Date} inputDate - The input date to be formatted.
- * @returns {string} The formatted date string.
- */
 import moment from 'moment';
 
 function formatDate(inputDate) {
@@ -36,13 +31,9 @@ const calculateTimeLeft = (startDate, deadline) => {
         return `${duration.months()} months left`;
     } else if (duration.weeks() > 0) {
         return `${duration.weeks()} weeks left`;
-    } else if (duration.days() > 0){
+    } else if (duration.days() >= 0){
         return `${duration.days()} days left`;
-    } else if (duration.hours() > 0){
-        return `${duration.hours()} hours left`;
-    } else if (duration.minutes() > 0){
-        return `${duration.minutes()} minutes left`;
-    } else {
+    } else if (duration.days() < 0){
         return `${(duration.days())*-1} days passed.`;
     }
 };
