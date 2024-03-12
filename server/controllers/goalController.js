@@ -3,6 +3,8 @@ import User from "../models/userModel.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import Notification from "../models/notification.js";
+import Transaction from "../models/transaction.js";
+import Expense from "../models/expense.js";
 import { io } from "../index.js";
 
 
@@ -53,8 +55,39 @@ export const updateGoal = asyncHandler(async (req, res) => {
     }
 
     // Update the user's deposit and the goal's current value
-    user.deposit -= depositAmount;
+   
     updatedGoal.current += depositAmount;
+
+    const expense = new Expense({
+      user: userId,
+      title: "Saving Goal",
+      amount: depositAmount,
+      date: new Date(),
+      category: "Saving",
+      frequency: "One-time",
+      merchant:"myself"
+    });
+
+
+    // Create and save the transaction
+    const transaction = new Transaction({
+      user: userId,
+      title: "Saving Goal",
+      amount: depositAmount * -1,
+      type: "withdraw",
+      date: new Date(),
+      frequency: "One-time",
+      merchant:"myself"
+    });
+
+    // Save the expense and transaction
+    await expense.save();
+    await transaction.save();
+
+    // Update the user's expense and transaction arrays
+    user.deposit -= depositAmount;
+    user.expense.push(expense._id);
+    user.transactions.push(transaction._id);
 
     // save the updated goal and user
     await updatedGoal.save();
