@@ -176,7 +176,7 @@ function Income() {
 
     useEffect(()=>{
         dispatch(fetchIncomes(user._id));
-    },[dispatch, user])
+    },[user, incomes])
 
 
     const handleDelete = (id) => {
