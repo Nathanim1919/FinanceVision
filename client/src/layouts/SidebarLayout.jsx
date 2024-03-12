@@ -24,7 +24,7 @@ function SidebarLayout() {
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const user = useSelector((state) => state.auth.user);
   const [notifications, setNotifications] = useState([]);
-  const socket = io(SOCKET_URL);
+  const socket = io('https://finance-vision.vercel.app');
 
   const logout = useCallback(async () => {
     setIsLoading(true);
