@@ -63,7 +63,7 @@ export const updateGoal = createAsyncThunk(
       return { data: response.data.data, message: response.data.message };
     } catch (error) {
       console.log(error);
-      throw error;
+      return { error: error.message };
     }
   }
 );

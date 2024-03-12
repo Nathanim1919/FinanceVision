@@ -50,17 +50,20 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
         depositAmount,
         userId: user._id
       }));
-      
-      const { data, message } = resultAction.payload;
-  
-      
-      if (resultAction.status >= 400) {
-        setErrorMessage(message);
-        console.log('Data:', data);
-        console.log('Message:', message);
-        return;
+
+
+      if (resultAction.payload){
+        const { data, message } = resultAction.payload;
+        if (resultAction.status >= 400) {
+          setErrorMessage(message);
+          console.log('Data:', data);
+          console.log('Message:', message);
+          return;
+        }
+      } else {
+        throw new Error('No payload returned from updateGoal action');
       }
-  
+    
       dispatch(fetchUser());
       setDepositAmount(0);
       setShowDetails(false);
