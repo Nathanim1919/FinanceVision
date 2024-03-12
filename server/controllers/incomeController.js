@@ -9,7 +9,7 @@ import Transaction from "../models/transaction.js";
 export const getIncomes = asyncHandler(async (req, res) => {
   const { userId } = req.query;
   try {
-    const user = await User.findById(userId).populate("incomes");
+    const user = await User.findById(userId).populate("incomes").populate('transactions');
     res.status(200).json(
         new ApiResponse(200, user, "Incomes fetched successfully")
     );

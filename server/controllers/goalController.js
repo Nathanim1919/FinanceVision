@@ -128,7 +128,7 @@ export const updateGoal = asyncHandler(async (req, res) => {
 export const getGoals = asyncHandler(async (req, res) => {
   const { userId } = req.query;
   try {
-    const user = await User.findById(userId).populate("goal");
+    const user = await User.findById(userId).populate("goal").populate("transactions");
     res
       .status(200)
       .json(new ApiResponse(200, user, "Goals fetched successfully"));

@@ -24,9 +24,6 @@ export const Transactions = () => {
   const loading = useSelector(state => state.transaction.loading);
 
 
-  // useEffect(() => {
-  //   dispatch(fetchTransactions(user._id));
-  // }, [dispatch, user]);
   
   return (
     loading?<Loader/>:
