@@ -13,7 +13,7 @@ import { BASE_URL, SOCKET_URL } from '../../utils/Api';
 
 
 const Notification = () => {
-    const socket = io(SOCKET_URL);
+    const socket = io('https://finance-vision.vercel.app');
     const user = useSelector((state) => state.auth.user);
     const [notifications, setNotifications] = useState([]);
 

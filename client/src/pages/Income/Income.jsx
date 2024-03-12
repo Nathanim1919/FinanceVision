@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import {useState} from 'react';
 import { IoMdAdd } from "react-icons/io";
 import styled from 'styled-components';
 import { CiCalendarDate, CiEdit, CiViewTimeline } from "react-icons/ci";
@@ -18,7 +18,6 @@ import { fetchIncomes, deleteIncomeAsync } from '../../features/incomes/incomeSl
 
 
 const Container = styled.div`
-    /* background-color: blue; */
     color: #333;
     margin: 0 auto;
     height: 85vh;

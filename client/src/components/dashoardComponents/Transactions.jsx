@@ -23,7 +23,6 @@ export const Transactions = () => {
 
 
   useEffect(() => {
-    // dispatch(fetchTransactions(user._id));
     dispatch(fetchIncomes(user._id))
     dispatch(fetchExpenses(user._id))
   }, [dispatch, user]);

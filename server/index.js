@@ -1,4 +1,5 @@
 import Express from "express";
+import http from 'http';
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -18,17 +19,16 @@ import { verifyJWT } from "./middlewares/auth.middlewares.js";
 
 dotenv.config();
 
+ // Create Express Server
+ const app = new Express();
+ const server = http.createServer(app);
 
-
-export const io = new Server(5000, {
-  cors: {
-    origin: 'https://finance-vision.vercel.app',
-    // origin: 'http://localhost:5173',
-    credentials: true,
-  },
-});
-
-
+ export const io = new Server(server, {
+   cors: {
+     origin: 'https://finance-vision.vercel.app',
+     credentials: true,
+   },
+ });
 
 const startServer = async () => {
   try {
@@ -38,8 +38,7 @@ const startServer = async () => {
       .then(() => console.log("Connected to MongoDB"))
       .catch((err) => console.log("unable to connect to MongoDB", err));
 
-    // Create Express Server
-    const app = new Express();
+   
 
     app.use(cookieParser());
     app.use(Express.json());
