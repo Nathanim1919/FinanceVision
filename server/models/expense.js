@@ -27,7 +27,6 @@ const expenseSchema = new Schema({
     enum: ['monthly', 'onetime', 'weekly', 'annually'],
     default: 'onetime'
   }
-  // Add more fields as needed for your application
 });
 
 const Expense = mongoose.model('Expense', expenseSchema);

@@ -64,7 +64,7 @@ export const updateGoal = asyncHandler(async (req, res) => {
       amount: depositAmount,
       date: new Date(),
       category: "Saving",
-      frequency: "One-time",
+      frequency: "onetime",
       merchant:"myself"
     });
 
@@ -75,8 +75,7 @@ export const updateGoal = asyncHandler(async (req, res) => {
       title: "Saving Goal",
       amount: depositAmount * -1,
       type: "withdraw",
-      date: new Date(),
-      frequency: "One-time",
+      frequency: "onetime",
       merchant:"myself"
     });
 
