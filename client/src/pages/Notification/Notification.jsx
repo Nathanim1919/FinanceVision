@@ -21,7 +21,8 @@ function Notification() {
   const [notificationId, setNotificationId] = useState(null);
   const user = useSelector(state => state.auth.user);
   const loading = useSelector(state => state.notification.loading);
-  const socket = io(SOCKET_URL);
+  const socket = io('https://finance-vision.vercel.app');
+
 
   function calculateTimeDifference(notificationCreatedAt) {
     const now = Date.now();
