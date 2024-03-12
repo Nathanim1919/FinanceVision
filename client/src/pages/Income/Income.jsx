@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { IoMdAdd } from "react-icons/io";
 import styled from 'styled-components';
 import { CiCalendarDate, CiEdit, CiViewTimeline } from "react-icons/ci";
@@ -8,7 +8,6 @@ import { TbCategoryFilled } from "react-icons/tb";
 import IncomeForm from '../../components/forms/IncomeForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../features/auth/authSlice';
-import axios from 'axios';
 import { Loader } from '../../components/Loader';
 import { BsThreeDots } from "react-icons/bs";
 import { formatDate } from '../../utils/Formatting';
@@ -26,12 +25,10 @@ const Container = styled.div`
     overflow-y: auto;
     
 `
-
 const Content = styled.div`
     width: 60%;
     margin: 0 auto;
 `
-
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
@@ -174,14 +171,9 @@ function Income() {
     const isLoading = useSelector((state) => state.income.loading);
     const dispatch = useDispatch();
 
-    const prevIncomes = useRef();
-
-    useEffect(() => {
-        if (prevIncomes.current !== incomes) {
-            dispatch(fetchIncomes(user._id));
-        }
-        prevIncomes.current = incomes;
-    }, [dispatch, user, incomes]);
+    useEffect(()=>{
+        dispatch(fetchIncomes(user._id));
+    },[])
 
 
     const handleDelete = (id) => {
