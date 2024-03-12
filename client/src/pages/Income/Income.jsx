@@ -171,15 +171,15 @@ function Income() {
     const isLoading = useSelector((state) => state.income.loading);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(fetchIncomes(user._id));
-    },[])
+    // useEffect(()=>{
+    //     dispatch(fetchIncomes(user._id));
+    // },[])
 
 
-    const handleDelete = (id) => {
-        dispatch(deleteIncomeAsync(id, user._id));
-        dispatch(fetchIncomes(user._id));
-    }
+const handleDelete = (id) => {
+    dispatch(deleteIncomeAsync(id, user._id));
+    dispatch(fetchIncomes(user._id));
+}
 
   return (
     isLoading ? <Loader/> :
