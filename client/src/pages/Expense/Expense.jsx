@@ -169,11 +169,6 @@ function Expense() {
     const dispatch = useDispatch();
 
 
-    useEffect(()=>{
-        dispatch(fetchExpenses(user._id));
-    },[dispatch, user]);
-
-
     const handleDeleteExpense = (id) => {
         dispatch(deleteExpense(id, user._id));
         dispatch(fetchExpenses(user._id));

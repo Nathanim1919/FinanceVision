@@ -171,9 +171,6 @@ function Income() {
     const isLoading = useSelector((state) => state.income.loading);
     const dispatch = useDispatch();
 
-    // useEffect(()=>{
-    //     dispatch(fetchIncomes(user._id));
-    // },[])
 
 
 const handleDelete = (id) => {

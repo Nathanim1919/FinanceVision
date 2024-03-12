@@ -25,9 +25,9 @@ export const Goals = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
 
-  useEffect(() => {
-    dispatch(fetchGoals(user._id));
-  }, [user]);
+  // useEffect(() => {
+  //   dispatch(fetchGoals(user._id));
+  // }, [user]);
 
   const handleGoalSelect = (goal) => {
     setSelectGoal(goal);
