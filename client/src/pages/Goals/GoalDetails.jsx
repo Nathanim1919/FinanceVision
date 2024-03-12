@@ -50,6 +50,7 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
         depositAmount,
         userId: user._id
       }));
+      dispatch(fetchUser());
 
 
       if (resultAction.payload){
@@ -64,7 +65,7 @@ export const GoalDetails = ({ goal, setShowDetails }) => {
         throw new Error('No payload returned from updateGoal action');
       }
     
-      dispatch(fetchUser());
+     
       setDepositAmount(0);
       setShowDetails(false);
     } catch (error) {
