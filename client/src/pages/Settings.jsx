@@ -21,6 +21,7 @@ export const Settings = () => {
       setLoading(true);
     try {
         const response =await axios.patch(`${BASE_URL}/api/v1/settings`, { userId:user._id,minimumAmount });
+        console.log(response)
     } catch (error) {
         new Error('Error updating minimum amount');
     }
