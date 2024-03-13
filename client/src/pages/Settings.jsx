@@ -13,16 +13,17 @@ export const Settings = () => {
   const user = useSelector(state => state.auth.user);
     const [loading, setLoading] = useState(false); 
 
-  // Optional: Fetch currency rates based on your implementation
-  const [minimumAmount, setMinimumAmount] = useState(user.minimumAmount); // State for minimum amount
-  
+
+  const [minimumAmount, setMinimumAmount] = useState(user.minimumAmount); 
 
   const updateMinimumAmount = async (event) => {
-    setLoading(true);
-    event.preventDefault();
-    // Update the user's minimum amount
-    const response =await axios.patch(`${BASE_URL}/api/v1/settings`, { userId:user._id,minimumAmount });
-    console.log(response.data);
+      event.preventDefault();
+      setLoading(true);
+    try {
+        const response =await axios.patch(`${BASE_URL}/api/v1/settings`, { userId:user._id,minimumAmount });
+    } catch (error) {
+        new Error('Error updating minimum amount');
+    }
     setLoading(false);
   }
 

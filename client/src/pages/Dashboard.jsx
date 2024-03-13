@@ -11,23 +11,13 @@ import { Transactions } from '../components/dashoardComponents/Transactions';
 import FinancialBarChart from '../components/graphs/BarChart';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import {fetchUser} from "../features/auth/authSlice";
-import {useNavigate} from "react-router-dom";
 import { formatNumber } from '../utils/Formatting';
 
-
-
-
+// Define the Dashboard component
 export const Dashboard = () => {
 
   const user = useSelector(selectUser);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [show, setShow] = useState(false);
-
-  // useEffect(() => {
-  //     dispatch(fetchUser())
-  // }, [dispatch]);
 
   return (
     <Container>
