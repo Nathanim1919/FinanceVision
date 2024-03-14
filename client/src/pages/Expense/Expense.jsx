@@ -19,6 +19,12 @@ const Container = styled.div`
     margin: 0 auto;
     height: 85vh;
     overflow-y: auto;
+
+    @media screen and (max-width: 800px){
+        height: 100vh;
+    
+    }
+    
     
 `
 
@@ -26,6 +32,9 @@ const Container = styled.div`
 const Content = styled.div`
     width: 60%;
     margin: 0 auto;
+    @media screen and (max-width: 800px){
+        width: 95%;
+    }
 `
 
 const Header = styled.div`

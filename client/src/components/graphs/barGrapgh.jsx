@@ -12,6 +12,7 @@ import {
   Tooltip,
   ResponsiveContainer
 } from "recharts";
+import styled from "styled-components";
 
 
 
@@ -71,7 +72,7 @@ export default function BardGraph() {
   };
   structureTransactions(transactions);
   return (
-    <div style={{ width: "350px", height: "210px" }}>
+    <Container>
       <ResponsiveContainer>
         <AreaChart
           data={structureTransactions(transactions)}
@@ -90,6 +91,24 @@ export default function BardGraph() {
           <Area type="monotone" dataKey="expenses" stroke="#8884d8" fill="#8884d8" />
         </AreaChart>
       </ResponsiveContainer>
-    </div>
+    </Container>
   );
 }
+
+
+const Container=styled.div`
+  width: 350px;
+  height: 210px;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 7px 23px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+
+  @media screen and (max-width: 800px){
+    /* display: none; */
+    margin-bottom: 8rem;
+  }
+`

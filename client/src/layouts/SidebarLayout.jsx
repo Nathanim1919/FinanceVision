@@ -15,6 +15,7 @@ import { Loader } from "../components/Loader";
 import { GoGoal } from "react-icons/go";
 import io from 'socket.io-client';
 import { BASE_URL, SOCKET_URL } from "../utils/Api";
+import { toggleShow } from "../features/sidebar/sidebarSlice";
 
 
 function SidebarLayout() {
@@ -23,6 +24,8 @@ function SidebarLayout() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const user = useSelector((state) => state.auth.user);
+  const show = useSelector(state => state.sidebar.show);
+
   const [notifications, setNotifications] = useState([]);
   const socket = io('https://finance-vision.vercel.app');
 
@@ -60,26 +63,27 @@ function SidebarLayout() {
 
 
   return (
-    <Container>
+    <Container show={show}>
       {isLoading && <Loader />}
       <div className="sidebar">
-        <NavLink to="/dashboard" className="sidebarItem" activeClassName="active">
+        <NavLink onClick={()=>dispatch(toggleShow())} to="/dashboard" className="sidebarItem" activeClassName="active">
           <MdDashboard />
           <p>Dashboard</p>
         </NavLink>
-        <NavLink to="/incomes" className="sidebarItem" activeClassName="active">
+        <NavLink onClick={()=>dispatch(toggleShow())} to="/incomes" className="sidebarItem" activeClassName="active">
           <FaGetPocket />
           <p>Incomes</p>
         </NavLink>
-        <NavLink to="/expenses" className="sidebarItem" activeClassName="active">
+        <NavLink onClick={()=>dispatch(toggleShow())} to="/expenses" className="sidebarItem" activeClassName="active">
           <TiExport />
           <p>Expenses</p>
         </NavLink>
-        <NavLink to="/goals" className="sidebarItem" activeClassName="active">
+        <NavLink onClick={()=>dispatch(toggleShow())} to="/goals" className="sidebarItem" activeClassName="active">
           <GoGoal />
           <p>Goals</p>
         </NavLink>
         <NavLink
+          onClick={()=>dispatch(toggleShow())}
           to="/transactions"
           className="sidebarItem"
           activeClassName="active"
@@ -88,6 +92,7 @@ function SidebarLayout() {
           <p>Transactions</p>
         </NavLink>
         <NavLink
+          onClick={()=>dispatch(toggleShow())}
           to="/notifications"
           className="sidebarItem"
           activeClassName="active"
@@ -101,7 +106,7 @@ function SidebarLayout() {
       </div>
 
       <div className="sidebarFooter">
-        <NavLink to="/settings" className="sidebarItem" activeClassName="active">
+        <NavLink onClick={()=>dispatch(toggleShow())} to="/settings" className="sidebarItem" activeClassName="active">
           <IoMdSettings />
           <p>Settings</p>
         </NavLink>
@@ -130,6 +135,22 @@ const Container = styled.div`
   flex-direction: column;
   box-shadow: 0 7px 33px rgba(0, 0, 0, 0.1);
   gap: 3rem;
+  transition: all 0.3s ease-in-out;
+
+  @media screen and (max-width: 800px){
+    position: absolute;
+    top: 0;
+    left: ${(props) => props.show?'0%':'-100%'};
+    bottom: 0;
+    width: 50%;
+    z-index: 10;
+
+    .sidebar{
+      margin-top: 6rem;
+    }
+  }
+
+  
 
   div a {
     text-decoration: none;

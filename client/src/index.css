@@ -3,6 +3,10 @@
 html{
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
+
+    @media screen and (max-width: 800px){
+      overflow-y: auto;
+    }
 }
 
 

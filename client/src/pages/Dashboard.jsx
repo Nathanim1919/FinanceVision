@@ -33,7 +33,7 @@ export const Dashboard = () => {
           </div>
 
            <div className="amount">
-               <h2>{!show ? "*******" : user && formatNumber(user.deposit)} ETB</h2>
+               <h2>{!show ? "*****" : user && formatNumber(user.deposit)} ETB</h2>
                <div onClick={() => setShow(!show)}>
                    {show ? <FaEye/> : <FaEyeSlash/>}
                </div>
@@ -77,9 +77,12 @@ const Container = styled.div`
    display: grid;
    grid-template-rows: .1fr .9fr;
    overflow: hidden;
-   /* height: 100%; */
    gap: .5rem;
    color: #fff;
+
+    @media screen and (max-width: 800px){
+      padding: 0;
+    }
 
    >*{
     flex: 1;
@@ -103,7 +106,7 @@ const Container = styled.div`
       align-items: center;
       max-height: 12vh;
       color: #000;
-      padding:0 1rem;
+      padding:0 .5rem;
       box-shadow: 0 17px 33px rgba(0, 0, 0, 0.1);
 
       >*{
@@ -117,6 +120,13 @@ const Container = styled.div`
         align-items: center;
         gap: 2rem;
 
+        @media screen and (max-width: 800px){
+          gap: 1rem;
+           h2{
+            font-size: .8rem;
+           }
+        }
+
 
         >div{
           width: 35px;
@@ -128,6 +138,11 @@ const Container = styled.div`
           font-size: 1.4rem;
           border-radius: 50%;
           cursor: pointer;
+          @media screen and (max-width: 800px){
+            font-size: 1rem;
+            width: 30px;
+          height: 30px;
+          }
         }
         }
 
@@ -136,6 +151,16 @@ const Container = styled.div`
         height: 100%;
         position: relative;
 
+        @media screen and (max-width: 800px){
+          p{
+            font-size: .7rem;
+          }
+
+          h3{
+            font-size: 1rem;
+          }
+        }
+
 
         img{
           width: 100%;
@@ -143,6 +168,10 @@ const Container = styled.div`
           position: relative;
           object-fit: cover;
           transform: scale(.8);
+
+          @media screen and (max-width: 800px){
+            transform: scale(.5);
+          }
           
         }
         div:nth-child(2){
@@ -165,9 +194,19 @@ const Container = styled.div`
      height: 100%;
      gap: .6rem;
 
+     @media screen and (max-width: 800px){
+        grid-template-columns: repeat(1, 1fr);
+        overflow-y: auto;
+        width: 100%;
+     }
+
      .bottomGrid{
       display: flex;
       gap: .5rem;
+
+      @media screen and (max-width: 800px){
+        flex-direction: column;
+      }
       
 
       >div{
@@ -184,18 +223,21 @@ const Container = styled.div`
 
      div:nth-child(1){
       grid-row:span 2;
-      /* background-color: red; */
       
      }
      div:nth-child(4){
       grid-column:span 2;
       grid-row: span 1;
-      /* background-color: red; */
+
+      @media screen and (max-width: 800px){
+        grid-column:span 1;
+      
+     }
      }
    }
 
    .data2{
-      /* background-color: red; */
+      background-color: red;
       height: 200px;
       width: 100%;
    }

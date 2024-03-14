@@ -22,11 +22,18 @@ const Container = styled.div`
     margin: 0 auto;
     height: 85vh;
     overflow-y: auto;
+
+    @media screen and (max-width: 800px){
+        height: 100vh;
+    }
     
 `
 const Content = styled.div`
     width: 60%;
     margin: 0 auto;
+    @media screen and (max-width: 800px){
+        width: 95%;
+    }
 `
 const Header = styled.div`
     display: flex;
@@ -188,9 +195,9 @@ const handleDelete = (id) => {
                     <div className='icon' onClick={()=>setCreateIncome(true)}>
                         <IoMdAdd/>
                     </div>
-                    <div>
+                    {/* <div>
                         <BsThreeDots/>
-                    </div>
+                    </div> */}
                 </div>
             </Header>
         <IncomeBox>

@@ -48,27 +48,32 @@ export const Settings = () => {
 };
 
 const Container = styled.div`
+   height: 100vh;
 
     h3{
         display: flex;
         align-items: center;
         gap: 1rem;
-    }
 
-    .dropDown{
-        cursor: pointer;
-        background-color: #bedffd;
-        padding: 0.4rem .7rem;
+        
     }
 
     .userSettings{
         display: flex;
         align-items: center;
         gap: 1rem;
+
+        @media screen and (max-width: 800px){
+            flex-direction: column;
+            
+            }
     
         form{
             display: flex;
             align-items: center;
+
+            
+           
 
             *{
                 margin: 0;

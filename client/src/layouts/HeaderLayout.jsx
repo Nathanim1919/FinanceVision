@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ProfileImage from '/images/profile.png'
 import { Link } from "react-router-dom";
+import { IoMdMenu,IoMdClose } from "react-icons/io";
+import { toggleShow } from "../features/sidebar/sidebarSlice";
+
+
 
 
 const Header = styled.div`
@@ -12,6 +16,19 @@ const Header = styled.div`
     align-items: center;
     color: #fff;
     padding: 0 2rem;
+
+    .menuBar{
+        display: none;
+    }
+
+    @media screen and (max-width: 800px){
+        .menuBar{
+            display: grid;
+            color: #fff;
+            font-size: 2rem;
+            
+        }
+    }
 
     a{
         text-decoration: none;
@@ -28,9 +45,16 @@ const Header = styled.div`
 const Profile = styled.div`
     display: flex;
     align-items: center;
+    gap: 1rem;
+ 
+ >div:nth-child(1){
+    display: flex;
+    align-items: center;
     gap: .5rem;
+ }
 
-    >div.profileImage{
+
+    div.profileImage{
         width: 35px;
         height: 35px;
         border-radius: 50%;
@@ -47,6 +71,10 @@ const Profile = styled.div`
 
 function HeaderLayout() {
   const user = useSelector(state => state.auth.user);
+  const show = useSelector(state => state.sidebar.show);
+
+  const dispatch = useDispatch();
+
   return (
     <Header>
         <div className="logo">
@@ -56,12 +84,20 @@ function HeaderLayout() {
         </div>
 
         <Profile className="profile">
-            <div className="profileImage">
-                <img src={ProfileImage} alt="" />
+            <div>
+                    <div className="profileImage">
+                        <img src={ProfileImage} alt="" />
+                    </div>
+                    <div className="profileName">
+                        <p>{user.username}</p>
+                    </div>
             </div>
-            <div className="profileName">
-                <p>{user.username}</p>
-            </div>
+            {!show?<div onClick={()=> dispatch(toggleShow())} className="menuBar">
+                <IoMdMenu/>
+            </div>:
+            <div onClick={()=> dispatch(toggleShow())} className="menuBar">
+                <IoMdClose/>
+            </div>}
         </Profile>
     </Header>
   );

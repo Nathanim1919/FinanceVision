@@ -70,6 +70,11 @@ const Content = styled.div`
     margin: 0 auto;
     height: 85vh;
     overflow-y: auto;
+
+    @media screen and (max-width: 800pxpx){
+       height: 100%;
+      
+    }
 `
 const Header = styled.div`
     display: flex;
@@ -215,6 +220,10 @@ const Container = styled.div`
   color: #1e1d1d;
   width: 60%;
   margin: auto;
+
+  @media screen and (max-width: 800px){
+       width :90vw;
+    }
   .header{
     display: flex;
     align-items: center;

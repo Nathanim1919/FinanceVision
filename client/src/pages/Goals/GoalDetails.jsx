@@ -159,6 +159,11 @@ const Container = styled.div`
   right: 0;
   top: 0;
   z-index: 2;
+
+  @media (max-width: 800px){
+    width: 100vw;
+  
+  }
 `
 
 

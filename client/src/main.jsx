@@ -10,6 +10,7 @@ import expenseReducer from './features/expenses/expenseSlice.js';
 import goalReducer from './features/goals/goalSlice.js'
 import transactionReducer from './features/transactions/transactionSlice.js'
 import notificationReducer from './features/notification/notificationSlice.js'
+import sidebarReducer from './features/sidebar/sidebarSlice.js'
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
     goal:goalReducer,
     transaction:transactionReducer,
     notification:notificationReducer,
+    sidebar:sidebarReducer
   },
 });
 

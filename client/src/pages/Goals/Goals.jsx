@@ -96,11 +96,18 @@ const Content = styled.div`
    margin: 0 auto;
     height: 85vh;
     overflow-y: auto;
+
+    @media screen and (max-width: 800px){
+      height: 100vh;
+    }
 `
 const Container = styled.div`
   color: #333;
   width: 60%;
   margin: 0 auto;
+  @media screen and (max-width: 800px){
+    width: 90%;
+  }
 
 
   .header{
@@ -192,6 +199,10 @@ const GoalContainer = styled.div`
       flex-direction: column;
       gap: .3rem;
       flex: 1;
+
+      @media screen and (max-width: 800px){
+        display: none;
+      }
 
       .target-goal{
         display: flex;

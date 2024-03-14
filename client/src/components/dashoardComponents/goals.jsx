@@ -60,6 +60,12 @@ export const Goals = () => {
 
 const Container = styled.div`
   color: #333;
+  width: 100%;
+
+  @media screen and (max-width: 800px){
+    /* padding: 1rem; */
+    height: 100%;
+  }
 
   .header{
     display: flex;

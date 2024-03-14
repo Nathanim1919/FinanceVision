@@ -132,6 +132,12 @@ const Container = styled.div`
   margin: 0 auto;
   height: 88vh;
   overflow-y: auto;
+
+  
+  @media screen and (max-width: 800pxpx){
+       height: 100%;
+      
+    }
   .header{
     display: flex;
     align-items: center;
@@ -185,6 +191,12 @@ const NotificationContainer = styled.div`
 const Content = styled.div`
   width: 60%;
   margin: auto;
+
+  
+  @media screen and (max-width: 800px){
+      width: 90%;
+      
+    }
 `
 
 const NotificationBox = styled.div`
