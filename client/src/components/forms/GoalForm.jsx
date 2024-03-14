@@ -146,6 +146,10 @@ const Container = styled.div`
           padding: 0;
           animation: animate .4s linear;
 
+          @media screen and (max-width: 500px){
+            transform: translateY(-60%) translateX(-40%);
+          }
+
           @keyframes animate {
               from{
                 opacity: 0;
