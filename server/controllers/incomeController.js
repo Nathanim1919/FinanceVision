@@ -44,7 +44,6 @@ export const createIncome = asyncHandler(async (req, res) => {
           date: incomeData.date,
           frequency: incomeData.frequency,
       });
-
       // Push IDs to user's arrays and update deposit
       user.incomes.push(newIncome._id);
       user.transactions.push(transaction._id);

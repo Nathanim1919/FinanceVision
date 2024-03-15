@@ -90,7 +90,7 @@ const ExpenseForm = ({setCreateExpense}) => {
           <input
             type="text"
             name="merchant"
-            placeholder='Who gives you the money?'
+            placeholder='Recipient?'
             value={incomeData.merchant}
             onChange={handleInputChange}
             required

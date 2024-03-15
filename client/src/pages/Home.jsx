@@ -233,6 +233,7 @@ const Navbar = styled.nav`
             li{
                 a{
                     padding:.1rem .7rem;
+                    color: #fff;
                 }
                 a.active{
                    background-color: orange;
@@ -441,7 +442,7 @@ export const Home = () => {
                        {user && <h3>Welcome, {user.username}</h3>}
                         <h1>Know where your <span>money</span> goes.</h1>
                         <p>Track income, expenses, and transactions effortlessly. Gain insights and achieve financial goals.</p>
-                        <Link to="/register">Get Started</Link>
+                        <Link to="/login">Get Started</Link>
                     </div>
                 </div>
                 <div>
