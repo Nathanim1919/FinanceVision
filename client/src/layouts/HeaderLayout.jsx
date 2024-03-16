@@ -16,6 +16,8 @@ const Header = styled.div`
     align-items: center;
     color: #fff;
     padding: 0 2rem;
+    position: relative;
+    z-index: 20;
 
     .menuBar{
         display: none;

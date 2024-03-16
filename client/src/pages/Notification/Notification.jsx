@@ -4,13 +4,14 @@ import { IoIosNotifications } from "react-icons/io";
 import { MdCalendarToday } from "react-icons/md";
 import io from 'socket.io-client';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch} from 'react-redux';
 import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
 import { IoIosWarning,IoMdNotifications } from "react-icons/io";
 import { NotificationDetail } from './NotificationDetail';
 import { SOCKET_URL, BASE_URL } from '../../utils/Api';
 import { Loader } from '../../components/Loader';
 import { calculateTimeDifference } from '../../utils/Formatting';
+import { fetchNotifications } from '../../features/notification/notificationSlice';
 
 
 function Notification() {
@@ -18,7 +19,10 @@ function Notification() {
   const notifications = useSelector((state)=> state.notification.notifications)
   const user = useSelector(state => state.auth.user);
   const loading = useSelector(state => state.notification.loading);
-  const socket = io('https://financevision-2.onrender.com');
+  const dispatch = useDispatch()
+
+  // const socket = io('https://financevision-2.onrender.com');  
+  const socket = io('http://localhost:3000');
   
 
   socket.on('connect', () => {
@@ -29,27 +33,18 @@ function Notification() {
 
   const setRead = async (id) => {
     const readNotification = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);
-    fetchNotifications();
+    dispatch(fetchNotifications(user._id))
     setNotificationId(id)
   }
   
-  const fetchNotifications = async () => {
-    try {
-      const fetchedNotifications = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${user._id}`)
-      setNotifications(fetchedNotifications.data);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
 
-  useEffect(() => {
-
-      fetchNotifications();
-      socket.on('notification-created', (data) => {
-        setNotifications((item) => [...item, data]);
-      });
-
-      return () => socket.off('notification-created');
+  useEffect(() => {  
+    dispatch(fetchNotifications(user._id))
+    socket.on('notification-created', (data) => {
+      notifications.push(data)
+      console.log(data)
+    });
+    return () => socket.off('notification-created');
   }, []);
 
   

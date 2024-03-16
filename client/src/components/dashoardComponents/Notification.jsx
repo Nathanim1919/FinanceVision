@@ -15,7 +15,8 @@ import { fetchNotifications } from '../../features/notification/notificationSlic
 
 
 const Notification = () => {
-    const socket = io('https://financevision-2.onrender.com');
+    // const socket = io('https://financevision-2.onrender.com');
+    const socket = io('http://localhost:3000');
     const user = useSelector((state) => state.auth.user);
     const notifications = useSelector((state)=> state.notification.notifications)
     const dispatch = useDispatch()

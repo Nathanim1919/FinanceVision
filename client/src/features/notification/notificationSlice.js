@@ -15,7 +15,6 @@ export const fetchNotifications = createAsyncThunk(
     async (userId) => {
         try {
             const response = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${userId}`);
-            console.log('response.data.data.notifications');
             return (response.data).reverse();       
         } catch (error) {
             throw error;

@@ -9,7 +9,8 @@ import io from 'socket.io-client'
 function Messages() {
   const messages = useSelector((state)=> state.chat.messages);
   const isLoading = useSelector((state)=> state.chat.isLoading);
-  const socket = io('https://financevision-2.onrender.com');
+  // const socket = io('https://financevision-2.onrender.com');
+  const socket = io('http://localhost:3000');
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
