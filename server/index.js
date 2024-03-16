@@ -26,7 +26,6 @@ dotenv.config();
  export const io = new Server(server, {
    cors: {
      origin: '*',
-    //  origin: 'http://localhost:5000',
      credentials: true,
    },
  });
