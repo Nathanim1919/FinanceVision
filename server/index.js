@@ -14,6 +14,7 @@ import goalRouter from './routes/goalRoute.js';
 import transactionRouter from './routes/transactionRoute.js'; 
 import notificationRouter from './routes/notificationRoute.js';
 import settingRoute from './routes/settingRoute.js';
+import chatRouter from './routes/chatRoute.js';
 
 
 dotenv.config();
@@ -24,8 +25,8 @@ dotenv.config();
 
  export const io = new Server(server, {
    cors: {
-     origin: 'https://finance-vision.vercel.app',
-    //  origin: 'http://localhost:5173',
+     origin: 'https://financevision-2.onrender.com',
+    //  origin: 'http://localhost:5000',
      credentials: true,
    },
  });
@@ -60,6 +61,7 @@ const startServer = async () => {
     app.use("/api/v1/transactions", transactionRouter);
     app.use("/api/v1/notifications", notificationRouter);
     app.use("/api/v1/settings", settingRoute);
+    app.use("/api/v1/chat", chatRouter);
 
 
     // Start Server

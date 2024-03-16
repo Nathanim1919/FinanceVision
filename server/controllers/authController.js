@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import { sendEmail } from "../utils/mailing.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import crypto from "crypto";
+import Chat from "../models/chat.js";
 /**
  * Registers a new user.
  *
@@ -31,6 +32,12 @@ export const registerUser = asyncHandler(async (req, res) => {
     password,
     isEmailVerified: false,
   });
+
+  const chatBoard = await Chat.create({
+    user:user._id
+  })
+
+  user.chatBoard = chatBoard._id;
 
   /**
    * unHashedToken: unHashed token is something we will send to the user's mail

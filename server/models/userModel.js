@@ -137,6 +137,11 @@ const userSchema = new Schema(
         ref: "Goal",
       },
     ],
+
+    chatBoard:{
+      type:Schema.Types.ObjectId,
+      ref:"Chat"
+    },
    
     transactions: [
       {

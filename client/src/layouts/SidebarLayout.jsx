@@ -16,6 +16,7 @@ import { GoGoal } from "react-icons/go";
 import io from 'socket.io-client';
 import { BASE_URL, SOCKET_URL } from "../utils/Api";
 import { toggleShow } from "../features/sidebar/sidebarSlice";
+import { FaRobot } from "react-icons/fa6";
 
 
 function SidebarLayout() {
@@ -102,6 +103,17 @@ function SidebarLayout() {
              <IoMdNotifications />
           </div>
           <p>Notifications</p>
+        </NavLink>
+        <NavLink
+          onClick={()=>dispatch(toggleShow())}
+          to="/chatAi"
+          className="sidebarItem"
+          activeClassName="active"
+        >
+          <div>
+             <FaRobot />
+          </div>
+          <p>Talk with AI</p>
         </NavLink>
       </div>
 

@@ -11,6 +11,7 @@ import goalReducer from './features/goals/goalSlice.js'
 import transactionReducer from './features/transactions/transactionSlice.js'
 import notificationReducer from './features/notification/notificationSlice.js'
 import sidebarReducer from './features/sidebar/sidebarSlice.js'
+import chatReducer from './features/chat/chatSlice.js';
 
 const store = configureStore({
   reducer: {
@@ -20,7 +21,8 @@ const store = configureStore({
     goal:goalReducer,
     transaction:transactionReducer,
     notification:notificationReducer,
-    sidebar:sidebarReducer
+    sidebar:sidebarReducer,
+    chat: chatReducer
   },
 });
 

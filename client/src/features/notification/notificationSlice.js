@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import io from 'socket.io-client';
 import { BASE_URL } from "../../utils/Api";
 
 
@@ -17,10 +16,7 @@ export const fetchNotifications = createAsyncThunk(
         try {
             const response = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${userId}`);
             console.log('response.data.data.notifications');
-            console.log(response.data);
-            return (response.data).reverse();
-
-           
+            return (response.data).reverse();       
         } catch (error) {
             throw error;
         }

@@ -4,43 +4,31 @@ import { IoIosNotifications } from "react-icons/io";
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { IoIosWarning,IoMdNotifications } from "react-icons/io";
 import { MdCalendarToday } from "react-icons/md";
 import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
 import { BASE_URL, SOCKET_URL } from '../../utils/Api';
 import { calculateTimeDifference } from '../../utils/Formatting';
+import { fetchNotifications } from '../../features/notification/notificationSlice';
 
 
 const Notification = () => {
-    const socket = io('https://finance-vision.vercel.app');
+    const socket = io('https://financevision-2.onrender.com');
     const user = useSelector((state) => state.auth.user);
-    const [notifications, setNotifications] = useState([]);
+    const notifications = useSelector((state)=> state.notification.notifications)
+    const dispatch = useDispatch()
   
-  
-    const fetchNotifications = useCallback(async (userId, setNotifications) => {
-      try {
-        const response = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${userId}`);
-        setNotifications(response.data.reverse());
-      } catch (error) {
-        console.error('Error fetching notifications:', error);
-      }
-    }, []);
-  
-    useEffect(() => {
-      const fetchAndSetNotifications = async () => {
-        await fetchNotifications(user._id, setNotifications);
-      };
-  
-      fetchAndSetNotifications();
-  
+
+    useEffect(() => {  
+      dispatch(fetchNotifications(user._id))
       socket.on('notification-created', (data) => {
-        setNotifications((prevNotifications) => [data, ...prevNotifications]);
+        notifications.push(data)
       });
-  
       return () => socket.off('notification-created');
     }, []);
+    
   
     return (
       <Container>

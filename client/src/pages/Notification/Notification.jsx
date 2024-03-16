@@ -1,9 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
-import { GrLinkNext } from "react-icons/gr";
-import { Link } from 'react-router-dom';
-import { IoMdAdd } from "react-icons/io";
 import { MdCalendarToday } from "react-icons/md";
 import io from 'socket.io-client';
 import axios from 'axios';
@@ -17,11 +14,12 @@ import { calculateTimeDifference } from '../../utils/Formatting';
 
 
 function Notification() {
-  const [notifications, setNotifications] = useState([]);
   const [notificationId, setNotificationId] = useState(null);
+  const notifications = useSelector((state)=> state.notification.notifications)
   const user = useSelector(state => state.auth.user);
   const loading = useSelector(state => state.notification.loading);
-  const socket = io('https://finance-vision.vercel.app');
+  const socket = io('https://financevision-2.onrender.com');
+  
 
   socket.on('connect', () => {
     console.log('Connected to the server');
@@ -69,7 +67,7 @@ function Notification() {
             <p>You currently have no notifications.</p>
             <p>Check back later for updates!</p>
         </div>
-        :(notifications?.slice(0,).reverse()).map(notification => (
+        :(notifications?.slice(0,)).map(notification => (
           <>
           {notification._id === notificationId && notificationId !== null && <NotificationDetail notification={notification} setNotificationId={setNotificationId} notificationId={notificationId}/>}
           <NotificationBox key={notification.createdAt} onClick={()=>setRead(notification._id)}>

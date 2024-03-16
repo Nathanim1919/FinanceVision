@@ -19,6 +19,7 @@ import BlogDetailPage from './pages/BlogDetailPage.jsx';
 import Notification from './pages/Notification/Notification.jsx';
 import Income from './pages/Income/Income.jsx';
 import Expense from './pages/Expense/Expense.jsx';
+import ChatBoard from './pages/AiChat/ChatBoard.jsx';
 
 function App() {
   // const navigate = useNavigate()
@@ -34,6 +35,7 @@ function App() {
             <Route element={<ProtectedRoutes />}>
               <Route element={<Layout />}>
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/chatAi" element={<ChatBoard />} />
                   <Route path="/goals" element={<Goals/>} />
                   <Route path="/incomes" element={<Income/>} />
                   <Route path="/expenses" element={<Expense/>} />
