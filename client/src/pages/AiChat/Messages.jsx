@@ -29,7 +29,7 @@ function Messages() {
   return (
     <Container>
       {
-        messages.map(msg=> (
+        messages?.map(msg=> (
           <div className={msg.sender==='ai'?"box aiBox":"box userBox"}>
             {msg.sender === 'ai'?
             <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
