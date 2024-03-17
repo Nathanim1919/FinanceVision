@@ -16,14 +16,14 @@ const Header = styled.div`
     align-items: center;
     color: #fff;
     padding: 0 2rem;
-    position: relative;
-    z-index: 20;
-
+    
     .menuBar{
         display: none;
     }
-
+    
     @media screen and (max-width: 800px){
+        position: relative;
+        z-index: 20;
         .menuBar{
             display: grid;
             color: #fff;

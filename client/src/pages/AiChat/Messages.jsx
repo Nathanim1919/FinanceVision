@@ -12,30 +12,32 @@ function Messages() {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
   }
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(scrollToBottom, [messages]);   
 
   
   return (
-    <Container>
-      {
-        messages && messages.map(msg=> (
-          <div className={msg.sender==='ai'?"box aiBox":"box userBox"}>
-                {msg.sender === 'ai'?
-                <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
-                  {msg.content !== "" && <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
-                      <p>{msg.content}</p>
-                  </div>}
-          </div>
+    <Container   ref={messagesEndRef}>
+      <MessagesContainer>
+          {
+            messages && messages.map(msg=> (
+              <div className={msg.sender==='ai'?"box aiBox":"box userBox"}>
+                    {msg.sender === 'ai'?
+                    <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
+                      {msg.content !== "" && <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
+                          <p>{msg.content}</p>
+                      </div>}
+<div ref={messagesEndRef} />
+              </div>
 
-    ))
-    }
-    {isLoading && 
-    <p className='loader'>I'am Thinking ...</p>
-    }
-<div className='ref' ref={messagesEndRef} />
+        ))
+        }
+        {isLoading && 
+        <p className='loader'>I'am Thinking ...</p>
+        }
+     </MessagesContainer>
     </Container>
   )
 }
@@ -43,13 +45,19 @@ function Messages() {
 export default Messages;
 
 const Container = styled.div`
+  
+`
+
+const MessagesContainer = styled.div`
+height: 90vh;
+overflow: hidden;
 display: flex;
 flex-direction: column;
 gap: 1rem;
-padding-top: 0.3rem;
+padding:1rem 0;
 overflow-y: auto;
-height: 700px;
 align-items: flex-start;
+
 
 
 .loader{

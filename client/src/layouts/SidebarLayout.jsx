@@ -144,6 +144,9 @@ const Container = styled.div`
   background-color: #ffffff;
   display: flex;
   height: 100vh;
+  position: relative;
+  top:0;
+  bottom:0;
   flex-direction: column;
   box-shadow: 0 7px 33px rgba(0, 0, 0, 0.1);
   gap: 3rem;

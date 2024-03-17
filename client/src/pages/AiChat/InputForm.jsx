@@ -35,6 +35,15 @@ export default function InputForm() {
 const Container = styled.form`
     display: flex;
     align-items: center;
+    
+    
+    @media screen and (max-width:800px){
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      
+    }
     input{
         padding: 0.5rem 1rem;
         border: none;

@@ -17,9 +17,11 @@ function ChatBoard() {
   
   return (
     <Container>
-      <Header/>
-      <Messages/>
-      <InputForm/>
+     
+        {/* <Header/> */}
+        <Messages/>
+        <InputForm/>
+     
     </Container>
   )
 }
@@ -28,27 +30,29 @@ export default ChatBoard;
 
 
 const Container = styled.div`
-    border-top-right-radius:10px;
-    border-top-left-radius:10px;
-    width: 60%;
-    margin: auto;
-    height: 87vh;
-    overflow: hidden;
-    margin-top: .4rem;
-    display: flex;
-    flex-direction: column;
+  border-top-right-radius:10px;
+  border-top-left-radius:10px;
+  width: 55vw;
+  margin:.3rem auto;
+  height: 97vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 
 
-    @media screen and (max-width:800px){
-      width: 90%;
-      height: 95vh;
-    }
+  @media screen and (max-width:800px){
+    width: 90vw;
+    height: 100vh;
+    overflow-x: hidden;
+    padding: 1rem;
+  }
 
-    >*{
-        width: 100%;
-    }
+  >*{
+      width: 100%;
+  }
 
-    >*:nth-child(2){
-        flex: 1;
-    }
+  >*:nth-child(2){
+      flex: 1;
+  }
 `
