@@ -1,16 +1,14 @@
 import React, { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector , useDispatch} from 'react-redux'
 import { FaRobot } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import styled from 'styled-components';
-import io from 'socket.io-client'
+
 
 
 function Messages() {
   const messages = useSelector((state)=> state.chat.messages);
   const isLoading = useSelector((state)=> state.chat.isLoading);
-  const socket = io('https://financevision-2.onrender.com');
-  // const socket = io('http://localhost:3000');
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -19,13 +17,6 @@ function Messages() {
 
   useEffect(scrollToBottom, [messages]);
 
-
-  useEffect(()=>{
-    socket.on('message-sent', (data) => {
-      messages.push(data)
-    });
-    return () => socket.off('message-sent');
-  },[])
   
   return (
     <Container>
@@ -34,10 +25,9 @@ function Messages() {
           <div className={msg.sender==='ai'?"box aiBox":"box userBox"}>
                 {msg.sender === 'ai'?
                 <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
-                  <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
+                  {msg.content !== "" && <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
                       <p>{msg.content}</p>
-                  </div>
-                <div ref={messagesEndRef} />
+                  </div>}
           </div>
 
     ))
@@ -45,6 +35,7 @@ function Messages() {
     {isLoading && 
     <p className='loader'>I'am Thinking ...</p>
     }
+<div className='ref' ref={messagesEndRef} />
     </Container>
   )
 }
@@ -59,6 +50,7 @@ padding-top: 0.3rem;
 overflow-y: auto;
 height: 700px;
 align-items: flex-start;
+
 
 .loader{
   background-color: #eee;

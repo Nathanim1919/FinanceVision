@@ -3,20 +3,15 @@ import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
-import io from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import { IoIosWarning,IoMdNotifications } from "react-icons/io";
 import { MdCalendarToday } from "react-icons/md";
 import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
-import { BASE_URL, SOCKET_URL } from '../../utils/Api';
 import { calculateTimeDifference } from '../../utils/Formatting';
 import { fetchNotifications } from '../../features/notification/notificationSlice';
 
 
 const Notification = () => {
-    const socket = io('https://financevision-2.onrender.com');
-    // const socket = io('http://localhost:3000');
     const user = useSelector((state) => state.auth.user);
     const notifications = useSelector((state)=> state.notification.notifications)
     const dispatch = useDispatch()
@@ -24,10 +19,6 @@ const Notification = () => {
 
     useEffect(() => {  
       dispatch(fetchNotifications(user._id))
-      socket.on('notification-created', (data) => {
-        notifications.push(data)
-      });
-      return () => socket.off('notification-created');
     }, []);
     
   

@@ -20,11 +20,12 @@ import Notification from './pages/Notification/Notification.jsx';
 import Income from './pages/Income/Income.jsx';
 import Expense from './pages/Expense/Expense.jsx';
 import ChatBoard from './pages/AiChat/ChatBoard.jsx';
+import { SocketProvider } from './utils/socketConnection.jsx';
 
 function App() {
   // const navigate = useNavigate()
   return (
-        <BrowserRouter>
+    <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home/>} />
           
@@ -35,11 +36,19 @@ function App() {
             <Route element={<ProtectedRoutes />}>
               <Route element={<Layout />}>
                   <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/chatAi" element={<ChatBoard />} />
+                  <Route path="/chatAi" element={
+                    <SocketProvider>
+                      <ChatBoard />
+                    </SocketProvider>
+                  } />
+                  <Route path="/notifications" element={
+                    <SocketProvider>
+                      <Notification />
+                    </SocketProvider>
+                  } />
                   <Route path="/goals" element={<Goals/>} />
                   <Route path="/incomes" element={<Income/>} />
                   <Route path="/expenses" element={<Expense/>} />
-                  <Route path="/notifications" element={<Notification/>} />
                   <Route path="/transactions" element={<Transactions />} />
                   <Route path="/transactions/:transactionId" element={<TransactionDetails />} />
                   <Route path="/goals" element={<Goals />} />

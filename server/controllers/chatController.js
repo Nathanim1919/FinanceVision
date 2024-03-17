@@ -1,7 +1,7 @@
 import Chat from "../models/chat.js";
 import Message from "../models/message.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { io } from "../index.js";
+
 
 
 
@@ -67,9 +67,6 @@ export const aiMessage = async (req, res) => {
             sender:"ai",
             content
         });
-
-        // Emit notification to the connected users
-        io.emit("message-sent", newMessage);
 
         const savedMessage = await newMessage.save();
 

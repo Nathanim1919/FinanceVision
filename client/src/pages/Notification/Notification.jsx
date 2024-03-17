@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
 import { MdCalendarToday } from "react-icons/md";
@@ -8,11 +8,12 @@ import { useSelector , useDispatch} from 'react-redux';
 import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
 import { IoIosWarning,IoMdNotifications } from "react-icons/io";
 import { NotificationDetail } from './NotificationDetail';
-import { SOCKET_URL, BASE_URL } from '../../utils/Api';
+import {BASE_URL } from '../../utils/Api';
 import { Loader } from '../../components/Loader';
 import { calculateTimeDifference } from '../../utils/Formatting';
 import { fetchNotifications, setRead } from '../../features/notification/notificationSlice';
-
+import { SocketContext } from '../../utils/socketConnection';
+import { setNotification } from '../../features/notification/notificationSlice';
 
 function Notification() {
   const [notificationId, setNotificationId] = useState(null);
@@ -21,14 +22,11 @@ function Notification() {
   const loading = useSelector(state => state.notification.loading);
   const dispatch = useDispatch()
 
-  const socket = io('https://financevision-2.onrender.com');  
-  // const socket = io('http://localhost:5000');
-  
+  const socket = useContext(SocketContext);  
 
 
   const setReadNoti = async (id) => {
     const readNotification = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);
-    // dispatch(setRead(id))
     dispatch(fetchNotifications(user._id))
     setNotificationId(id)
   }
@@ -36,8 +34,9 @@ function Notification() {
 
   useEffect(() => {  
     socket.on('notification-created', (data) => {
+      dispatch(setNotification(data));
       console.log(data)
-      notifications.push(data)
+      console.log(notifications)
     });
     return () => socket.off('notification-created');
   }, []);

@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { useSelector,useDispatch } from 'react-redux';
 import { aiMessage, createMessage } from '../../features/chat/chatSlice';
-
+import { SocketContext } from '../../utils/socketConnection';
 
 export default function InputForm() {
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const user = useSelector((state)=> state.auth.user);
+  const socket = useContext(SocketContext);
 
   const sendMessage = (e) => {
     e.preventDefault();
     dispatch(createMessage({message, chatBoard:user.chatBoard}))
-    dispatch(aiMessage({message, chatBoard:user.chatBoard}))
+      .then((userMessage) => {
+        socket.emit('new-message', userMessage);
+      });
     setMessage("")
+    dispatch(aiMessage({message, chatBoard:user.chatBoard}))
+    .then((aiMessage) => {
+        socket.emit('new-message', aiMessage);
+      });
   }
 
   return (

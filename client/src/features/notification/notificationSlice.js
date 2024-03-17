@@ -41,8 +41,8 @@ const notificationSlice = createSlice({
     name: "notification",
     initialState,
     reducers: {
-        setNotificationId: (state, action) => {
-            state.notifications = action.payload;
+        setNotification: (state, action) => {
+            state.notifications = [...state.notifications, action.payload];
         },
         setError: (state, action) => {
             state.error = action.payload;
@@ -79,5 +79,5 @@ const notificationSlice = createSlice({
 });
 
 
-
+export const { setNotification } = notificationSlice.actions;
 export default notificationSlice.reducer;

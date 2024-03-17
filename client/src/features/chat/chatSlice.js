@@ -18,7 +18,7 @@ const chatSlice = createSlice({
     initialState,
     reducers: {
         setMessages: (state, action) => {
-            state.messages = action.payload;
+            state.messages = [...state.messages, action.payload];
         },
         setConversations: (state, action) => {
             state.conversations = action.payload;
@@ -30,13 +30,13 @@ const chatSlice = createSlice({
 
     extraReducers:(builder)=> {
         builder.addCase(createMessage.fulfilled, (state, action) => {
-            state.messages.push(action.payload);
+             state.messages = [...state.messages, action.payload];
         });
         builder.addCase(aiMessage.pending, (state, action) => {
             state.isLoading = true;
         });
         builder.addCase(aiMessage.fulfilled, (state, action) => {
-            state.messages.push(action.payload);
+             state.messages = [...state.messages, action.payload];
             state.isLoading = false;
         });
         builder.addCase(fetchChat.fulfilled, (state, action) => {
@@ -75,20 +75,13 @@ export const createMessage = createAsyncThunk(
 export const aiMessage = createAsyncThunk(
     'chat/aiMessage',
     async ({message, chatBoard}) => {
-        const generationConfig = {
-            stopSequences: ["red"],
-            maxOutputTokens: 100,
-            temperature: 0.9,
-            topP: 0.1,
-            topK: 16,
-          };
         try {
             const model = genAI.getGenerativeModel({ model: "gemini-pro"});
            // Use streaming with text-only input
             const result = await model.generateContentStream(message);
             const response = await result.response;
             const text = response.text();
-            console.log(text);
+            
             // Save the AI message to the database
             const saveResponse = await axios.post(`${BASE_URL}/api/v1/chat/saveAiMessage`, { content: text, chatId:chatBoard});
             return saveResponse.data;
@@ -99,4 +92,5 @@ export const aiMessage = createAsyncThunk(
 )
 
 
+export const {setMessages} = chatSlice.actions;
 export default chatSlice.reducer;
