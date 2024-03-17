@@ -25,8 +25,8 @@ dotenv.config();
 
  export const io = new Server(server, {
    cors: {
-    // origin: 'https://finance-vision.vercel.app',
-    origin: 'http://localhost:5173',
+    origin: 'https://finance-vision.vercel.app',
+    // origin: 'http://localhost:5173',
      credentials: true,
    },
  });
@@ -51,8 +51,8 @@ const startServer = async () => {
     app.use(Express.json());
     // configure cors 
     app.use(cors({
-      // origin: 'https://finance-vision.vercel.app',
-      origin: 'http://localhost:5173',
+      origin: 'https://finance-vision.vercel.app',
+      // origin: 'http://localhost:5173',
       credentials: true,
     }));
     
