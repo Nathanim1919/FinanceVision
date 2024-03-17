@@ -9,8 +9,8 @@ import io from 'socket.io-client'
 function Messages() {
   const messages = useSelector((state)=> state.chat.messages);
   const isLoading = useSelector((state)=> state.chat.isLoading);
-  // const socket = io('https://financevision-2.onrender.com');
-  const socket = io('http://localhost:3000');
+  const socket = io('https://financevision-2.onrender.com');
+  // const socket = io('http://localhost:3000');
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -22,7 +22,7 @@ function Messages() {
 
   useEffect(()=>{
     socket.on('message-sent', (data) => {
-      notifications.push(data)
+      messages.push(data)
     });
     return () => socket.off('message-sent');
   },[])
@@ -32,19 +32,18 @@ function Messages() {
       {
         messages && messages.map(msg=> (
           <div className={msg.sender==='ai'?"box aiBox":"box userBox"}>
-            {msg.sender === 'ai'?
-            <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
-            <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
-                <p>{msg.content}</p>
-            </div>
-            <div ref={messagesEndRef} />
-            
+                {msg.sender === 'ai'?
+                <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
+                  <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
+                      <p>{msg.content}</p>
+                  </div>
+                <div ref={messagesEndRef} />
           </div>
 
-))
-}
+    ))
+    }
     {isLoading && 
-    <p className='loader'>Ai is Thinking ...</p>
+    <p className='loader'>I'am Thinking ...</p>
     }
     </Container>
   )
@@ -91,7 +90,7 @@ align-items: flex-start;
     display: grid;
     place-items: center;
     font-size: 1.2rem;
-    left: 0;
+    left: .4rem;
     top: -.3rem;
   }
   }
@@ -99,7 +98,7 @@ align-items: flex-start;
   .messageBox{
     padding: 0 2rem;
     font-size: .7rem;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3); */
     border-radius: 10px;
   }
 

@@ -64,7 +64,7 @@ const notificationSlice = createSlice({
         })
 
         .addCase(setRead.pending, (state) => {
-            state.loading = true;
+            state.loading = false;
         })
         .addCase(setRead.fulfilled, (state, action) => {
             state.notifications = action.payload;

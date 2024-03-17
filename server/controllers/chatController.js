@@ -8,7 +8,6 @@ import { io } from "../index.js";
 export const getMessages = async (req, res) => {
     try {
         const { chatId } = req.query;
-        console.log(chatId)
 
         const chat = await Chat.findById(chatId).populate('messages');
 

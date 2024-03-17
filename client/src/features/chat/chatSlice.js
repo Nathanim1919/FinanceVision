@@ -75,9 +75,17 @@ export const createMessage = createAsyncThunk(
 export const aiMessage = createAsyncThunk(
     'chat/aiMessage',
     async ({message, chatBoard}) => {
+        const generationConfig = {
+            stopSequences: ["red"],
+            maxOutputTokens: 100,
+            temperature: 0.9,
+            topP: 0.1,
+            topK: 16,
+          };
         try {
             const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-            const result = await model.generateContent(message);
+           // Use streaming with text-only input
+            const result = await model.generateContentStream(message);
             const response = await result.response;
             const text = response.text();
             console.log(text);

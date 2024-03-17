@@ -11,7 +11,7 @@ import { NotificationDetail } from './NotificationDetail';
 import { SOCKET_URL, BASE_URL } from '../../utils/Api';
 import { Loader } from '../../components/Loader';
 import { calculateTimeDifference } from '../../utils/Formatting';
-import { fetchNotifications } from '../../features/notification/notificationSlice';
+import { fetchNotifications, setRead } from '../../features/notification/notificationSlice';
 
 
 function Notification() {
@@ -21,28 +21,23 @@ function Notification() {
   const loading = useSelector(state => state.notification.loading);
   const dispatch = useDispatch()
 
-  // const socket = io('https://financevision-2.onrender.com');  
-  const socket = io('http://localhost:3000');
+  const socket = io('https://financevision-2.onrender.com');  
+  // const socket = io('http://localhost:5000');
   
 
-  socket.on('connect', () => {
-    console.log('Connected to the server');
-  });
 
-
-
-  const setRead = async (id) => {
+  const setReadNoti = async (id) => {
     const readNotification = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);
+    // dispatch(setRead(id))
     dispatch(fetchNotifications(user._id))
     setNotificationId(id)
   }
   
 
   useEffect(() => {  
-    dispatch(fetchNotifications(user._id))
     socket.on('notification-created', (data) => {
-      notifications.push(data)
       console.log(data)
+      notifications.push(data)
     });
     return () => socket.off('notification-created');
   }, []);
@@ -57,15 +52,15 @@ function Notification() {
           <h2>{user.username}'s Notifications</h2>
       </Header>
       <NotificationContainer>
-        {notifications.length === 0?
+        {notifications?.length === 0?
         <div className='emptyNotification'>
             <p>You currently have no notifications.</p>
             <p>Check back later for updates!</p>
         </div>
-        :(notifications?.slice(0,)).map(notification => (
+        :notifications?.map(notification => (
           <>
           {notification._id === notificationId && notificationId !== null && <NotificationDetail notification={notification} setNotificationId={setNotificationId} notificationId={notificationId}/>}
-          <NotificationBox key={notification.createdAt} onClick={()=>setRead(notification._id)}>
+          <NotificationBox key={notification.createdAt} onClick={()=>setReadNoti(notification._id)}>
               <div className='notification'>
                     <div>
                         <IoIosNotifications/>

@@ -26,7 +26,6 @@ export default function InputForm() {
 
 
 const Container = styled.form`
-    background-color: red;
     display: flex;
     align-items: center;
     input{
