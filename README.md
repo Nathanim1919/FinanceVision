@@ -29,3 +29,9 @@ general information by using Gemini's API).
 
 ## Licensing
 [Nathanim Tadele](https://www.linkedin.com/in/nathanim-tadele-762099247/)
+
+
+
+## Dashboard
+![Alt text](image_url)
+
