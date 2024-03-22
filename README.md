@@ -6,3 +6,10 @@ are also foud in side this platform last but not least user can communicate with
 about anythin they want(not trained with users data but it will soon, at the moment it gives
 general information by using Gemini's API).
 
+## Features
+- Users can create incomes add their incomes with corresponding frequency (onetime, weekly, monthly, annually)
+- Users can create and add their expenses with corresponding frequency (onetime, weekly, monthly, annually)
+- every transaction will be saved and users can see it.
+- User will get different type of notifications(bill deadline approching, goal deadline approching, goal achieved)
+- Users can set goals and also can visualize thier progress
+- User can chat with AI
