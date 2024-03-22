@@ -14,6 +14,18 @@ general information by using Gemini's API).
 - Users can set goals and also can visualize thier progress
 - User can chat with AI
 
+[Visit deployed App](https://finance-vsion-landing-page.vercel.app/)
+
 ## Author
 ### Nathanim Tadele
 [Visit Nathanim's LinkedIN Account](https://www.linkedin.com/in/nathanim-tadele-762099247/)
+
+
+## Installation 
+- clone the repository
+- run `npm install` in both front-end and backend directory to install dependencies
+- run `npm run dev` to run the front end locally
+- run `npm start` to start the server locally
+
+## Licensing
+[Nathanim Tadele](https://www.linkedin.com/in/nathanim-tadele-762099247/)
