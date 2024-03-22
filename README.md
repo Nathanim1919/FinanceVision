@@ -33,5 +33,5 @@ general information by using Gemini's API).
 
 
 ## Dashboard
-![Alt text](image_url)
+![image_url](https://github.com/Nathanim1919/FinanceVision/blob/main/Web%20capture_24-2-2024_155136_localhost.jpeg)https://github.com/Nathanim1919/FinanceVision/blob/main/Web%20capture_24-2-2024_155136_localhost.jpeg)
 
