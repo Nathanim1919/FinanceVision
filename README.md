@@ -15,4 +15,4 @@ general information by using Gemini's API).
 - User can chat with AI
 
 ## Author
-[Nathanim Tadele]["https://www.linkedin.com/in/nathanim-tadele-762099247/"]
+[Nathanim Tadele]("https://www.linkedin.com/in/nathanim-tadele-762099247/")
