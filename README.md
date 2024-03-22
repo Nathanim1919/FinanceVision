@@ -13,3 +13,6 @@ general information by using Gemini's API).
 - User will get different type of notifications(bill deadline approching, goal deadline approching, goal achieved)
 - Users can set goals and also can visualize thier progress
 - User can chat with AI
+
+## Author
+(Nathanim Tadele)["https://www.linkedin.com/in/nathanim-tadele-762099247/"]
