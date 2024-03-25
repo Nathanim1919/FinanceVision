@@ -15,7 +15,7 @@ function Messages() {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
   }
 
-  useEffect(scrollToBottom, [messages]);   
+  useEffect((messages.length>1 && scrollToBottom), [messages]);   
 
   
   return (
