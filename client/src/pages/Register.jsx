@@ -129,7 +129,7 @@ export const Register = () => {
             <Input type='submit' value='Register'/>
             {/*<Input type='submit' value='Singup with Google'/>*/}
             <p className='navigate'>Already have an account? <Link to="/Login">Login</Link></p>
-            <div className="validation">
+            {/* <div className="validation">
                 <div className='requirement'>
                     <p>Password Must contain</p>
                     <ul>
@@ -150,7 +150,7 @@ export const Register = () => {
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> */}
         </form>
         {isRegistered && <Success setIsRegistered={setIsRegistered}/>}
     </Container>
