@@ -34,7 +34,7 @@ const Container = styled.div`
   border-top-left-radius:10px;
   width: 55vw;
   margin:.3rem auto;
-  height: 97vh;
+  height: 95vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
