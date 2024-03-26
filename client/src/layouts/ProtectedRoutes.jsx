@@ -14,6 +14,9 @@ export function ProtectedRoutes({ children }) {
   const [isLoading, setIsLoading] = useState(true); 
   const user = useSelector(selectUser);
 
+  // Configure Axios to send cookies with requests
+axios.defaults.withCredentials = true;
+
 
   /* 
     Check if the user is authenticated, if not redirect to the login page, else render the protected routes
@@ -30,9 +33,7 @@ export function ProtectedRoutes({ children }) {
       }
       
       try {
-        const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, {
-          withCredentials: true, // Send cookies when making a request. Required for accessing protected routes
-        });
+        const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`);
        
         if (response.data.data !== null) {
           dispatch(setUser(response.data.data));
