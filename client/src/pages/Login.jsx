@@ -31,7 +31,7 @@ export const Login = () => {
     try {
       const response = await axios.post(`${BASE_URL}/api/v1/auth/login`,{userData});
       const { accessToken } = response.data.data;
-      console.log(accessToken)
+      console.log(response)
   
       if (accessToken  && response.data.data !== null) {
         // Use HttpOnly cookies for storing the access token
