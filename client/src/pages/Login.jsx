@@ -44,7 +44,7 @@ export const Login = () => {
     } catch (error) {
       console.error(error);
       // Display a user-friendly error message
-      setError('An error occurred. Please try again.');
+      // setError('An error occurred. Please try again.');
     }
     setIsLoading(false);
   }
