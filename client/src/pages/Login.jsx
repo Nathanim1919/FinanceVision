@@ -35,7 +35,7 @@ export const Login = () => {
   
       if (accessToken  && response.data.data !== null) {
         // Use HttpOnly cookies for storing the access token
-        document.cookie = `accessToken=${accessToken}; SameSite=Strict; Secure; HttpOnly; path=/; domain=.finance-vision.vercel.app;`;
+        document.cookie = `accessToken=${accessToken}; SameSite=Strict; Secure;  path=/; domain=.finance-vision.vercel.app;`;
         navigate('/dashboard', { replace: true });
       } else {
         console.error('No token found');
