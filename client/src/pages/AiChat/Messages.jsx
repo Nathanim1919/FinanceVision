@@ -12,12 +12,13 @@ function Messages() {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }
      
-  useEffect(() => {
-    messages?.length > 1 && scrollToBottom
-  }, [messages]);
+  useEffect(
+    scrollToBottom , [messages]);
 
   
   return (

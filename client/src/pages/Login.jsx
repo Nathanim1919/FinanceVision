@@ -31,17 +31,20 @@ export const Login = () => {
     try {
       const response = await axios.post(`${BASE_URL}/api/v1/auth/login`,{userData});
       const { accessToken } = response.data.data;
-
+  
       if (accessToken  && response.data.data !== null) {
-        localStorage.setItem('accessToken', accessToken);
-          // document.cookie = `accessToken=${accessToken}; SameSite=None; Secure; path=/; domain=.finance-vision.vercel.app;`;
-          navigate('/dashboard', { replace: true });
-
+        // Use HttpOnly cookies for storing the access token
+        document.cookie = `accessToken=${accessToken}; SameSite=Strict; Secure; HttpOnly; path=/; domain=.finance-vision.vercel.app;`;
+        navigate('/dashboard', { replace: true });
       } else {
         console.error('No token found');
+        // Display a user-friendly error message
+        setError('Authentication failed. Please try again.');
       }
     } catch (error) {
       console.error(error);
+      // Display a user-friendly error message
+      setError('An error occurred. Please try again.');
     }
     setIsLoading(false);
   }

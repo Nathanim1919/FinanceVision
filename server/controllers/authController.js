@@ -160,12 +160,17 @@ const generateAccessAndRefreshTokens = async (userId) => {
 export const loginUser = asyncHandler(async (req, res) => {
   const { userData } = req.body;
 
+  if (!userData) {
+    return res.status(400).json({
+      message: "User data is required",
+    });
+  }
+
   const { email, password } = userData;
 
-
-  if (!userData.email) {
-    res.status(400).json({
-      message: "Username or Email is required",
+  if (!email) {
+    return res.status(400).json({
+      message: "Email is required",
     });
   }
 
@@ -174,17 +179,17 @@ export const loginUser = asyncHandler(async (req, res) => {
   });
 
   if (!user) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "User does not exist",
     });
   }
+
   const isPasswordValid = await user.comparePassword(password);
 
   if (!isPasswordValid) {
-    res.status(401).json({
+    return res.status(401).json({
       message: "Invalid user credentials",
     });
-    return;
   }
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
@@ -192,19 +197,17 @@ export const loginUser = asyncHandler(async (req, res) => {
   );
 
   // get the user document ignoring the password and refreshToken field
-  const looggedInUser = await User.findById(user._id)
+  const loggedInUser = await User.findById(user._id).select('-password -refreshToken');
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken)
-    .cookie("refreshToken", refreshToken)
+    .cookie("accessToken", accessToken, { httpOnly: true, secure: true, sameSite: 'none', domain: '.finance-vision.vercel.app'})
+    .cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, sameSite: 'none', domain: '.finance-vision.vercel.app' })
     .json(
       new ApiResponse(
         200,
         {
-          user: looggedInUser,
-          accessToken,
-          refreshToken,
+          user: loggedInUser,
         },
         "User logged in successfully"
       )

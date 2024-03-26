@@ -14,22 +14,24 @@ export function ProtectedRoutes({ children }) {
   const [isLoading, setIsLoading] = useState(true); 
   const user = useSelector(selectUser);
 
+
+  /* 
+    Check if the user is authenticated, if not redirect to the login page, else render the protected routes
+    This is done by making a request to the server to get the user data. 
+    If the user is authenticated, the server will return the user data, else it will return null or an error. 
+  */
   useEffect(() => {
     const checkAuthentication = async () => {
       setIsLoading(true); 
-
+    
       if (user) {
         setIsLoading(false); 
         return;
       }
       
       try {
-        const token = localStorage.getItem('accessToken');
-
         const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true, // Send cookies when making a request. Required for accessing protected routes
         });
        
         if (response.data.data !== null) {
@@ -45,9 +47,16 @@ export function ProtectedRoutes({ children }) {
         setIsLoading(false); 
       }
     };
-
+    
     checkAuthentication();
   }, [dispatch, navigate]);
+
+
+  /* 
+    Display a loader while the user authentication is being checked
+    If the user is authenticated, render the protected routes
+    If the user is not authenticated, redirect to the login page
+  */
 
   return (
     <Container>
@@ -64,6 +73,7 @@ export function ProtectedRoutes({ children }) {
 
 
 
+// Styles
 const Container = styled.div`
   width: 100%;
   height: 100vh;
