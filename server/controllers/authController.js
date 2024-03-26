@@ -201,8 +201,8 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, { httpOnly: true, secure: true, sameSite: 'none', domain: '.finance-vision.vercel.app'})
-    .cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, sameSite: 'none', domain: '.finance-vision.vercel.app' })
+    .cookie("accessToken", accessToken, { httpOnly: true, secure: true, sameSite: 'lax', domain: '.finance-vision.vercel.app'})
+    .cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, sameSite: 'lax', domain: '.finance-vision.vercel.app' })
     .json(
       new ApiResponse(
         200,
