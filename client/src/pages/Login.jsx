@@ -31,6 +31,7 @@ export const Login = () => {
     try {
       const response = await axios.post(`${BASE_URL}/api/v1/auth/login`,{userData});
       const { accessToken } = response.data.data;
+      console.log(accessToken)
   
       if (accessToken  && response.data.data !== null) {
         // Use HttpOnly cookies for storing the access token
@@ -39,7 +40,7 @@ export const Login = () => {
       } else {
         console.error('No token found');
         // Display a user-friendly error message
-        setError('Authentication failed. Please try again.');
+        // setError('Authentication failed. Please try again.'); 
       }
     } catch (error) {
       console.error(error);
