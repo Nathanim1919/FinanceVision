@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import { useSelector , useDispatch} from 'react-redux'
+import { useEffect, useRef } from 'react'
+import { useSelector} from 'react-redux'
 import { FaRobot } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import styled from 'styled-components';

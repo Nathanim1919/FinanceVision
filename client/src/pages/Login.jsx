@@ -30,22 +30,15 @@ export const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL}/api/v1/auth/login`,{userData});
-      const { accessToken } = response.data.data;
       console.log(response)
   
-      if (accessToken  && response.data.data !== null) {
-        // Use HttpOnly cookies for storing the access token
-        document.cookie = `accessToken=${accessToken}; SameSite=Strict; Secure;  path=/; domain=.finance-vision.vercel.app;`;
+      if (response.status === 200 && response.data.data !== null) {
         navigate('/dashboard', { replace: true });
       } else {
         console.error('No token found');
-        // Display a user-friendly error message
-        // setError('Authentication failed. Please try again.'); 
       }
     } catch (error) {
       console.error(error);
-      // Display a user-friendly error message
-      // setError('An error occurred. Please try again.');
     }
     setIsLoading(false);
   }

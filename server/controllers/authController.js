@@ -208,6 +208,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         200,
         {
           user: loggedInUser,
+          accessToken: accessToken,
         },
         "User logged in successfully"
       )
