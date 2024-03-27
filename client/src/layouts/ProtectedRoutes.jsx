@@ -35,6 +35,7 @@ export function ProtectedRoutes({ children }) {
         const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, {
           withCredentials: true
         });
+        console.log(response.data.data);
        
         if (response.data.data !== null) {
           dispatch(setUser(response.data.data));
