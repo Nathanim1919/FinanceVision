@@ -15,7 +15,6 @@ export function ProtectedRoutes({ children }) {
   const user = useSelector(selectUser);
 
   // Configure Axios to send cookies with requests
-axios.defaults.withCredentials = true;
 
 
   /* 
