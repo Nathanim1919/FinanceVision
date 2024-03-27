@@ -33,7 +33,9 @@ axios.defaults.withCredentials = true;
       }
       
       try {
-        const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`);
+        const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, {
+          withCredentials: true
+        });
        
         if (response.data.data !== null) {
           dispatch(setUser(response.data.data));
