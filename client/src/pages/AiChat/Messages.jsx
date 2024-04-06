@@ -4,8 +4,6 @@ import { FaRobot } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import styled from 'styled-components';
 
-
-
 function Messages() {
   const messages = useSelector((state)=> state.chat.messages);
   const isLoading = useSelector((state)=> state.chat.isLoading);
@@ -16,36 +14,37 @@ function Messages() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }
-     
-  useEffect(
-    scrollToBottom , [messages]);
 
-  
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
-    <Container   ref={messagesEndRef}>
-      <MessagesContainer>
+      <Container>
+        <MessagesContainer>
           {
-            messages && messages.map(msg=> (
-              <div className={msg.sender==='ai'?"box aiBox":"box userBox"}>
+              messages && messages.map((msg, index) => (
+                  <div key={index} className={msg.sender==='ai'?"box aiBox":"box userBox"}>
                     {msg.sender === 'ai'?
-                    <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
-                      {msg.content !== "" && <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
-                          <p>{msg.content}</p>
-                      </div>}
-<div ref={messagesEndRef} />
-              </div>
-
-        ))
-        }
-        {isLoading && 
-        <p className='loader'>I'am Thinking ...</p>
-        }
-     </MessagesContainer>
-    </Container>
+                        <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
+                    {msg.content !== "" && <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
+                      <p>{msg.content}</p>
+                    </div>}
+                  </div>
+              ))
+          }
+          {isLoading &&
+              <p className='loader'>I'am Thinking ...</p>
+          }
+          <div ref={messagesEndRef} />
+        </MessagesContainer>
+      </Container>
   )
 }
 
 export default Messages;
+
+
 
 const Container = styled.div`
   
@@ -60,6 +59,10 @@ gap: 1rem;
 padding:1rem 0;
 overflow-y: auto;
 align-items: flex-start;
+  width: 60vw;
+  margin: 0 auto;
+    max-height: 70vh;
+  
 
 
 

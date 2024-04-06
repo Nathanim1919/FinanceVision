@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
 import Header from "./Header.jsx";
 import InputForm from "./InputForm.jsx";
 import Messages from './Messages.jsx';
@@ -13,15 +13,13 @@ function ChatBoard() {
 
   useEffect(()=> {
     dispatch(fetchChat({chatId:user.chatBoard}))
-  },[])
+  },[user])
   
   return (
     <Container>
-     
-        {/* <Header/> */}
+        <Header/>
         <Messages/>
         <InputForm/>
-     
     </Container>
   )
 }
@@ -32,13 +30,10 @@ export default ChatBoard;
 const Container = styled.div`
   border-top-right-radius:10px;
   border-top-left-radius:10px;
-  width: 55vw;
-  margin:.3rem auto;
-  height: 95vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: .1fr .8fr .1fr;
+  
 
 
   @media screen and (max-width:800px){
@@ -53,6 +48,6 @@ const Container = styled.div`
   }
 
   >*:nth-child(2){
-      flex: 1;
+      //flex: 1;
   }
 `

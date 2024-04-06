@@ -1,7 +1,7 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import styled from 'styled-components';
 import { selectUser } from '../features/auth/authSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ExpensePieChart from '../components/graphs/PieChar';
 import { Goals } from '../components/dashoardComponents/goals';
 import welcomeImage from '/images/coin.png';
@@ -22,33 +22,31 @@ export const Dashboard = () => {
   return (
     <Container>
        <div className="welocmepage">
-          <div className='welcomeText'>
-            <div>
-              <img src={welcomeImage} alt=''/>
-            </div>
-              <div>
-                  <h3>Hi, {user && (user.username)[0].toUpperCase() + (user.username).slice(1)}</h3>
-                  <p>Save, Track, Invest and Grow Exponentially</p>
-              </div>
-          </div>
+               {/*<div>*/}
+               {/*  <img src={welcomeImage} alt=''/>*/}
+               {/*</div>*/}
+               <div className={'welcometext'}>
+                   <h3>Hi, {user && (user.username)[0].toUpperCase() + (user.username).slice(1)}</h3>
+                   <p>Save, Track, Invest and Grow Exponentially</p>
+               </div>
+               <div className="amount">
 
-           <div className="amount">
-               <h2>{!show ? "*****" : user && formatNumber(user.deposit)} ETB</h2>
-               <div onClick={() => setShow(!show)}>
-                   {show ? <FaEye/> : <FaEyeSlash/>}
+                   <h2>{!show ? "*****" : user && formatNumber(user.deposit)} ETB</h2>
+                   <div onClick={() => setShow(!show)}>
+                       {show ? <FaEye/> : <FaEyeSlash/>}
+                   </div>
                </div>
            </div>
-       </div>
         <div className="datas">
-        <div className='firstData'>
-              <div>
-                <Goals/>
-              </div>
-               <div>
-              <BardGraph/>
-               </div>
-        </div>
-        <div>
+            <div className='firstData'>
+                <div>
+                    <Goals/>
+                </div>
+                <div>
+                    <BardGraph/>
+                </div>
+            </div>
+            <div>
             <Notification/>
         </div>
         <div style={{
@@ -102,23 +100,42 @@ const Container = styled.div`
    }
    .welocmepage{
       background-color: #fff351;
+       background-image:linear-gradient(to right, rgba(0,0,0,.2), rgba(0,0,0,.1)), url(${welcomeImage});
+       background-size: cover;
+       background-position: center;
       display: flex;
-      align-items: center;
-      max-height: 12vh;
-      color: #000;
-      padding:0 .5rem;
+       width: 100%;
+       z-index: 1;
+       justify-content: space-between;
+      color: #fff;
+      padding:.5rem;
       box-shadow: 0 17px 33px rgba(0, 0, 0, 0.1);
+       
+        @media screen and (max-width: 800px){
+            padding: 0;
+            margin: 0px;
+            max-height: 12vh;
+        }
+       
+       >*:nth-child(2){
+           flex: 1;
+           width: 100%;
+       }
 
       >*{
         padding: 0;
         margin: 0;
+        
       }
 
       div.amount{
         width: 100%;
         display: flex;
         align-items: center;
+          justify-content: flex-end;
         gap: 2rem;
+          position: relative;
+          z-index: 1;
 
         @media screen and (max-width: 800px){
           gap: 1rem;
@@ -141,15 +158,26 @@ const Container = styled.div`
           @media screen and (max-width: 800px){
             font-size: 1rem;
             width: 30px;
-          height: 30px;
+            height: 30px;
           }
         }
         }
 
-      div.welcomeText{
+      div.welcometext{
         display: flex;
+          flex-direction: column;
         height: 100%;
         position: relative;
+          
+          h3{
+              font-size: 2rem;
+          }
+          
+          *{
+              position: relative;
+              z-index: 1;
+              margin: 0px;
+          }
 
         @media screen and (max-width: 800px){
           p{
@@ -163,11 +191,14 @@ const Container = styled.div`
 
 
         img{
-          width: 100%;
+          width: 100vw;
           height: 100%;
-          position: relative;
+          position: absolute;
+            top: 0;
+            left: 0;
+           z-index: 0;
           object-fit: cover;
-          transform: scale(.8);
+          //transform: scale(.8);
 
           @media screen and (max-width: 800px){
             transform: scale(.5);
