@@ -23,9 +23,11 @@ export const Transactions = () => {
 
 
   useEffect(() => {
-    dispatch(fetchIncomes(user._id))
-    dispatch(fetchExpenses(user._id))
-  }, [dispatch, user]);
+    if (user._id && transactions.length === 0){
+        dispatch(fetchIncomes(user._id))
+        dispatch(fetchExpenses(user._id))
+    }
+  }, [user]);
 
   return (
     loading?<Loader/>:

@@ -17,8 +17,10 @@ const Notification = () => {
     const dispatch = useDispatch()
   
 
-    useEffect(() => {  
-      dispatch(fetchNotifications(user._id))
+    useEffect(() => {
+        if (user._id && notifications.length === 0){
+            dispatch(fetchNotifications(user._id));
+        }
     }, []);
     
   
@@ -34,9 +36,9 @@ const Notification = () => {
           </Link>
         </Header>
         <NotificationContainer>
-          {notifications.length === 0 ? (
+          {notifications?.length === 0 ? (
         <p>No new notifications. Stay tuned!</p>
-          ) :  notifications.slice(0, 3).map((notification) => (
+          ) :  notifications?.slice(0, 3).map((notification) => (
             <NotificationBox key={notification.createdAt}>
             <div className='notification'>
                     <div>

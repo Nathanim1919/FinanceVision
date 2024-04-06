@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
 import styled from 'styled-components'
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from 'react-router-dom';
@@ -19,7 +19,9 @@ export const Goals = () => {
   const loading = useSelector(selectLoading);
 
   useEffect(() => {
-    dispatch(fetchGoals(user._id));
+    if (goals.length === 0 && user._id){
+      dispatch(fetchGoals(user._id));
+    }
   }, [dispatch, user]);
 
   return (

@@ -22,9 +22,6 @@ export const Dashboard = () => {
   return (
     <Container>
        <div className="welocmepage">
-               {/*<div>*/}
-               {/*  <img src={welcomeImage} alt=''/>*/}
-               {/*</div>*/}
                <div className={'welcometext'}>
                    <h3>Hi, {user && (user.username)[0].toUpperCase() + (user.username).slice(1)}</h3>
                    <p>Save, Track, Invest and Grow Exponentially</p>

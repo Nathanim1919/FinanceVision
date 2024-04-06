@@ -23,7 +23,9 @@ export default function BardGraph() {
   const transactions = useSelector(state => state.transaction.transactions);
 
   useEffect(() => {
-    dispatch(fetchTransactions(user._id));
+    if (user._id && transactions.length === 0){
+        dispatch(fetchTransactions(user._id));
+    }
   }, [dispatch, user]);
 
   const structureTransactions = (transactions) => {
