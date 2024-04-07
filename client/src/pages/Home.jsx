@@ -142,6 +142,7 @@ const Container = styled.div`
             padding: .5rem 1rem;
             border-radius: 5px;
             background-color: #12a1fa;
+            cursor: pointer;
             color: #fff;
             text-decoration: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -175,105 +176,105 @@ const Container = styled.div`
 `
 
 const Navbar = styled.nav`
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #1d42ffd5;
-        align-self: end;
-        padding: 0 2rem;
-        border-radius: 4rem;
-        position: fixed;
-        z-index: 10;
-        right: 4%;
-       
-        transition: all .4s ease-in-out;
-        backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(29, 66, 255, 0.67);
+    align-self: end;
+    padding: 0 2rem;
+    border-radius: 4rem;
+    position: fixed;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+    right: 4%;
 
-        .closeIcon{
-            display: none;
+    transition: all .4s ease-in-out;
+    backdrop-filter: blur(10px);
+
+    .closeIcon {
+        display: none;
+        cursor: pointer;
+    }
+
+    @media screen and (max-width: 700px) {
+        position: fixed;
+        width: 100%;
+        right: 0%;
+        padding: 2rem 0;
+        border-radius: 0;
+        flex-direction: column;
+        gap: 2rem;
+        box-shadow: 0 5px 23px rgba(0, 0, 0, .3);
+        top: ${props => props.isOpen ? '0%' : '-100%'};
+        background-color: #000000d4;
+
+        .closeIcon {
+            display: block;
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+            font-size: 2rem;
             cursor: pointer;
+            color: #fff;
         }
 
-        @media screen and (max-width:700px){
-            position: fixed;
-            width: 100%;
-            right: 0%;
-            padding: 2rem 0;
-            border-radius: 0;
-            flex-direction: column;
-            gap: 2rem;
-            box-shadow: 0 5px 23px rgba(0,0,0,.3);
-            top:${props => props.isOpen ? '0%' : '-100%'};
-            background-color: #000000d4;
+    }
 
-            .closeIcon{
-                display: block;
-                position: absolute;
-                right: 2rem;
-                top: 1rem;
-                font-size: 2rem;
-                cursor: pointer;
+    ul {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: capitalize;
+        margin-right: 2rem;
+
+        li {
+            a {
+                padding: .1rem .7rem;
                 color: #fff;
             }
-            
+
+            a.active {
+                background-color: orange;
+                border-radius: 40px;
+            }
         }
 
-        ul{
-            position: relative;
-            z-index: 5;
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: 500;
-            text-transform: capitalize;
-            margin-right: 2rem;
 
-            li{
-                a{
-                    padding:.1rem .7rem;
-                    color: #fff;
-                }
-                a.active{
-                   background-color: orange;
-                   border-radius: 40px;
-             }
-            }
+        @media screen and (max-width: 700px) {
+            flex-direction: column;
+            width: 100%;
+            gap: 0;
 
-            
-
-
-            @media screen and (max-width:700px){
-                flex-direction: column;
+            li {
+                font-size: 1.2rem;
+                border-bottom: 1px solid #535151;
                 width: 100%;
-                gap: 0;
-
-                li{
-                    font-size: 1.2rem;
-                    border-bottom: 1px solid #535151;
-                    width: 100%;
-                    display: grid;
-                    place-items: center;
-                    padding: 1rem 0;
-                    cursor: pointer;                    
-
-                    &:hover{
-                        color: #151514;
-                        background-color: #1463bed4;
-                    }
-                }
-            }
-
-            li{
+                display: grid;
+                place-items: center;
+                padding: 1rem 0;
                 cursor: pointer;
 
-                &:hover{
-                    color: #dbdaa5;
+                &:hover {
+                    color: #151514;
+                    background-color: #1463bed4;
                 }
             }
-        
         }
+
+        li {
+            cursor: pointer;
+
+            &:hover {
+                color: #dbdaa5;
+            }
+        }
+
+    }
 `
 
 const Button = styled.div`
@@ -442,7 +443,7 @@ export const Home = () => {
                        {user && <h3>Welcome, {user.username}</h3>}
                         <h1>Know where your <span>money</span> goes.</h1>
                         <p>Track income, expenses, and transactions effortlessly. Gain insights and achieve financial goals.</p>
-                        <Link to="/login">Get Started</Link>
+                        <NavLink to="/login">Get Started</NavLink>
                     </div>
                 </div>
                 <div>
