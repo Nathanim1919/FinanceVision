@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { clearUser } from "../features/auth/authSlice";
+import { logout } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../components/Loader";
 import { GoGoal } from "react-icons/go";
@@ -30,17 +30,16 @@ function SidebarLayout() {
   const [notifications, setNotifications] = useState([]);
   const socket = io('https://finance-vision.vercel.app');
 
-  const logout = useCallback(async () => {
-    setIsLoading(true);
-    localStorage.removeItem('accessToken');
+  const handleLogout =  async () => {
+    // setIsLoading(true);
     try {
-      dispatch(clearUser());
-      navigate('/login', { replace: true });
+      dispatch(logout())
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error("Error logging out:", error);
+      // setIsLoading(false);
     }
-    setIsLoading(false);
-  }, [dispatch, navigate]);
+  }
 
   const unreadNotifications = notifications.filter((notification) => notification.isRead === false);
 
@@ -123,7 +122,7 @@ function SidebarLayout() {
           <p>Settings</p>
         </NavLink>
 
-        <Link onClick={logout} className="sidebarItem" activeClassName="active">
+        <Link onClick={handleLogout} className="sidebarItem" activeClassName="active">
           <IoMdLogOut />
           <p>Logout</p>
         </Link>

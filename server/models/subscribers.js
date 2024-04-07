@@ -13,3 +13,7 @@ const subscriberSchema = new Schema({
         default: Date.now,
     },
 });
+
+
+const Subscriber = mongoose.model('Subscriber', subscriberSchema);
+export default Subscriber;

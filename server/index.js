@@ -15,7 +15,7 @@ import transactionRouter from './routes/transactionRoute.js';
 import notificationRouter from './routes/notificationRoute.js';
 import settingRoute from './routes/settingRoute.js';
 import chatRouter from './routes/chatRoute.js';
-
+import subscriptionRouter from './routes/subscriptionRoute.js';
 
 dotenv.config();
 
@@ -68,6 +68,7 @@ const startServer = async () => {
     app.use("/api/v1/notifications", notificationRouter);
     app.use("/api/v1/settings", settingRoute);
     app.use("/api/v1/chat", chatRouter);
+    app.use("/api/v1/subscription", subscriptionRouter);
 
 
     // Start Server

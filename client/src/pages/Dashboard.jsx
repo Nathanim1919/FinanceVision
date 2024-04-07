@@ -81,6 +81,23 @@ const Container = styled.div`
 
     > * {
         flex: 1;
+        //animation:fadeUp alternate 1s;
+        
+        >*{
+            animation:fadeUp alternate 2s;
+        }
+        
+    }
+    
+    @keyframes fadeUp{
+        from{
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to{
+            opacity: 1;
+            transform: translateY(0px);
+        }
     }
 
     .firstData {

@@ -34,7 +34,7 @@ export const Login = () => {
   
       if (response.status === 200 && response.data.data !== null) {
           document.cookie = `accessToken=${response.data.data.accessToken}`;
-        navigate('/dashboard', { replace: true });
+          navigate('/dashboard', { replace: true });
       } else {
         console.error('No token found');
       }
