@@ -51,7 +51,7 @@ const Container = styled.div`
 `
 
 const MessagesContainer = styled.div`
-height: 90vh;
+/* height: 90vh; */
 overflow: hidden;
 display: flex;
 flex-direction: column;
@@ -59,7 +59,6 @@ gap: 1rem;
 padding:1rem 0;
 overflow-y: auto;
 align-items: flex-start;
-  width: 60vw;
   margin: 0 auto;
     max-height: 70vh;
   

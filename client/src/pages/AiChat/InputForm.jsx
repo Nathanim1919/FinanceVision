@@ -38,8 +38,8 @@ const Container = styled.form`
     
     
     @media screen and (max-width:800px){
-      position: fixed;
-      bottom: 0;
+      position: ;
+      bottom: 25%;
       right: 0;
       left: 0;
       

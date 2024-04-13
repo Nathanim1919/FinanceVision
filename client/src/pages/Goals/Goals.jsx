@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import styled from 'styled-components'
-import { GrLinkNext } from "react-icons/gr";
-import { Link } from 'react-router-dom';
+// import { GrLinkNext } from "react-icons/gr";
+// import { Link } from 'react-router-dom';
 import { GoGoal } from "react-icons/go";
 import {CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
@@ -10,7 +10,7 @@ import { GiProgression } from "react-icons/gi";
 import { TbCategoryFilled } from "react-icons/tb";
 import GoalForm from '../../components/forms/GoalForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectGoals, selectLoading } from '../../features/goals/goalSlice';
+import { selectGoals, selectLoading , deleteGoal} from '../../features/goals/goalSlice';
 import { Loader } from '../../components/Loader';
 import { GoalDetails } from './GoalDetails';
 import { calculateTimeLeft, formatNumber } from '../../utils/Formatting';
@@ -32,6 +32,7 @@ export const Goals = () => {
     setShowDetails(true);
   }
 
+
   return (
     isLoading ? <Loader/> :
     <Content>
@@ -52,7 +53,7 @@ export const Goals = () => {
                       <button onClick={()=>setCreateGoal(true)}>Create Goal</button>
                   </div>
                      ):goals && goals.map(item => (
-                  <Card key={item.title} onClick={()=>handleGoalSelect(item)}>
+                  <Card key={item.title}>
                     <div className='titles'>
                       <h4><TbCategoryFilled/>{(item.title).slice(0, 15)}..<span>{item.category}</span></h4>
                       <div className='current-progress'>
@@ -76,10 +77,10 @@ export const Goals = () => {
                       </div>
                     </div>
                     <div className='icons'>
-                        <div className='edit'>
+                        <div className='edit' onClick={()=>handleGoalSelect(item)}>
                             <CiEdit/>
                         </div>
-                        <div className='delete'>
+                        <div className='delete' onClick={()=>dispatch(deleteGoal({userId:user._id, goalId:item._id}))}>
                             <MdDeleteOutline/>
                         </div>
                     </div>
