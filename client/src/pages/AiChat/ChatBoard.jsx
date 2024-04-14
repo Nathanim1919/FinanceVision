@@ -9,6 +9,7 @@ import PlanImage from '../../../public/chat/plan.png';
 import AdviceImage from '../../../public/chat/advice.png';
 import BudgetImage from '../../../public/chat/budget.png';
 import TrackImage from '../../../public/chat/track.png';
+import AiImage from '../../../public/chat/ai.png';
 
 
 
@@ -24,35 +25,43 @@ function ChatBoard() {
   
   return (
 <Container openChat={openChat}>
-    <div className='header'>
-      <h1>Welcome to the AI Chat Board</h1>
-      <h2>Hello, {user.username}!</h2>
-      <p>Engage in interesting conversations with our AI. Click the button below to start chatting.</p>
+  <div className='header'>
+    <div>
+      <img src={AiImage} alt="" />
+    </div>
+    <div>
+      <h1>Welcome to Your Personal AI Assistant</h1>
+      <h2>Greetings, {user.username}!</h2>
+      <p>Our advanced AI is ready to assist you with your financial needs. Engage in a dynamic conversation to explore its capabilities.</p>
       <button onClick={() => setOpenChat(!openChat)}>
-        {openChat ? "Close Chat" : "Start Chatting"}
+        {openChat ? "End Conversation" : "Begin Conversation"}
       </button>
-  </div>
+    </div>
+</div>
 
   <div className="info-boxes">
-    <div className="info-box">
-      <img src={PlanImage} alt="" />
-      <h3>Financial Planning</h3>
-      <p>Our AI can help you create a personalized financial plan.</p>
-    </div>
-    <div className="info-box">
-      <img src={BudgetImage} alt="" />
-      <h3>Budgeting</h3>
-      <p>Get assistance in managing your budget effectively.</p>
-    </div>
-    <div className="info-box">
-      <img src={AdviceImage} alt="" />
-      <h3>Investment Advice</h3>
-      <p>Receive investment advice based on your financial goals.</p>
-    </div>
-    <div className="info-box">
-      <img src={TrackImage} alt="" />
-      <h3>Expense Tracking</h3>
-      <p>Track your expenses and understand your spending habits better.</p>
+      <h2>Our AI Can Help You With:</h2>
+    <div>
+      <div className="info-box">
+        <img src={PlanImage} alt="" />
+        <h3>Financial Planning</h3>
+        <p>Our AI can help you create a personalized financial plan.</p>
+      </div>
+      <div className="info-box">
+        <img src={BudgetImage} alt="" />
+        <h3>Budgeting</h3>
+        <p>Get assistance in managing your budget effectively.</p>
+      </div>
+      <div className="info-box">
+        <img src={AdviceImage} alt="" />
+        <h3>Investment Advice</h3>
+        <p>Receive investment advice based on your financial goals.</p>
+      </div>
+      <div className="info-box">
+        <img src={TrackImage} alt="" />
+        <h3>Expense Tracking</h3>
+        <p>Track your expenses and understand your spending habits better.</p>
+      </div>
     </div>
   </div>
   <div className="container">
@@ -69,14 +78,81 @@ export default ChatBoard;
 
 const Container = styled.div`
     background-color: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+
+    >*{
+      margin: 0;
+    }
+    
     
 
     .header{
-      padding: 2rem 0;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
+      animation:fadeUp alternate .7s;
+      padding: 0;
+      background-color: #ffffff;
+      /* width: 100vw; */
+      margin: 0 auto;
+
+      >*{
+        padding: 0;
+        margin: 0;
+      }
+
+
+
+      @media screen and (max-width:800px){
+        flex-direction: column;
+
+        >*{
+          margin: 0%;
+          padding: 1rem;
+        }
+      }
+    
+     >div:nth-child(1){
+       width: 30%;
+       animation:fadeUp alternate .5s;
+
+       @media screen and (max-width:800px){
+        width: 100%;
+      }
+       img{
+         width: 100%;
+         height: auto;
+         object-fit: cover;
+       }
+     }
+     >div:nth-child(2){
+        width: 60%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        animation:fadeUp alternate .7s;
+
+        >*{
+          /* padding: 0; */
+          margin: 0;
+        }
+        
+  
+        @media screen and (max-width:800px){
+          width: 100%;
+     }
+    }
+      >*{
+            animation:fadeUp alternate .7s;
+        }
+      
 
       h1{
         font-size: 2rem;
@@ -104,6 +180,7 @@ const Container = styled.div`
         border-radius: 5px;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
+        margin-top: 1rem;
         &:hover{
           background-color: #1e4bb5;
         }
@@ -116,12 +193,17 @@ const Container = styled.div`
     }
 
     .info-boxes{
+      width:90%;
+      margin: 0 auto;
+    
+      >div{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
-      padding: 2rem 0;
-      width:90%;
-      margin: 0 auto;
+      /* padding: 1rem 0; */
+      >*{
+            animation:fadeUp alternate 1.3s;
+        }
       
 
       .info-box{
@@ -136,6 +218,7 @@ const Container = styled.div`
         }
       }
     }
+  }
 
     .container{
       overflow: hidden;
@@ -175,4 +258,16 @@ const Container = styled.div`
   >*:nth-child(2){
       //flex: 1;
   }
+
+
+  @keyframes fadeUp{
+        from{
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to{
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
 `
