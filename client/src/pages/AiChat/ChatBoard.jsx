@@ -22,7 +22,7 @@ function ChatBoard() {
   useEffect(()=> {
     dispatch(fetchChat({chatId:user.chatBoard}))
   },[user])
-  
+
   return (
 <Container openChat={openChat}>
   <div className='header'>
@@ -77,197 +77,202 @@ export default ChatBoard;
 
 
 const Container = styled.div`
-    background-color: #f5f5f5;
-    font-family: 'Poppins', sans-serif;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
+  background-color: #f5f5f5;
+  font-family: 'Poppins', sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
 
-    >*{
+  > * {
+    margin: 0;
+  }
+
+
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeUp alternate .7s;
+    padding: 0;
+    background-color: #ffffff;
+    /* width: 100vw; */
+    margin: 0 auto;
+
+    > * {
+      padding: 0;
       margin: 0;
     }
-    
-    
 
-    .header{
+
+    @media screen and (max-width: 800px) {
+      flex-direction: column;
+
+      > * {
+        margin: 0%;
+        padding: 1rem;
+      }
+    }
+
+    > div:nth-child(1) {
+      width: 20%;
+      animation: fadeUp alternate .5s;
+
+      @media screen and (max-width: 800px) {
+        width: 100%;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+
+    > div:nth-child(2) {
+      width: 60%;
+      padding: 1rem;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      animation:fadeUp alternate .7s;
-      padding: 0;
-      background-color: #ffffff;
-      /* width: 100vw; */
-      margin: 0 auto;
+      animation: fadeUp alternate .7s;
 
-      >*{
-        padding: 0;
+      > * {
+        /* padding: 0; */
         margin: 0;
       }
 
-
-
-      @media screen and (max-width:800px){
-        flex-direction: column;
-
-        >*{
-          margin: 0%;
-          padding: 1rem;
-        }
+      p {
+        margin: 1rem 0;
       }
-    
-     >div:nth-child(1){
-       width: 30%;
-       animation:fadeUp alternate .5s;
 
-       @media screen and (max-width:800px){
+
+      @media screen and (max-width: 800px) {
         width: 100%;
       }
-       img{
-         width: 100%;
-         height: auto;
-         object-fit: cover;
-       }
-     }
-     >div:nth-child(2){
-        width: 60%;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        animation:fadeUp alternate .7s;
-
-        >*{
-          /* padding: 0; */
-          margin: 0;
-        }
-        
-  
-        @media screen and (max-width:800px){
-          width: 100%;
-     }
-    }
-      >*{
-            animation:fadeUp alternate .7s;
-        }
-      
-
-      h1{
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-
-      h2{
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-      }
-
-      p{
-        font-size: 1rem;
-        margin-bottom: 1rem;
-        max-width: 80%;
-        text-align: center;
-      }
-
-      button{
-        padding: 0.5rem 1rem;
-        background-color: #286cff;
-        color: #fff;
-        border: none;
-        outline: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        margin-top: 1rem;
-        &:hover{
-          background-color: #1e4bb5;
-        }
-
-      }
-
-      >*{
-        margin:0;
-      }
     }
 
-    .info-boxes{
-      width:90%;
-      margin: 0 auto;
-    
-      >div{
+    > * {
+      animation: fadeUp alternate .7s;
+    }
+
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      max-width: 80%;
+      text-align: center;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #286cff;
+      color: #fff;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      margin-top: 1rem;
+
+      &:hover {
+        background-color: #1e4bb5;
+      }
+
+    }
+
+    > * {
+      margin: 0;
+    }
+  }
+
+  .info-boxes {
+    width: 90%;
+    margin: 0 auto;
+
+    > div {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       /* padding: 1rem 0; */
-      >*{
-            animation:fadeUp alternate 1.3s;
-        }
-      
 
-      .info-box{
+      > * {
+        animation: fadeUp alternate 1.3s;
+      }
+
+
+      .info-box {
         display: grid;
         place-items: center;
         background-color: #fff;
         padding: 1rem;
         border-radius: 10px;
-        box-shadow: 0 6px 30px rgba(0,0,0,0.1);
-        h3{
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+
+        h3 {
           margin-bottom: 1rem;
         }
       }
     }
   }
 
-    .container{
-      overflow: hidden;
-      display: grid;
-      grid-template-rows: .1fr .8fr .1fr;
+  .container {
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: .1fr .8fr .1fr;
+    height: 100vh;
+    width: 35vw;
+    margin: 0 auto;
+    background-color: #4b4949;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    transform: translateX(${props => props.openChat ? 0 : 100}%);
+    transition: all 0.3s ease-in-out;
+    z-index: 12;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 1rem 2rem;
+
+
+    @media screen and (max-width: 800px) {
+      width: 100vw;
       height: 100vh;
-      width: 40vw;
-      margin: 0 auto;
-      background-color: #fff;
-      box-shadow: 0 6px 30px rgba(0,0,0,0.1);
-      position: fixed;
-      transform: translateX(${props => props.openChat ? 0 : 100}%);
-      transition: all 0.3s ease-in-out;
-      z-index: 12;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      padding: 1rem 2rem;
-
-
-      @media screen and (max-width:800px){
-          width: 100vw;
-          height: 100vh;
-          overflow-x: hidden;
-          padding: 1rem;
-      }
+      overflow-x: hidden;
+      padding: 1rem 0;
     }
-  
-
-
-  
-
-  >*{
-      width: 100%;
-  }
-
-  >*:nth-child(2){
-      //flex: 1;
   }
 
 
-  @keyframes fadeUp{
-        from{
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to{
-            opacity: 1;
-            transform: translateY(0px);
-        }
+  > * {
+    width: 100%;
+  }
+
+  > *:nth-child(2) {
+    //flex: 1;
+  }
+
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
 `

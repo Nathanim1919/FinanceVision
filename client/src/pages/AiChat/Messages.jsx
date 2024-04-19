@@ -34,7 +34,7 @@ function Messages() {
               ))
           }
           {isLoading &&
-              <p className='loader'>I'am Thinking ...</p>
+              <p className='loader'>Processing ...</p>
           }
           <div ref={messagesEndRef} />
         </MessagesContainer>
@@ -51,7 +51,6 @@ const Container = styled.div`
 `
 
 const MessagesContainer = styled.div`
-/* height: 90vh; */
 overflow: hidden;
 display: flex;
 flex-direction: column;
@@ -66,11 +65,10 @@ align-items: flex-start;
 
 
 .loader{
-  background-color: #eee;
   font-size: .7rem;
   padding: 0.2rem 1rem;
   border-radius: 20px;
-
+  color: #eee;
 }
 
 .box{
@@ -83,7 +81,7 @@ align-items: flex-start;
   position: relative;
 
   @media screen and (max-width:800px){
-    max-width: 80%;
+    max-width: 60%;
   }
 
   .icon{

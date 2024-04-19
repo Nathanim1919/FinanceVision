@@ -14,10 +14,9 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: 5rem;
     padding: 2rem;
     border-radius: 20px;
-    margin: 0px auto;
+    margin: 5rem auto;
 
     @media screen and (max-width: 768px) {
         padding: 0 1rem;
@@ -29,6 +28,17 @@ const Container = styled.div`
         flex-direction: column;
         align-items: center;
         margin: 3rem 0;
+
+        h1 {
+            font-size: 3rem;
+            span {
+                color: #6464ff;
+            }
+        }
+        
+        p{
+            width: 50%;
+        }
 
         > * {
             margin: 0;
@@ -57,7 +67,7 @@ const Container = styled.div`
             padding: 0 2rem;
             margin: 1rem 0;
             border-radius: 20px;
-            
+
 
             > div:nth-child(1) {
                 //background-color: rgba(244, 199, 120, 0.59);
@@ -208,8 +218,8 @@ export default function Services() {
   return (
     <Container id='services'>
         <div className="header">
-            <h1>Visualize Your Financial Future</h1>
-            <h2>Take control of your finances and unlock peace of mind with FVISION's comprehensive suite of tracking and management tools.</h2>
+            <h1>Visualize Your <span>Financial</span> Future</h1>
+            <p>Take control of your finances and unlock peace of mind with FVISION's comprehensive suite of tracking and management tools.</p>
         </div>
 
         <div className="services">
@@ -239,8 +249,8 @@ export default function Services() {
                 <div>
                     <h2>Achieve Your Goals</h2>
                     <p>Whether it's saving for a dream vacation, paying off debt, or securing your future, set personalized financial goals and track your progress in real-time. Stay motivated and celebrate your achievements as you move closer to your aspirations.</p>
-                </div>    
-            </div>  
+                </div>
+            </div>
             <div>
                 <div>
                  <img src={Visual} alt="" />
@@ -248,8 +258,8 @@ export default function Services() {
                 <div>
                     <h2>Visualize Your Financial Journey</h2>
                     <p>Gain valuable insights with interactive charts and graphs, visualizing your spending patterns, budget adherence, and goal progress. Understand your finances at a glance and make informed decisions for a brighter financial future.</p>
-                </div>    
-            </div>  
+                </div>
+            </div>
         </div>
 
         <div className="footer">

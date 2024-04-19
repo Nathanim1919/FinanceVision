@@ -10,7 +10,6 @@ function Header({setOpenChat}) {
       <div onClick={()=> setOpenChat(false)}>
         <FaArrowLeftLong/>
       </div>
-       
         <div>
         <h3>{user.username}</h3>
         </div>
@@ -26,6 +25,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color:#fff;
 
     *{
 

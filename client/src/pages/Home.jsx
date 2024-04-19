@@ -64,71 +64,83 @@ const Header = styled.div`
 
 const Container = styled.div`
     width: 80vw;
-    margin:0 auto;
+    margin: 0 auto;
     padding: 0;
-    
-    @media screen and (max-width: 768px){
+
+    @media screen and (max-width: 768px) {
         width: 100vw;
     }
 
-    .hero{
+    .hero {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
         align-items: center;
         position: relative;
 
-        .hero-text{
+        .hero-text {
             position: relative;
             z-index: 3;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
 
-            >*{
+            > * {
                 margin: 0;
             }
 
-            h1{
+            h1 {
                 margin-bottom: 1rem;
             }
 
-            h3{
-                color: #656060;
-                font-size: 1.5rem;
+            h3 {
+                span {
+                    font-size: 1.3rem;
+                    padding: .1rem .5rem;
+                    background-color: #ffb838;
+                    color: #fff;
+                    margin-right:1rem;
+
+                }
+                display: flex;
+                align-items: center;
+                color: #333;
+                font-size: 2rem;
             }
 
-            p{
+            p {
                 margin-bottom: 1rem;
             }
-            @media screen and (max-width: 768px){
+
+            @media screen and (max-width: 768px) {
                 margin-top: 4rem;
-               
+
             }
         }
- 
 
-        @media screen and (max-width: 768px){
+
+        @media screen and (max-width: 768px) {
             grid-template-columns: 1fr;
             padding: 2rem;
-           
+
         }
 
-        .icon{
+        .icon {
             color: gold;
             font-size: 6rem;
             right: 40%;
             position: absolute;
 
-            @media screen and (max-width: 768px){
+            @media screen and (max-width: 768px) {
                 right: -45%;
                 top: 0%;
                 font-size: 26rem;
                 opacity: .5;
-    
+
             }
         }
-        .icon2{
+
+        .icon2 {
             color: gold;
             font-size: 16rem;
             left: 20%;
@@ -139,39 +151,38 @@ const Container = styled.div`
         }
 
         a {
-            padding: .5rem 1rem;
-            border-radius: 5px;
-            background-color: #12a1fa;
+            padding: .5rem 3rem;
+            background-color: #4f5bff;
             cursor: pointer;
             color: #fff;
             text-decoration: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        h1{
-            font-size: 3rem;
+        h1 {
+            font-size: 4rem;
             line-height: 1;
             color: #171717;
-            span{
+
+            span {
                 color: #12a1fa;
             }
 
-            @media screen and (max-width:768px){
-                font-size:2rem;
+            @media screen and (max-width: 768px) {
+                font-size: 2rem;
             }
         }
 
-        p{
+        p {
             font-size: 1.2rem;
             color: #171717;
         }
 
-        img{
+        img {
             width: 100%;
             border-radius: 10px;
         }
-    
+
     }
 `
 
@@ -358,7 +369,7 @@ export const Home = () => {
                 <ul>
                     <li>
                         <Link
-                            onClick={()=>setIsOpen(false)} 
+                            onClick={()=>setIsOpen(false)}
                             activeClass="active"
                             to="hero"
                             spy={true}
@@ -370,7 +381,7 @@ export const Home = () => {
                     </li>
                     <li>
                         <Link
-                            onClick={()=>setIsOpen(false)} 
+                            onClick={()=>setIsOpen(false)}
                             activeClass="active"
                             to="services"
                             spy={true}
@@ -382,7 +393,7 @@ export const Home = () => {
                     </li>
                     <li>
                         <Link
-                            onClick={()=>setIsOpen(false)} 
+                            onClick={()=>setIsOpen(false)}
                             activeClass="active"
                             to="blog"
                             spy={true}
@@ -394,7 +405,7 @@ export const Home = () => {
                     </li>
                     <li>
                         <Link
-                            onClick={()=>setIsOpen(false)} 
+                            onClick={()=>setIsOpen(false)}
                             activeClass="active"
                             to="about"
                             spy={true}
@@ -406,7 +417,7 @@ export const Home = () => {
                     </li>
                     <li>
                         <Link
-                            onClick={()=>setIsOpen(false)} 
+                            onClick={()=>setIsOpen(false)}
                             activeClass="active"
                             to="faqs"
                             spy={true}
@@ -440,15 +451,16 @@ export const Home = () => {
                         <FaMoneyCheckAlt/>
                     </div>
                     <div className="hero-text">
-                       {user && <h3>Welcome, {user.username}</h3>}
+                       {user && <h3><span>Welcome back, </span> {user.username}</h3>}
                         <h1>Know where your <span>money</span> goes.</h1>
                         <p>Track income, expenses, and transactions effortlessly. Gain insights and achieve financial goals.</p>
-                        <NavLink to="/login">Get Started</NavLink>
+                        {!user && <NavLink to="/login">Get Started</NavLink>}
+                        {user && <NavLink to="/dashboard">Get Back to Dashboard</NavLink>}
                     </div>
                 </div>
                 <div>
                     <img src={HeroImage} alt="hero"/>
-                </div>    
+                </div>
             </div>
 
             <Services/>
