@@ -23,6 +23,7 @@ dotenv.config();
  const app = new Express();
  const server = http.createServer(app);
 
+
  export const io = new Server(server, {
    cors: {
     // origin: 'https://finance-vision.vercel.app',

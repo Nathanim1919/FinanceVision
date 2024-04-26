@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import {useEffect} from 'react'
 import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
 import { GrLinkNext } from "react-icons/gr";
@@ -18,10 +18,8 @@ const Notification = () => {
   
 
     useEffect(() => {
-        if (user._id && notifications.length === 0){
             dispatch(fetchNotifications(user._id));
-        }
-    }, []);
+    }, [dispatch, user._id]);
     
   
     return (

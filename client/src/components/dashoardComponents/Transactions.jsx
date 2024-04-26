@@ -12,7 +12,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { formatDate } from '../../utils/Formatting';
 import { fetchIncomes } from '../../features/incomes/incomeSlice';
 import { fetchExpenses } from '../../features/expenses/expenseSlice';
-
+import { IoIosAdd } from "react-icons/io";
 
 
 export const Transactions = () => {
@@ -43,8 +43,8 @@ export const Transactions = () => {
             <div className='emptyOne'>
               <p>No transactions recorded yet. creating your first transaction now.</p>
               <div>
-                <Link to="/goals">Income</Link>
-                <Link to="/expenses">Expense</Link>
+                <Link to="/goals"><IoIosAdd/>Income</Link>
+                <Link to="/expenses"><IoIosAdd/>Expense</Link>
               </div>
             </div>
         ): transactions.map(transaction => (
@@ -147,6 +147,10 @@ const TransactionsContainer = styled.div`
       border-radius: 20px;
       text-decoration: none;
       font-size: .8rem;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      font-weight: 600;
     }
   }
 `

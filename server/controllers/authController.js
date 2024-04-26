@@ -217,22 +217,21 @@ export const loginUser = asyncHandler(async (req, res) => {
 });
 
 export const logoutUser = asyncHandler(async (req, res) => {
-    await User.findByIdAndUpdate(
-        req.user._id,
-        {
-            $set: {
-                refreshToken: undefined,
-            },
-        },
-        {new: true}
-    );
+    const user = await User.findById(req.user._id);
+    if (!user) {
+        return res.status(404).json(new ApiResponse(404, {}, "User not found"));
+    }
 
-    return res
-        .status(200)
-        .clearCookie("accessToken")
-        .clearCookie("refreshToken")
-        .json(new ApiResponse(200, {}, "User logged out successfully"));
-})
+    // Invalidate the user's session on the server side
+    user.refreshToken = undefined;
+    await user.save();
+
+    // Clear the user's access token from the client side
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    return res.status(200).json(new ApiResponse(200, {}, "User logged out successfully"));
+});
 
 export const getCurrentUser = asyncHandler(async (req, res) => {
     return res

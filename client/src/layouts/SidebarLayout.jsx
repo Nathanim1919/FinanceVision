@@ -27,22 +27,35 @@ function SidebarLayout() {
   const user = useSelector((state) => state.auth.user);
   const show = useSelector(state => state.sidebar.show);
 
+
   const [notifications, setNotifications] = useState([]);
   const socket = io('https://finance-vision.vercel.app');
+  axios.defaults.withCredentials = true;
 
-  const handleLogout =  async () => {
-    // setIsLoading(true);
+
+  // Logout user
+  const logoutUser = async () => {
+    setIsLoading(true);
     try {
-      dispatch(logout())
-      navigate("/");
+      // Dispatch the logout action and wait for it to complete
+      await dispatch(logout());
+  
+      // If the logout action completes successfully, navigate to the login page
+      navigate("/login");
     } catch (error) {
-      console.error("Error logging out:", error);
-      // setIsLoading(false);
+      // If an error occurs during the logout process, log the error and show an error message
+      console.error('An error occurred during the logout process:', error);
+      // You could also show a toast notification or some other form of user feedback here
+    } finally {
+      // Regardless of whether the logout action succeeds or fails, stop showing the loading indicator
+      setIsLoading(false);
     }
   }
 
   const unreadNotifications = notifications.filter((notification) => notification.isRead === false);
 
+
+  // Fetch notifications
   const fetchNotifications = useCallback(async () => {
     try {
       const fetchedNotifications = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${user._id}`)
@@ -53,18 +66,20 @@ function SidebarLayout() {
   }, [user._id]);
 
 
+  // Fetch notifications on component mount
   useEffect(() =>  {
     fetchNotifications();
     socket.on('notification-created', (data) => {
       setNotifications((item) => [...item, data]);
     });
     return () => socket.off('notification-created');
-  }, [fetchNotifications]);
+  }, [fetchNotifications, socket]);
 
 
   return (
     <Container show={show}>
-      {isLoading && <Loader />}
+      {isLoading ? (<Loader />):(
+        <>
       <div className="sidebar">
         <NavLink onClick={()=>dispatch(toggleShow())} to="/dashboard" className="sidebarItem" activeClassName="active">
           <MdDashboard />
@@ -122,13 +137,17 @@ function SidebarLayout() {
           <p>Settings</p>
         </NavLink>
 
-        <Link onClick={handleLogout} className="sidebarItem" activeClassName="active">
+        <Link onClick={logoutUser} className="sidebarItem" activeClassName="active">
           <IoMdLogOut />
           <p>Logout</p>
         </Link>
       </div>
+      </>
+      )}
     </Container>
+    
   );
+  
 }
 
 export default SidebarLayout;

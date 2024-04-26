@@ -23,7 +23,7 @@ export const fetchUser = () => {
 export const logout = () => {
     return async (dispatch) => {
         try {
-            await axios.post(`${BASE_URL}/api/v1/auth/logout`, {withCredentials: true});
+            await axios.post(`${BASE_URL}/api/v1/auth/logout`,{withCredentials: true});
             dispatch(clearUser());
         } catch (error) {
             console.error(error);

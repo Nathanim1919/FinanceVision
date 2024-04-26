@@ -9,7 +9,7 @@ import { Loader } from '../Loader';
 import { CiCalendarDate } from "react-icons/ci";
 import { PiTargetThin } from "react-icons/pi";
 import { calculateTimeLeft, formatNumber } from '../../utils/Formatting';
-
+import { IoIosAdd } from "react-icons/io";
 
 
 export const Goals = () => {
@@ -19,9 +19,7 @@ export const Goals = () => {
   const loading = useSelector(selectLoading);
 
   useEffect(() => {
-    if (goals.length === 0 && user._id){
       dispatch(fetchGoals(user._id));
-    }
   }, [dispatch, user]);
 
   return (
@@ -37,7 +35,7 @@ export const Goals = () => {
       {goals.length === 0 ? (
             <div className='emptyOne'>
               <p>No goals created yet.</p>
-               <Link to="/goals">create</Link>
+               <Link to="/goals"><IoIosAdd/>create</Link>
             </div>
         ): goals?.map(goal => (
         <div key={goal.title}>
@@ -122,6 +120,10 @@ const GoalContainer = styled.div`
       border-radius: 20px;
       text-decoration: none;
       font-size: .8rem;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      font-weight: 600;
     }
   }
 
