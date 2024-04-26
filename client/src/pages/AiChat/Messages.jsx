@@ -22,6 +22,15 @@ function Messages() {
   return (
       <Container>
         <MessagesContainer>
+          {messages.length === 0 && 
+              <div className='box aiBox'>
+                <div className='icon'><FaRobot/></div>
+                <div className='messageBox aiMessage'>
+                  <p>Hi, I am your personal assistant. How can I help you today?</p>
+                </div>
+              </div>
+
+          }
           {
               messages && messages.map((msg, index) => (
                   <div key={index} className={msg.sender==='ai'?"box aiBox":"box userBox"}>

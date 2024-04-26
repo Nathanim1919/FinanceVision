@@ -24,12 +24,10 @@ function Notification() {
 
 
     const setReadNoti = async (id) => {
-        // dispatch(fetchNotifications(user._id))
         setNotificationId(id)
-        // if (notifications.find(notification => notification._id === id).isRead === false) {
-        // }
-        dispatch(setRead(id));
-        // const readNotification = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);
+        if (notifications.find(notification => notification._id === id).isRead === false) {
+            dispatch(setRead(id));
+        }
     }
 
     useEffect(() => {
