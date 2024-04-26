@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { selectIsLoggedIn, selectUser, setUser, clearUser } from '../features/auth/authSlice';
-import { Loader } from '../components/Loader';
-import styled from 'styled-components';
-import { BASE_URL } from '../utils/Api';
+import React, { useState, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {
+  selectIsLoggedIn,
+  selectUser,
+  setUser,
+  clearUser,
+} from "../features/auth/authSlice";
+import { Loader } from "../components/Loader";
+import styled from "styled-components";
+import { BASE_URL } from "../utils/Api";
 
 export function ProtectedRoutes({ children }) {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
   const user = useSelector(selectUser);
 
   // Configure Axios to send cookies with requests
-
 
   /* 
     Check if the user is authenticated, if not redirect to the login page, else render the protected routes
@@ -24,35 +28,34 @@ export function ProtectedRoutes({ children }) {
   */
   useEffect(() => {
     const checkAuthentication = async () => {
-      setIsLoading(true); 
-    
+      setIsLoading(true);
+
       if (user) {
-        setIsLoading(false); 
+        setIsLoading(false);
         return;
       }
-      
+
       try {
         const response = await axios.get(`${BASE_URL}/api/v1/auth/getUser`, {
-          withCredentials: true
+          withCredentials: true,
         });
 
         if (response.data.data !== null) {
           dispatch(setUser(response.data.data));
         } else {
           dispatch(clearUser());
-          navigate('/login', { replace: true });
+          navigate("/login", { replace: true });
         }
       } catch (error) {
         dispatch(clearUser());
-        navigate('/login', { replace: true });
+        navigate("/login", { replace: true });
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
-    
+
     checkAuthentication();
   }, [dispatch, navigate]);
-
 
   /* 
     Display a loader while the user authentication is being checked
@@ -63,21 +66,19 @@ export function ProtectedRoutes({ children }) {
   return (
     <Container>
       {isLoading ? (
-       <Loader/>
+        <Loader />
       ) : isLoggedIn ? (
-        <Outlet/>
+        <Outlet />
       ) : (
-       navigate('/login', {replace: true})
+        navigate("/login", { replace: true })
       )}
     </Container>
   );
 }
-
-
 
 // Styles
 const Container = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-`
+`;

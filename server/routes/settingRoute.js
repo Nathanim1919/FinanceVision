@@ -1,9 +1,9 @@
-import express from 'express';
+import express from "express";
 
-import {updateSettings} from '../controllers/settingController.js';
+import { updateSettings } from "../controllers/settingController.js";
 
 const router = express.Router();
 
-router.post('/', updateSettings);
+router.post("/", updateSettings);
 
 export default router;
