@@ -21,10 +21,10 @@ export function ProtectedRoutes({ children }) {
 
   // Configure Axios to send cookies with requests
 
-  /* 
+  /*
     Check if the user is authenticated, if not redirect to the login page, else render the protected routes
-    This is done by making a request to the server to get the user data. 
-    If the user is authenticated, the server will return the user data, else it will return null or an error. 
+    This is done by making a request to the server to get the user data.
+    If the user is authenticated, the server will return the user data, else it will return null or an error.
   */
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -57,7 +57,7 @@ export function ProtectedRoutes({ children }) {
     checkAuthentication();
   }, [dispatch, navigate]);
 
-  /* 
+  /*
     Display a loader while the user authentication is being checked
     If the user is authenticated, render the protected routes
     If the user is not authenticated, redirect to the login page
