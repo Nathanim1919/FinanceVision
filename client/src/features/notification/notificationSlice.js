@@ -29,13 +29,12 @@ export const setRead = createAsyncThunk(
     async (id) => {
         try {
             const response = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);
-            return response.data.data;
+            return response.data; // Return the updated notification
         } catch (error) {
             throw error;
         }
     }
 );
-
 
 
 const notificationSlice = createSlice({
@@ -68,7 +67,10 @@ const notificationSlice = createSlice({
             state.loading = false;
         })
         .addCase(setRead.fulfilled, (state, action) => {
-            state.notifications = action.payload;
+            const index = state.notifications.findIndex(notification => notification._id === action.payload._id);
+            if (index !== -1) {
+                state.notifications[index] = action.payload;
+            }
             state.loading = false;
         })
         .addCase(setRead.rejected, (state, action) => {

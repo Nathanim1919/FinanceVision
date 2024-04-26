@@ -1,9 +1,7 @@
-import React, {useState, useEffect, useContext} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import styled from 'styled-components';
 import {IoIosNotifications} from "react-icons/io";
 import {MdCalendarToday} from "react-icons/md";
-import io from 'socket.io-client';
-import axios from 'axios';
 import {useSelector, useDispatch} from 'react-redux';
 import {FaCheckCircle, FaInfoCircle} from "react-icons/fa";
 import {IoIosWarning, IoMdNotifications} from "react-icons/io";
@@ -17,22 +15,28 @@ import {setNotification} from '../../features/notification/notificationSlice';
 
 function Notification() {
     const [notificationId, setNotificationId] = useState(null);
-    const notifications = useSelector((state) => state.notification.notifications)
+    const notifications = useSelector((state) => state.notification.notifications);
     const user = useSelector(state => state.auth.user);
     const loading = useSelector(state => state.notification.loading);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const socket = useContext(SocketContext);
 
 
     const setReadNoti = async (id) => {
-        dispatch(fetchNotifications(user._id))
+        // dispatch(fetchNotifications(user._id))
         setNotificationId(id)
-        if (notifications.find(notification => notification._id === id).isRead === false) {
-            dispatch(setRead(id));
-        }
+        // if (notifications.find(notification => notification._id === id).isRead === false) {
+        // }
+        dispatch(setRead(id));
         // const readNotification = await axios.patch(`${BASE_URL}/api/v1/notifications/${id}`);
     }
+
+    useEffect(() => {
+        if (notifications?.length === 0 ){
+            dispatch(fetchNotifications(user._id));
+        }
+    }, [dispatch, notifications?.length, user._id]);
 
 
     useEffect(() => {
@@ -40,7 +44,7 @@ function Notification() {
             dispatch(setNotification(data));
         });
         return () => socket.off('notification-created');
-    }, []);
+    }, [dispatch, socket]);
 
 
     return (
