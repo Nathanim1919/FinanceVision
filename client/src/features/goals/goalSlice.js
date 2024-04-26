@@ -40,9 +40,11 @@ export const createGoal = createAsyncThunk(
 
 export const deleteGoal = createAsyncThunk(
   'goal/deleteGoal',
-  async (id, userId) => {
+  async ({userId, goalId}) => {
+    
+    alert("goalId is here: ", goalId)
     try {
-      await axios.delete(`${BASE_URL}/api/v1/goals/${id}`);
+      await axios.delete(`${BASE_URL}/api/v1/goals/${goalId}`, {data: userId});
       return id; // Return the deleted goal ID for successful deletion handling
     } catch (error) {
       throw error; // Re-throw for error handling in reducers

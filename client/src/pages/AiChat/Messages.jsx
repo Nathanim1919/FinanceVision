@@ -4,8 +4,6 @@ import { FaRobot } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import styled from 'styled-components';
 
-
-
 function Messages() {
   const messages = useSelector((state)=> state.chat.messages);
   const isLoading = useSelector((state)=> state.chat.isLoading);
@@ -16,43 +14,52 @@ function Messages() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }
-     
-  useEffect(
-    scrollToBottom , [messages]);
 
-  
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
-    <Container   ref={messagesEndRef}>
-      <MessagesContainer>
-          {
-            messages && messages.map(msg=> (
-              <div className={msg.sender==='ai'?"box aiBox":"box userBox"}>
-                    {msg.sender === 'ai'?
-                    <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
-                      {msg.content !== "" && <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
-                          <p>{msg.content}</p>
-                      </div>}
-<div ref={messagesEndRef} />
+      <Container>
+        <MessagesContainer>
+          {messages.length === 0?
+              <div className='box aiBox'>
+                <div className='icon'><FaRobot/></div>
+                <div className='messageBox aiMessage'>
+                  <p>Hi, I am your personal assistant. How can I help you today?</p>
+                </div>
               </div>
 
-        ))
-        }
-        {isLoading && 
-        <p className='loader'>I'am Thinking ...</p>
-        }
-     </MessagesContainer>
-    </Container>
+          
+          :messages && messages.map((msg, index) => (
+                  <div key={index} className={msg.sender==='ai'?"box aiBox":"box userBox"}>
+                    {msg.sender === 'ai'?
+                        <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
+                    {msg.content !== "" && <div className={msg.sender==='ai'?"messageBox aiMessage":"messageBox userMessage"}>
+                      <p>{msg.content}</p>
+                    </div>}
+                  </div>
+              ))
+          }
+          
+          {isLoading &&
+              <p className='loader'>Processing ...</p>
+          }
+          <div ref={messagesEndRef} />
+        </MessagesContainer>
+      </Container>
   )
 }
 
 export default Messages;
+
+
 
 const Container = styled.div`
   
 `
 
 const MessagesContainer = styled.div`
-height: 90vh;
 overflow: hidden;
 display: flex;
 flex-direction: column;
@@ -60,15 +67,17 @@ gap: 1rem;
 padding:1rem 0;
 overflow-y: auto;
 align-items: flex-start;
+  margin: 0 auto;
+    max-height: 70vh;
+  
 
 
 
 .loader{
-  background-color: #eee;
   font-size: .7rem;
   padding: 0.2rem 1rem;
   border-radius: 20px;
-
+  color: #eee;
 }
 
 .box{
@@ -81,7 +90,7 @@ align-items: flex-start;
   position: relative;
 
   @media screen and (max-width:800px){
-    max-width: 80%;
+    max-width: 60%;
   }
 
   .icon{

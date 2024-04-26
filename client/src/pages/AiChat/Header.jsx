@@ -1,14 +1,17 @@
-import React from 'react'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { FaArrowLeftLong } from "react-icons/fa6";
 
-function Header() {
+// eslint-disable-next-line react/prop-types
+function Header({setOpenChat}) {
   const user = useSelector((state) => state.auth.user)
   return (
     <Container>
-        <h3>{user.username}</h3>
+      <div onClick={()=> setOpenChat(false)}>
+        <FaArrowLeftLong/>
+      </div>
         <div>
-            <h3>Conversations</h3>
+        <h3>{user.username}</h3>
         </div>
 
     </Container>
@@ -19,15 +22,18 @@ export default Header;
 
 
 const Container = styled.div`
-    background-color: #22175f;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: .8rem;
-    color: #fff;
+    justify-content: space-between;
+    color:#fff;
 
     *{
 
         padding: 0 1rem;
+    }
+
+    div:nth-child(1){
+    
+      cursor: pointer;
     }
 `
