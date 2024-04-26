@@ -78,7 +78,7 @@ function SidebarLayout() {
 
   return (
     <Container show={show}>
-      {isLoading ? (<Loader />):(
+      
         <>
       <div className="sidebar">
         <NavLink onClick={()=>dispatch(toggleShow())} to="/dashboard" className="sidebarItem" activeClassName="active">
@@ -140,10 +140,16 @@ function SidebarLayout() {
         <Link onClick={logoutUser} className="sidebarItem" activeClassName="active">
           <IoMdLogOut />
           <p>Logout</p>
+          {isLoading &&
+          (
+          <div className="loader">
+            <Loader />
+          </div>
+          )
+         }
         </Link>
       </div>
       </>
-      )}
     </Container>
     
   );
@@ -183,6 +189,7 @@ const Container = styled.div`
     }
   }
 
+
   
 
   div a {
@@ -197,7 +204,7 @@ const Container = styled.div`
     transition: transform 0.3s ease-in-out;
     position: relative;
     right: 0;
-    
+
 
     .notificationNumber{
       background-color: red;

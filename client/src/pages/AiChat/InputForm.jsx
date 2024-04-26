@@ -12,6 +12,7 @@ export default function InputForm() {
 
   const sendMessage = (e) => {
     e.preventDefault();
+    if (message.trim() === "") return;
     dispatch(createMessage({message, chatBoard:user.chatBoard}))
       .then((userMessage) => {
         socket.emit('new-message', userMessage);
@@ -38,7 +39,6 @@ const Container = styled.form`
     
     
     @media screen and (max-width:800px){
-      position: ;
       bottom: 25%;
       right: 0;
       left: 0;
@@ -48,13 +48,16 @@ const Container = styled.form`
         padding: 0.5rem 1rem;
         border: none;
         outline: none;
+        background-color: transparent;
+        color: #fff;
     }
 
     input:nth-child(1){
         flex: 1;
     }
     input:nth-child(2){
-        background-color: #286cff;
-        color: #fff;
+        background-color: #ffffff;
+        color: #282626;
+        cursor: pointer;
     }
 `

@@ -231,7 +231,7 @@ const Container = styled.div`
   .container {
     overflow: hidden;
     display: grid;
-    grid-template-rows: .1fr .8fr .1fr;
+    grid-template-rows: .1fr .8fr .2fr;
     height: 100vh;
     width: 35vw;
     margin: 0 auto;

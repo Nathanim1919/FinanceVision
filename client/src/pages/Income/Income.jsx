@@ -179,10 +179,11 @@ function Income() {
 
 
     useEffect(() => {
-        if (user && user._id && incomes.length == 0){
-            dispatch(fetchIncomes(user._id));
+      
+        if (user && incomes.length === 0){
+        dispatch(fetchIncomes(user._id));
         }
-    }, [dispatch, incomes, user]);
+    }, [dispatch, incomes.length, user]);
 
 
 
