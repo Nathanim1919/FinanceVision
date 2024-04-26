@@ -12,10 +12,8 @@ import {
   Tooltip,
   ResponsiveContainer
 } from "recharts";
+import TranIcon from '/notiIcon/tra.png';
 import styled from "styled-components";
-
-
-
 
 export default function BardGraph() {
   const dispatch = useDispatch();
@@ -74,29 +72,39 @@ export default function BardGraph() {
   };
   structureTransactions(transactions);
   return (
-    <Container>
-      <ResponsiveContainer>
-        <AreaChart
-          data={structureTransactions(transactions)}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 0,
-            bottom: 0
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Area type="monotone" dataKey="income" stroke="#82ca9d" fill="#82ca9d" />
-          <Area type="monotone" dataKey="expenses" stroke="#8884d8" fill="#8884d8" />
-        </AreaChart>
-      </ResponsiveContainer>
-    </Container>
+    transactions.length < 1 ? (
+      <IntroContainer>
+        <div className="image">
+          <img src={TranIcon} alt="transactions icon" />
+        </div>
+        <h2>No transactions recorded</h2>
+        <p>Once you start adding transactions, you will see a graph here</p>
+        <p>Get started by adding your first transaction</p>
+      </IntroContainer>
+    ) : (
+      <Container>
+        <ResponsiveContainer>
+          <AreaChart
+            data={structureTransactions(transactions)}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Area type="monotone" dataKey="income" stroke="#82ca9d" fill="#82ca9d" />
+            <Area type="monotone" dataKey="expenses" stroke="#8884d8" fill="#8884d8" />
+          </AreaChart>
+        </ResponsiveContainer>
+      </Container>
+    )
   );
 }
-
 
 const Container=styled.div`
   width: 350px;
@@ -112,5 +120,51 @@ const Container=styled.div`
   @media screen and (max-width: 800px){
     /* display: none; */
     margin-bottom: 8rem;
+  }
+`
+
+
+const IntroContainer = styled.div`
+  position: relative;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  background-color: rgba(237, 237, 233, 0.59);
+
+
+  .image{
+    position: absolute;
+    width: 80px;
+    height: auto;
+    top: -20%;
+
+    >img{
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      
+    }
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: .9rem;
+    font-weight: 400;
+  }
+
+  >* {
+    margin: 0;
   }
 `

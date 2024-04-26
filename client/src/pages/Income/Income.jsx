@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import { IoMdAdd } from "react-icons/io";
 import styled from 'styled-components';
 import { CiCalendarDate, CiEdit, CiViewTimeline } from "react-icons/ci";
@@ -176,6 +176,13 @@ function Income() {
     const incomes = useSelector(selectIncomes);
     const isLoading = useSelector((state) => state.income.loading);
     const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        if (user && user._id && incomes.length == 0){
+            dispatch(fetchIncomes(user._id));
+        }
+    }, [dispatch, incomes, user]);
 
 
 

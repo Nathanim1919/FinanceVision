@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import styled from 'styled-components'
 // import { GrLinkNext } from "react-icons/gr";
 // import { Link } from 'react-router-dom';
@@ -10,10 +10,11 @@ import { GiProgression } from "react-icons/gi";
 import { TbCategoryFilled } from "react-icons/tb";
 import GoalForm from '../../components/forms/GoalForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectGoals, selectLoading , deleteGoal} from '../../features/goals/goalSlice';
+import { selectGoals, selectLoading , deleteGoal, fetchGoals} from '../../features/goals/goalSlice';
 import { Loader } from '../../components/Loader';
 import { GoalDetails } from './GoalDetails';
 import { calculateTimeLeft, formatNumber } from '../../utils/Formatting';
+
 import { FaCheckCircle } from "react-icons/fa";
 
 
@@ -25,6 +26,13 @@ export const Goals = () => {
   const [showDetails, setShowDetails] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
+
+
+  useEffect(() => {
+    if (user._id && goals.length === 0){
+      dispatch(fetchGoals(user._id));
+    }
+}, [dispatch, goals.length, user]);
 
 
   const handleGoalSelect = (goal) => {

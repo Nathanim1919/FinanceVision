@@ -23,6 +23,12 @@ export const Transactions = () => {
   const transactions = useSelector(state => state.transaction.transactions);
   const loading = useSelector(state => state.transaction.loading);
 
+  useEffect(() => {
+    if (user._id && transactions.length === 0){
+        dispatch(fetchTransactions(user._id));
+    }
+  }, [dispatch, transactions.length, user]);
+
 
   
   return (

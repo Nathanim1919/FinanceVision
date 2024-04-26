@@ -22,7 +22,7 @@ function Messages() {
   return (
       <Container>
         <MessagesContainer>
-          {messages.length === 0 && 
+          {messages.length === 0?
               <div className='box aiBox'>
                 <div className='icon'><FaRobot/></div>
                 <div className='messageBox aiMessage'>
@@ -30,9 +30,8 @@ function Messages() {
                 </div>
               </div>
 
-          }
-          {
-              messages && messages.map((msg, index) => (
+          
+          :messages && messages.map((msg, index) => (
                   <div key={index} className={msg.sender==='ai'?"box aiBox":"box userBox"}>
                     {msg.sender === 'ai'?
                         <div className='icon'><FaRobot/></div>:<div className='icon'><IoPerson/></div>}
@@ -42,6 +41,7 @@ function Messages() {
                   </div>
               ))
           }
+          
           {isLoading &&
               <p className='loader'>Processing ...</p>
           }
