@@ -28,19 +28,12 @@ export const Login = () => {
   const authenticateUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-  
-<<<<<<< HEAD
-      if (response.status === 200 && response.data.data !== null) {
-          document.cookie = `accessToken=${response.data.data.accessToken}; Secure; SameSite=None`;
-
-=======
     try {
       const response = await axios.post(`${BASE_URL}/api/v1/auth/login`, { userData });
   
       if (response.status === 200 && response.data.data) {
         const { accessToken } = response.data.data;
-        document.cookie = `accessToken=${accessToken}`;
->>>>>>> b7a9e15e6b0545b7a9f4974756e6db1bf5ffeefe
+        document.cookie = `accessToken=${accessToken}; Secure; SameSite=None`;
         navigate('/dashboard', { replace: true });
       } else {
         throw new Error('Authentication failed. Please verify your credentials and try again.');
