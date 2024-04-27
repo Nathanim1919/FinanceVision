@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { clearUser } from "../features/auth/authSlice";
+import { logout } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../components/Loader";
 import { GoGoal } from "react-icons/go";
@@ -27,23 +27,35 @@ function SidebarLayout() {
   const user = useSelector((state) => state.auth.user);
   const show = useSelector(state => state.sidebar.show);
 
+
   const [notifications, setNotifications] = useState([]);
   const socket = io('https://finance-vision.vercel.app');
+  axios.defaults.withCredentials = true;
 
-  const logout = useCallback(async () => {
+
+  // Logout user
+  const logoutUser = async () => {
     setIsLoading(true);
-    localStorage.removeItem('accessToken');
     try {
-      dispatch(clearUser());
-      navigate('/login', { replace: true });
+      // Dispatch the logout action and wait for it to complete
+      await dispatch(logout());
+  
+      // If the logout action completes successfully, navigate to the login page
+      navigate("/login");
     } catch (error) {
-      console.log(error);
+      // If an error occurs during the logout process, log the error and show an error message
+      console.error('An error occurred during the logout process:', error);
+      // You could also show a toast notification or some other form of user feedback here
+    } finally {
+      // Regardless of whether the logout action succeeds or fails, stop showing the loading indicator
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  }, [dispatch, navigate]);
+  }
 
   const unreadNotifications = notifications.filter((notification) => notification.isRead === false);
 
+
+  // Fetch notifications
   const fetchNotifications = useCallback(async () => {
     try {
       const fetchedNotifications = await axios.get(`${BASE_URL}/api/v1/notifications?userId=${user._id}`)
@@ -54,18 +66,20 @@ function SidebarLayout() {
   }, [user._id]);
 
 
+  // Fetch notifications on component mount
   useEffect(() =>  {
     fetchNotifications();
     socket.on('notification-created', (data) => {
       setNotifications((item) => [...item, data]);
     });
     return () => socket.off('notification-created');
-  }, [fetchNotifications]);
+  }, [fetchNotifications, socket]);
 
 
   return (
     <Container show={show}>
-      {isLoading && <Loader />}
+      
+        <>
       <div className="sidebar">
         <NavLink onClick={()=>dispatch(toggleShow())} to="/dashboard" className="sidebarItem" activeClassName="active">
           <MdDashboard />
@@ -123,13 +137,23 @@ function SidebarLayout() {
           <p>Settings</p>
         </NavLink>
 
-        <Link onClick={logout} className="sidebarItem" activeClassName="active">
+        <Link onClick={logoutUser} className="sidebarItem" activeClassName="active">
           <IoMdLogOut />
           <p>Logout</p>
+          {isLoading &&
+          (
+          <div className="loader">
+            <Loader />
+          </div>
+          )
+         }
         </Link>
       </div>
+      </>
     </Container>
+    
   );
+  
 }
 
 export default SidebarLayout;
@@ -165,6 +189,7 @@ const Container = styled.div`
     }
   }
 
+
   
 
   div a {
@@ -179,7 +204,7 @@ const Container = styled.div`
     transition: transform 0.3s ease-in-out;
     position: relative;
     right: 0;
-    
+
 
     .notificationNumber{
       background-color: red;

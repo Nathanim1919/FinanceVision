@@ -14,81 +14,107 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: 5rem;
-    padding: 2rem 0;
+    padding: 2rem;
+    border-radius: 20px;
+    margin: 5rem auto;
 
-    @media screen and (max-width:768px){
+    @media screen and (max-width: 768px) {
         padding: 0 1rem;
     }
 
 
-    .header{
+    .header {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin: 3rem 0;
 
-        >*{
+        h1 {
+            font-size: 3rem;
+            span {
+                color: #6464ff;
+            }
+        }
+        
+        p{
+            width: 50%;
+        }
+
+        > * {
             margin: 0;
         }
 
-        @media screen and (max-width:768px){
+        @media screen and (max-width: 768px) {
             margin: 0;
-            
 
-            h1{
+
+            h1 {
                 font-size: 1.5rem;
             }
         }
     }
 
-    .services{
+    .services {
         display: grid;
         place-items: center;
         /* gap: 5rem; */
-        >div{
+
+        > div {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 2rem;
-            h2{
+            background-color: #f5f4f4;
+            padding: 0 2rem;
+            margin: 1rem 0;
+            border-radius: 20px;
+
+
+            > div:nth-child(1) {
+                //background-color: rgba(244, 199, 120, 0.59);
+                padding: 1rem;
+                border-radius: 20px;
+                transform: scale(.9);
+            }
+
+            h2 {
                 background-color: #f3e09c75;
                 border-radius: 40px;
             }
 
-            >div{
+            > div {
                 flex: 1;
             }
 
-            img{
+            img {
                 width: 100%;
                 height: auto;
                 object-fit: cover;
             }
         }
 
-        div:nth-child(2),div:nth-child(4){
+        div:nth-child(2), div:nth-child(4) {
             flex-direction: row-reverse;
         }
 
-        @media screen and (max-width:768px){
+        @media screen and (max-width: 768px) {
             padding: 2rem;
-            >div{
+            > div {
                 flex-direction: column;
             }
-            div:nth-child(2),div:nth-child(4){
-            flex-direction: column;
+
+            div:nth-child(2), div:nth-child(4) {
+                flex-direction: column;
             }
 
-            h2{
+            h2 {
                 font-size: 1.2rem;
             }
         }
 
-        
+
     }
 
-    .footer{
+    .footer {
         background-color: #69affe;
         width: 100%;
         display: grid;
@@ -99,100 +125,101 @@ const Container = styled.div`
         border-radius: 20px;
         position: relative;
 
-        @media screen and (max-width:768px){
+        @media screen and (max-width: 768px) {
             grid-template-columns: 1fr;
             border-radius: 0;
             margin-top: 0rem;
             box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .BackDropimage{
+        .BackDropimage {
             position: absolute;
             transform: scale(.3);
             top: -105%;
             right: -50%;
 
-            
-        @media screen and (max-width:768px){
-            top: -30%;
-            right: -70%;
-        }
 
-            img{
+            @media screen and (max-width: 768px) {
+                top: -30%;
+                right: -70%;
+            }
+
+            img {
                 width: 100%;
                 object-fit: cover;
                 height: auto;
             }
         }
-        }
+    }
 
-        .calltoaction{
-            background: linear-gradient(to right, #ff0877, #3d84ff);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            position: relative;
-            bottom: -30%;
-            z-index: 3;
-            padding: 2rem; 
-            box-shadow: 0 20px 54px rgba(0,0,0,.3);
-            color: #fff;
-            border-radius: 10px;
+    .calltoaction {
+        background: linear-gradient(to right, #ff0877, #3d84ff);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+        bottom: -30%;
+        right: 5%;
+        z-index: 3;
+        padding: 2rem;
+        box-shadow: 0 20px 54px rgba(0, 0, 0, .3);
+        color: #fff;
+        border-radius: 10px;
 
-            @media screen and (max-width:768px){
-                padding:1rem;
-                bottom: 10%;
-                margin: 1rem;
-            }
-
-
-            h1{
-                color: #ffffff;
-            }
-            
-            >*{
-                margin: 0;
-            }
+        @media screen and (max-width: 768px) {
+            padding: 1rem;
+            bottom: 10%;
+            margin: 1rem;
         }
 
 
-        .image{
-            position: relative;
-            top: -15%;
-            left: -1rem;
-
-            @media screen and (max-width:768px){
-                top: -10%;
-                left: -1rem;
-            }
-            
-            
-            img{
-                width: 100%;
-                height: auto;
-                object-fit: cover;
-            }
-        }
-
-
-        a{
-            padding: 0.4rem 1rem;
+        h1 {
             color: #ffffff;
-            background-color: #3d84ff;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            text-decoration: none;
-            align-self: center;
-            position: relative;
         }
+
+        > * {
+            margin: 0;
+        }
+    }
+
+
+    .image {
+        position: relative;
+        top: -15%;
+        left: -1rem;
+
+        @media screen and (max-width: 768px) {
+            top: -10%;
+            left: -1rem;
+        }
+
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    }
+
+
+    a {
+        padding: 0.4rem 1rem;
+        color: #ffffff;
+        background-color: #3d84ff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        align-self: center;
+        position: relative;
+    }
 `
 
 export default function Services() {
   return (
     <Container id='services'>
         <div className="header">
-            <h1>Visualize Your Financial Future</h1>
-            <p>Take control of your finances and unlock peace of mind with FVISION's comprehensive suite of tracking and management tools. <br/>Our user-friendly platform empowers you to effortlessly</p>
+            <h1>Visualize Your <span>Financial</span> Future</h1>
+            <p>Take control of your finances and unlock peace of mind with FVISION's comprehensive suite of tracking and management tools.</p>
         </div>
 
         <div className="services">
@@ -222,8 +249,8 @@ export default function Services() {
                 <div>
                     <h2>Achieve Your Goals</h2>
                     <p>Whether it's saving for a dream vacation, paying off debt, or securing your future, set personalized financial goals and track your progress in real-time. Stay motivated and celebrate your achievements as you move closer to your aspirations.</p>
-                </div>    
-            </div>  
+                </div>
+            </div>
             <div>
                 <div>
                  <img src={Visual} alt="" />
@@ -231,8 +258,8 @@ export default function Services() {
                 <div>
                     <h2>Visualize Your Financial Journey</h2>
                     <p>Gain valuable insights with interactive charts and graphs, visualizing your spending patterns, budget adherence, and goal progress. Understand your finances at a glance and make informed decisions for a brighter financial future.</p>
-                </div>    
-            </div>  
+                </div>
+            </div>
         </div>
 
         <div className="footer">

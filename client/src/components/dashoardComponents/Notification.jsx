@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import {useEffect} from 'react'
 import styled from 'styled-components';
 import { IoIosNotifications } from "react-icons/io";
 import { GrLinkNext } from "react-icons/gr";
@@ -9,6 +9,7 @@ import { MdCalendarToday } from "react-icons/md";
 import { FaCheckCircle,FaInfoCircle } from "react-icons/fa";
 import { calculateTimeDifference } from '../../utils/Formatting';
 import { fetchNotifications } from '../../features/notification/notificationSlice';
+import BellIcon from '/notiIcon/bell.png';
 
 
 const Notification = () => {
@@ -17,9 +18,9 @@ const Notification = () => {
     const dispatch = useDispatch()
   
 
-    useEffect(() => {  
-      dispatch(fetchNotifications(user._id))
-    }, []);
+    useEffect(() => {
+            dispatch(fetchNotifications(user._id));
+    }, [dispatch, user._id]);
     
   
     return (
@@ -34,9 +35,12 @@ const Notification = () => {
           </Link>
         </Header>
         <NotificationContainer>
-          {notifications.length === 0 ? (
-        <p>No new notifications. Stay tuned!</p>
-          ) :  notifications.slice(0, 3).map((notification) => (
+          {notifications?.length === 0 ? (
+            <div style={{display:'grid', placeItems:'center'}}>
+              <img src={BellIcon} alt="bell" style={{width:'50px'}}/>
+              <p>No new notifications.<br/>Stay tuned!</p>
+            </div>
+          ) :  notifications?.slice(0, 3).map((notification) => (
             <NotificationBox key={notification.createdAt}>
             <div className='notification'>
                     <div>
@@ -131,6 +135,11 @@ const Header = styled.div`
 const NotificationContainer = styled.div`
   display: grid;
   gap: .5rem;
+  /* place-items: center; */
+
+  p{
+    text-align: center;
+  }
 `
 
 const NotificationBox = styled.div`

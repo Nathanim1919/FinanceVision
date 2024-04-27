@@ -190,4 +190,36 @@ export const createGoal = asyncHandler(async (req, res) => {
   }
 });
 
+export const deleteGoal = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const { goalId } = req.params;
 
+    const user = await User.findById(userId);
+    console.log(userId)
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    const goal = await Goal.findById(goalId);
+    if (!goal) {
+      return res.status(404).json({
+        message: "Goal not found"
+      });
+    }
+
+    await Goal.findByIdAndDelete(goalId);
+    user.goal = user.goal.filter((goal) => goal.toString() !== goalId);
+    await user.save();
+    await goal.save();
+
+    res.status(200).json({
+      message: "Goal deleted successfully"
+    });
+  } catch (error) {
+    console.error("Error deleting goal:", error);
+    res.status(500).json({ message: "Error deleting goal" });
+  }
+});
