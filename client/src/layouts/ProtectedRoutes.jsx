@@ -51,7 +51,7 @@ export function ProtectedRoutes({ children }) {
     };
     
     checkAuthentication();
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, user]);
 
 
   /* 
