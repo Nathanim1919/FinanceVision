@@ -53,7 +53,7 @@ const startServer = async () => {
     // configure cors
     app.use(cors({
       origin: 'https://finance-vision.vercel.app',
-      origin: 'http://localhost:5173',
+      // origin: 'http://localhost:5173',
       credentials: true,
     }));
 
