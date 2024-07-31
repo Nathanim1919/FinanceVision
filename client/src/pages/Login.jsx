@@ -33,7 +33,7 @@ export const Login = () => {
 
       if (response.status === 200 && response.data.data) {
         const { accessToken } = response.data.data;
-        //   document.cookie = `accessToken=${accessToken}; Secure; SameSite=None; Domain=.nathanimt.me`;
+          document.cookie = `accessToken=${accessToken}; Secure; SameSite=None; Domain=.nathanimt.me`;
         navigate('/dashboard', { replace: true });
       } else {
         throw new Error('Authentication failed. Please verify your credentials and try again.');

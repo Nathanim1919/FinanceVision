@@ -38,6 +38,8 @@ const authSlice = createSlice({
             state.user = action.payload;
         }, clearUser: (state) => {
             state.isLoggedIn = false;
+            // Clear the cookie
+            document.cookie = `accessToken=; Secure; SameSite=None; Domain=.nathanimt.me; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
             state.user = null;
         },
     },
