@@ -200,6 +200,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     // get the user document ignoring the password and refreshToken field
     const loggedInUser = await User.findById(user._id).select('-password -refreshToken');
 
+
     res
         .status(200)
         .cookie("accessToken", accessToken, { domain: '.nathanimt.me', sameSite: 'none', secure: true })
