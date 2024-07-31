@@ -25,11 +25,16 @@ dotenv.config();
 
 
 // configure cors
+// app.use(cors({
+//     // origin: 'https://financevision-client.onrender.com/',
+//     // origin: 'https://finance-vision.vercel.app',
+//     origin: '*',
+//     // origin: 'http://localhost:5173',
+//     credentials: true,
+// }));
+
 app.use(cors({
-    // origin: 'https://financevision-client.onrender.com/',
-    // origin: 'https://finance-vision.vercel.app',
-    origin: '*',
-    // origin: 'http://localhost:5173',
+    origin: 'https://financevision-client.onrender.com',
     credentials: true,
 }));
 
@@ -38,7 +43,7 @@ app.use(cors({
    cors: {
        // origin: 'https://financevision-client.onrender.com/',
     // origin: 'https://finance-vision.vercel.app',
-    origin: '*',
+       origin: 'https://financevision-client.onrender.com',
      credentials: true,
    },
  });
