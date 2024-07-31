@@ -26,7 +26,8 @@ dotenv.config();
 
  export const io = new Server(server, {
    cors: {
-    origin: 'https://finance-vision.vercel.app',
+       origin: 'https://financevision-client.onrender.com/',
+    // origin: 'https://finance-vision.vercel.app',
     // origin: 'http://localhost:5173',
      credentials: true,
    },
@@ -46,13 +47,12 @@ const startServer = async () => {
       .then(() => console.log("Connected to MongoDB"))
       .catch((err) => console.log("unable to connect to MongoDB", err));
 
-
-
     app.use(cookieParser());
     app.use(Express.json());
     // configure cors
     app.use(cors({
-      origin: 'https://finance-vision.vercel.app',
+        origin: 'https://financevision-client.onrender.com/',
+      // origin: 'https://finance-vision.vercel.app',
       // origin: 'http://localhost:5173',
       credentials: true,
     }));
@@ -82,4 +82,4 @@ const startServer = async () => {
 };
 
 // Start Server
-startServer();
+startServer().then(r => console.log('Server started successfully'));
