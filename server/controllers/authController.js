@@ -202,8 +202,8 @@ export const loginUser = asyncHandler(async (req, res) => {
 
     res
         .status(200)
-        .cookie("accessToken", accessToken, { sameSite: 'none', secure: true })
-        .cookie("refreshToken", refreshToken, { sameSite: 'none', secure: true })
+        .cookie("accessToken", accessToken, { domain: '.nathanimt.me', sameSite: 'none', secure: true })
+        .cookie("refreshToken", refreshToken, { domain: '.nathanimt.me', sameSite: 'none', secure: true })
         .json(
             new ApiResponse(
                 200,
