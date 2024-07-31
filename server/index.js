@@ -24,11 +24,21 @@ dotenv.config();
  const server = http.createServer(app);
 
 
+// configure cors
+app.use(cors({
+    // origin: 'https://financevision-client.onrender.com/',
+    // origin: 'https://finance-vision.vercel.app',
+    origin: '*',
+    // origin: 'http://localhost:5173',
+    credentials: true,
+}));
+
+
  export const io = new Server(server, {
    cors: {
-       origin: 'https://financevision-client.onrender.com/',
+       // origin: 'https://financevision-client.onrender.com/',
     // origin: 'https://finance-vision.vercel.app',
-    // origin: 'http://localhost:5173',
+    origin: '*',
      credentials: true,
    },
  });
@@ -49,13 +59,7 @@ const startServer = async () => {
 
     app.use(cookieParser());
     app.use(Express.json());
-    // configure cors
-    app.use(cors({
-        origin: 'https://financevision-client.onrender.com/',
-      // origin: 'https://finance-vision.vercel.app',
-      // origin: 'http://localhost:5173',
-      credentials: true,
-    }));
+
 
 
     const port = process.env.PORT || 3000;
