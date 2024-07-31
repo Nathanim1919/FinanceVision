@@ -34,7 +34,7 @@ dotenv.config();
 // }));
 
 app.use(cors({
-    origin: 'https://financevision-client.onrender.com',
+    origin: 'https://nathanimt.me',
     credentials: true,
 }));
 
@@ -43,7 +43,7 @@ app.use(cors({
    cors: {
        // origin: 'https://financevision-client.onrender.com/',
     // origin: 'https://finance-vision.vercel.app',
-       origin: 'https://financevision-client.onrender.com',
+       origin: 'https://nathanimt.me',
      credentials: true,
    },
  });
