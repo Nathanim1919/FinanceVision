@@ -55,7 +55,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     await user.save({validateBeforeSave: false});
 
     // Send the unhashed token to the user's email
-    const verificationURL = `http://localhost:5173/verify-email/${unHashedToken}`;
+    const verificationURL = `http://nathanimt.me/verify-email/${unHashedToken}`;
 
     // Send the email
     await sendEmail({
@@ -203,8 +203,8 @@ export const loginUser = asyncHandler(async (req, res) => {
 
     res
         .status(200)
-        .cookie("accessToken", accessToken, { domain: '.nathanimt.me', sameSite: 'none', secure: true })
-        .cookie("refreshToken", refreshToken, { domain: '.nathanimt.me', sameSite: 'none', secure: true })
+        .cookie("accessToken", accessToken, { domain: '.nathanimt.me', sameSite: 'none', secure: true,  httpOnly: true })
+        .cookie("refreshToken", refreshToken, { domain: '.nathanimt.me', sameSite: 'none', secure: true,  httpOnly: true })
         .json(
             new ApiResponse(
                 200,
